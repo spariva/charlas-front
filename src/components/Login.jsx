@@ -34,17 +34,17 @@ export default class Login extends Component {
     <div className="parent">
       <div className="isSignDiv ? 'active container' : 'container'"  id="container">
         <div className="form-container sign-up">
-          <form>
+          <form onSubmit={this.signUp}>
             <h1>Crear Cuenta</h1>
             <span>Introduzca nombre, mail y tipo de entidad</span>
             <input type="text" name="name" v-model="signUpObj.name" placeholder="Nombre">
             <input type="email" name="email" v-model="signUpObj.email" placeholder="Email">
             <input type="password" name="password" v-model="signUpObj.password" placeholder="Contraseña">
-            <button @click="onRegister()">Crear cuenta</button>
+            <button>Crear cuenta</button>
           </form>
         </div>
         <div className="form-container sign-in">
-          <form v-on:submit.prevent="login()">
+          <form onSubmit={this.login}>
             <h1>Iniciar Sesión</h1>
             <span>Introduzca apellido y contraseña</span>
             <input type="text" name="email" v-model="userName" placeholder="Email">

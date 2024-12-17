@@ -1,21 +1,24 @@
 /* eslint-disable no-unused-vars */
-import React, { Component } from 'react'
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom'
-import Home from './Home'
-import Login from './Login'
-
+import React, { Component } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import Login from './Login';
+import Menu from './Menu';
 
 export default class Router extends Component {
     render() {
         return (
             <BrowserRouter>
-                {/* <Menu /> */}
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    {/* <Route path='/equipos/:id' element={<ElementDetalle />} /> */}
-                </Routes>
+                {/* Incluye el menú como un elemento fijo */}
+                <Menu />
+                <div style={{ marginLeft: '250px', padding: '20px' }}>
+                    {/* Contenedor para el contenido principal */}
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                    </Routes>
+                </div>
             </BrowserRouter>
-        )
+        );
     }
 }

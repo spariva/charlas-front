@@ -7,7 +7,7 @@ const Card = ({ imagen, titulo, descripcion }) => {
       <div className="card-body d-flex flex-column">
         <h5 className="card-title">{titulo}</h5>
         <p className="card-text">{descripcion}</p>
-
+        
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';
 import Menu from './Menu';
+import Profile from './Profile'
 
 export default class Router extends Component {
     render() {
@@ -16,6 +17,7 @@ export default class Router extends Component {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/login" element={<Login />} />
+						<Route path="/profile" element={<Profile />} />
                     </Routes>
                 </div>
             </BrowserRouter>

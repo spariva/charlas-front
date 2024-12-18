@@ -20,6 +20,12 @@ export default class Menu extends Component {
 					<h4>Login</h4>
 				</div>
 			</NavLink>
+			<NavLink to="/profile">
+				<div className="option">
+					<i className="fas fa-video"></i>
+					<h4>Profile</h4>
+				</div>
+			</NavLink>
 			<a href="#">
 				<div className="option">
 					<i className="far fa-sticky-note"></i>

@@ -89,10 +89,10 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="login-container">
+      <div className="login-parent-container">
         {this.state.status === true && <Navigate to="/" />}
 
-        <div className={`container ${this.state.isRegistroForm ? 'active' : ''}`}>
+        <div className={`login-container ${this.state.isRegistroForm ? 'active' : ''}`}>
           <div className={`form-container sign-up ${this.state.isRegistroForm ? '' : 'active'}`}>
             <form onSubmit={this.signUp}>
               <h1>Crear Cuenta</h1>

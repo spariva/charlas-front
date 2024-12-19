@@ -1,0 +1,85 @@
+.carousel {
+	margin: 50px;
+}
+
+.card {
+	max-height: 350px; 
+	max-width: 300px; 
+	margin: 30px auto;
+	padding: 15px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background: #f8f8f8;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.card img {
+	/* IMAGEN DE LA TARJETA */
+	width: 100%;
+	height: auto;
+	max-height: 180px;
+	object-fit: cover;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+.card .card-body {
+	/* CONTENEDOR DEL TEXTO */
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: hidden;
+}
+
+.card .card-title {
+	/* TITULO */
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+	margin: 10px 0;
+	text-overflow: ellipsis; /* Agrega puntos suspensivos si el texto es muy largo */
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.card .card-text {
+	/* DESCRIPCION */
+	font-size: 14px;
+	color: #666;
+	line-height: 1.4;
+	margin: 10px 0;
+	overflow: hidden;
+	text-overflow: ellipsis; /* Muestra puntos suspensivos al final del texto */
+	display: -webkit-box; /* Soporte para truncar texto */
+	-webkit-line-clamp: 3; /* Limita a 3 líneas */
+	-webkit-box-orient: vertical;
+}
+
+.slick-prev,
+.slick-next {
+	background-color: red;
+	z-index: 1;
+	border: none;
+	padding: 10px;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.slick-prev i,
+.slick-next i {
+	font-size: 30px;
+	color: white;
+}
+
+.imgcharla {
+	max-width: 100%;
+	max-height: 180px;
+	object-fit: contain;
+}

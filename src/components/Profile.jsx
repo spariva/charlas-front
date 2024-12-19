@@ -8,12 +8,8 @@ export default class Profile extends Component {
   };
 
   async getUsuario() {
-    try {
       const data = await services.getPerfilUsuario();
       this.setState({ usuario: data.usuario });
-    } catch (error) {
-      console.error("Error al obtener los datos del usuario:", error);
-    }
   }
 
   componentDidMount() {
@@ -93,7 +89,7 @@ export default class Profile extends Component {
           <div style={{ textAlign: "center" }}>
             {/* Imagen de perfil */}
             <img
-              src={usuario?.imagen || "https://via.placeholder.com/100"}
+              src={usuario?.imagen || "https://th.bing.com/th?id=OIP.awAiMS1BCAQ2xS2lcdXGlwHaHH&w=255&h=245&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"}
               alt="Foto de perfil"
               style={{
                 width: "100px",

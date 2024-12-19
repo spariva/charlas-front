@@ -6,7 +6,8 @@ class Charlas extends Component {
   state = {
     charlas: [],
     rondas: [],
-    charlasRonda: []
+    charlasRonda: [],
+    estadoCharla: []
   }
   getCharlas = () => {
     services.getCharlas().then((response) => {
@@ -25,6 +26,16 @@ class Charlas extends Component {
       });
     });
   }
+
+  getEstadosCharla = () => {
+    services.getEstadoCharla().then((response) => {
+      console.log(response);
+      this.setState({
+        estadoCharla: response
+      })
+    })
+  }
+
   // getCharlasRonda = () => {
   //   services.getCharlasRonda().then((response) => {
   //     console.log(response);
@@ -37,6 +48,7 @@ class Charlas extends Component {
   componentDidMount = () => {
     this.getCharlas();
     this.getRondas();
+    this.getEstadosCharla();
   }
 
   render() {
@@ -60,17 +72,29 @@ class Charlas extends Component {
         </div>
 
         <div className="row d-flex justify-content-end mt-4">
-          <div className="col-12 col-md-3">
+          <div className="col-6 col-md-3">
             <select
-              value={this.state.selectedRonda}
-              onChange={this.handleRondaChange}
               className="form-select"
             >
-              <option value="">Selecciona Ronda</option>
+              <option value="">Ronda</option>
               {this.state.rondas.map((ronda, index) => {
                 return (
                   <option key={index} value={ronda.idRonda}>
                     Ronda {ronda.idRonda}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="col-6 col-md-3">
+            <select
+              className="form-select"
+            >
+              <option value="">Estado</option>
+              {this.state.estadoCharla.map((estado, index) => {
+                return (
+                  <option key={index} value={estado.idEstadoRonda}>
+                    {estado.estado}
                   </option>
                 );
               })}

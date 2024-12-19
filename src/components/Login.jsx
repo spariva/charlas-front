@@ -71,8 +71,8 @@ export default class Login extends Component {
 
     axios.post(this.url + request, user)
       .then(res => {
-        console.log(res.response);
-        localStorage.setItem('token', res.response);
+        console.log("Token "+res.data.response);
+        localStorage.setItem('token', res.data.response);
         this.setState({ status: true });
       }).catch(err => {
         console.log(err);
@@ -90,7 +90,7 @@ export default class Login extends Component {
   render() {
     return (
       <div className="login-parent-container">
-        {this.state.status === true && <Navigate to="/" />}
+        {this.state.status === true && <Navigate to="/profile" />}
 
         <div className={`login-container ${this.state.isRegistroForm ? 'active' : ''}`}>
           <div className={`form-container sign-up ${this.state.isRegistroForm ? '' : 'active'}`}>

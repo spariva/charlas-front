@@ -7,6 +7,7 @@ import Menu from './Menu';
 import Profile from './Profile'
 import Charlas from './Charlas';
 import Header from './Header';
+import CreateRonda from './CreateRonda';
 
 export default class Router extends Component {
     render() {
@@ -36,6 +37,7 @@ export default class Router extends Component {
                                     <Route path="/profile" element={<Profile />} />
                                     <Route path="/charlas" element={<Charlas />} />
                                     <Route path="/charlas/:id" element={<CharlasRonda />} />
+									<Route path="/createronda" element={<CreateRonda />} />
                                 </Routes>
                         </div>
                         {/* CREAR COMPONENT PARA EL SELECT*/}

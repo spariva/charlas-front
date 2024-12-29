@@ -99,8 +99,17 @@ class serviceProfile {
 		})
 	};
 
-	createCharla = () => {
-		
+	createCharla = (charla) => {
+		const request = "/api/charlas";
+		const url = Global.api + request;
+
+		return axios.post(url, charla, {
+			headers: {
+				'Authorization': `Bearer ${this.token}`,
+			}
+		}).then((response) => {
+			console.log(response);
+		})
 	}
 
 	//filtrar charlas por ronda

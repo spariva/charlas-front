@@ -14,7 +14,7 @@ class Home extends Component {
 	};
 
 	getCharlas = () => {
-		services.getCharlas().then((response) => {
+		services.getCharlasRonda().then((response) => {
 			console.log(response);
 			this.setState({
 				charlas: response
@@ -116,3 +116,4 @@ class Home extends Component {
 }
 
 export default Home;
+

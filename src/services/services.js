@@ -28,7 +28,7 @@ class serviceProfile {
 				}
 			}).then(response => {
 				usuario = response.data;
-				console.log(usuario);
+				console.log(usuario.usuario);
 				resolve(usuario);
 			})
 		})

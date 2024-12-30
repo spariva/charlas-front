@@ -30,10 +30,6 @@ class Header extends Component {
             <img src={logo} alt="Logo" style={{width: "200px"}} />
           </div>
           <TooltipHeader></TooltipHeader>
-          {/* <div className="profile">
-            <div className="name_user">👋🏻 Hola, {perfilUsuario.nombre}</div>
-            <div className="user_photo"><img src="https://www.purina.com.bo/sites/default/files/styles/webp/public/2022-10/Que_debes_saber_antes_de_adoptar_un_gatito.jpg.webp?itok=EQBVwxUr" alt="foto de perfil" /></div>
-          </div> */}
         </div>
   
       </div>

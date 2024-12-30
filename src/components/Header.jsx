@@ -3,38 +3,40 @@ import logo from "./../assets/images/logotipo-positivo.jpg";
 import services from '../services/services';
 import '../assets/css/header.css';
 import TooltipHeader from "./TooltipHeader";
+
 class Header extends Component {
-
   state = {
-    perfilUsuario: []
-  }
+    tokenAvailable: false,
+  };
+
   componentDidMount() {
-    this.getUsuario();
+    this.checkToken();
   }
 
-  getUsuario() {
-    services.getPerfilUsuario().then((response) => {
-      console.log("AQUIII" + response.usuario.nombre);
-      this.setState({
-        perfilUsuario: response.usuario
-      })
-    })
+  // Función para verificar si el token está presente
+  checkToken() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      this.setState({ tokenAvailable: true }); 
+    } else {
+      this.setState({ tokenAvailable: false });
+    }
   }
 
   render() {
-    const { perfilUsuario } = this.state;
+    const { tokenAvailable } = this.state;
     return (
-      <div className="container container__header" >
+      <div className="container container__header">
         <div className="header">
-          <div className='logo'>
-            <img src={logo} alt="Logo" style={{width: "200px"}} />
+          <div className="logo">
+            <img src={logo} alt="Logo" style={{ width: "200px" }} />
           </div>
-          <TooltipHeader></TooltipHeader>
+          {/* Mostrar TooltipHeader solo si el token está presente */}
+          {tokenAvailable && <TooltipHeader />}
         </div>
-  
       </div>
     );
   }
-};
+}
 
 export default Header;

@@ -20,7 +20,7 @@ export default class TooltipHeader extends Component {
 
   render() {
     const { perfilUsuario } = this.state;
-    const userImage = perfilUsuario.imagen || 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/800px-User_icon_2.svg.png';
+    const userImage = perfilUsuario.imagen;
 
     return (
       <div className="tooltip-container" style={{ backgroundImage: `url(${userImage})` }}>

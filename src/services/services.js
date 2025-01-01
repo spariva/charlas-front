@@ -82,8 +82,40 @@ class serviceProfile {
 		}).then((response => response.data));
 	}
 
+	//* Auth:
+	async login(user) {
+		let request = "api/auth/login";
+		try {
+			const response = await axios.post(Global.api + request, user);
+			localStorage.setItem('token', response.data.response);
+			console.log("rdr: " + response.data.response);
+			console.log("rd : " + response.data);
+			return response.data.response;
+		} catch (error) {
+			console.log("Error getting login", error);
+		}
+	}
+
 	logOut() {
 		this.token = "";
+		localStorage.removeItem('token');
+		window.location.href = "/";
+	}
+
+	signUp(user) {
+		let request = "api/usuarios/newalumno/" + 3213;
+		//* Esto se sustituira por el curso como parametro en el método.
+		try {
+			const response = axios.post(Global.api + request, user, {
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			localStorage.setItem('token', response.data.response);
+			return response.data.response;
+		} catch (error) {
+			console.log("Error getting signup", error);
+		}
 	}
 
 	//PARA CREAR UNA RONDA TIENES QUE TENER UN TOKEN DE PROFESOR

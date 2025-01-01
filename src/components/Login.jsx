@@ -61,19 +61,15 @@ export default class Login extends Component {
 
   login = (e) => {
     e.preventDefault();
-
-    let request = "api/auth/login";
-
     var user = {
       userName: this.cajaUserLogin.current.value,
       password: this.cajaPasswordLogin.current.value
     }
 
-    axios.post(this.url + request, user)
+    services.login(user)
       .then(res => {
-        console.log("Token " + res.data.response);
-        localStorage.setItem('token', res.data.response);
         this.setState({ status: true });
+        console.log("token component: " + res);
       }).catch(err => {
         console.log(err);
       });

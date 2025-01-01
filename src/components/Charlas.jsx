@@ -9,6 +9,7 @@ class Charlas extends Component {
     charlasRonda: [],
     estadoCharla: []
   }
+
   getCharlas = () => {
     services.getCharlas().then((response) => {
       console.log(response);
@@ -46,6 +47,7 @@ class Charlas extends Component {
   // }
 
   componentDidMount = () => {
+    services.getToken();
     this.getCharlas();
     this.getRondas();
     this.getEstadosCharla();

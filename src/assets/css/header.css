@@ -1,0 +1,157 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile {
+  display: flex;
+  align-items: flex-end; 
+  justify-content: center;
+
+  .user_photo {
+    width: 60px; 
+    height: 60px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 50%; 
+
+    img {
+      width: 100%;
+      height: 100%; 
+      object-fit: cover;
+    }
+  }
+}
+
+.tooltip-container {
+  position: relative;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  width: 50px;
+  height: 50px;
+  background-position: center;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+/* tooltip de PERFIL */
+.tooltip1 {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  fill: #03a9f4;
+  padding: 10px;
+  border-radius: 50px;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s,
+    top 0.3s,
+    background 0.3s;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-container:hover .tooltip1 {
+  top: 150%;
+  opacity: 1;
+  visibility: visible;
+  background: #fff;
+  border-radius: 50px;
+  transform: translate(-50%, -5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip-container:hover .tooltip1:hover {
+  background: #03a9f4;
+  fill: #fff;
+}
+
+/* AÑADIR NUEVA CHARLA */
+.tooltip2 {
+  position: absolute;
+  top: 100%;
+  left: 60%; /* Cambiar para estar al lado de tooltip1 */
+  transform: translateX(80%);
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  padding: 10px;
+  border-radius: 50px;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s,
+    top 0.3s,
+    background 0.3s;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-container:hover .tooltip2 {
+  top: 70%;
+  opacity: 1;
+  visibility: visible;
+  background: #fff;
+  transform: translate(85%, -5px);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip-container:hover .tooltip2:hover {
+  background: #b43c3c;
+  fill: #fff;
+}
+
+.tooltip2:hover path {
+  fill: white
+}
+
+/* CHARLAS? */
+.tooltip4 {
+  position: absolute;
+  top: 100%;
+  left: -170%;
+  transform: translateX(70%);
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  fill: #ea8c4d;
+  padding: 10px;
+  border-radius: 50px;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s,
+    top 0.3s,
+    background 0.3s;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-container:hover .tooltip4 {
+  top: 70%;
+  opacity: 1;
+  visibility: visible;
+  background: #fff;
+  transform: translate(85%, -5px);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tooltip-container:hover .tooltip4:hover {
+  background: #ea8c4d;
+  fill: #fff;
+}
+
+.tooltip4:hover path {
+  fill: white
+}

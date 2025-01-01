@@ -39,6 +39,12 @@ export default class Menu extends Component {
 					<h4>Crear Ronda</h4>
 				</div>
 			</NavLink>
+			<NavLink to="/createcharla">
+			<div className="option">
+					<i className="far fa-sticky-note"></i>
+					<h4>Crear Charla</h4>
+				</div>
+			</NavLink>
 			<NavLink to="/login">
 				<div className="option">
 					<i className="far fa-address-card"></i>

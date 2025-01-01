@@ -46,7 +46,7 @@ class serviceProfile {
 
 	//CHARLAS DE UNA RONDA
 	getCharlasRonda() {
-        const request = "api/charlas/charlasronda/" + "4";
+        const request = "api/charlas/charlasronda/4";
         const url = Global.api + request;
 
         return axios.get(url, {
@@ -110,5 +110,6 @@ class serviceProfile {
     // }
 }
 
+const services = new serviceProfile();
 
-export default new serviceProfile;
+export default services;

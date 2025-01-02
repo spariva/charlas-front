@@ -46,6 +46,8 @@ class serviceProfile {
 		}).then(response => response.data);
 	}
 
+	
+
 	//CHARLAS DE UNA RONDA
 	getCharlasRonda() {
         const request = "api/charlas/charlasronda/4";
@@ -136,16 +138,48 @@ class serviceProfile {
 		})
 	}
 
-	//filtrar charlas por ronda
-	// getCharlasRonda() {
-	//     const request = "api/charlas/charlasronda/" + this.props.id;
-	//     const url = Global.api + request;
-	//     return axios.get(url, {
-	//         headers: {
-	//             'Authorization': 'Bearer ' + 'mNXdhWThMZGFLYy9oZStxYllCVTZaTnVjTm9iYjJFdEZ5ME4rUXJNck9tSjQzNFpsMWxWYUpKUE9VRitkS3JBQlo5dlZYZkxMK1dubTIxcGFOZEV1dUhNMzlzRUM3SW1uIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIkFETUlOSVNUUkFET1IiLCJQUk9GRVNPUiIsIkFMVU1OTyJdLCJuYmYiOjE3MzQ1NTA2ODMsImV4cCI6MTczNDU2NTA4MywiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAzMi8iLCJhdWQiOiJBcGlDaGFybGFzVGVjbmljYXNDb3JlT0F1dGgifQ.qWHLQqnLx62aOSWH0teC_KasXL7rBa7AMRRmI5SVxfk'
-	//         },
-	//     }).then(response => response.data);
-	// }
+	getCharlasCurso = () => {
+		const request = "api/Charlas/CharlasCurso";
+		const url = Global.api + request;
+
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			},
+		}).then(response => response.data);
+	}
+
+	getCharlasAlumno = () => {
+		const request = "/api/Charlas/CharlasAlumno";
+		const url = Global.api + request;
+
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			},
+		}).then(response => response.data);
+	}
+
+	getRondasCurso = () => {
+		const request = "/api/Rondas/RondasCurso";
+		const url = Global.api + request;
+
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			},
+		}).then(response => response.data);
+	}
+
+	getCharlasRonda() {
+	    const request = "/api/Charlas/CharlasRonda/" + this.props.id;
+	    const url = Global.api + request;
+	    return axios.get(url, {
+	        headers: {
+	            'Authorization': 'Bearer ' + 'mNXdhWThMZGFLYy9oZStxYllCVTZaTnVjTm9iYjJFdEZ5ME4rUXJNck9tSjQzNFpsMWxWYUpKUE9VRitkS3JBQlo5dlZYZkxMK1dubTIxcGFOZEV1dUhNMzlzRUM3SW1uIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIkFETUlOSVNUUkFET1IiLCJQUk9GRVNPUiIsIkFMVU1OTyJdLCJuYmYiOjE3MzQ1NTA2ODMsImV4cCI6MTczNDU2NTA4MywiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAzMi8iLCJhdWQiOiJBcGlDaGFybGFzVGVjbmljYXNDb3JlT0F1dGgifQ.qWHLQqnLx62aOSWH0teC_KasXL7rBa7AMRRmI5SVxfk'
+	        },
+	    }).then(response => response.data);
+	}
 }
 
 const services = new serviceProfile();

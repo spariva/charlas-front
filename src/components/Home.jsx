@@ -14,7 +14,7 @@ class Home extends Component {
 	};
 
 	getCharlas = () => {
-		services.getCharlasRonda().then((response) => {
+		services.getCharlasCurso().then((response) => {
 			console.log(response);
 			this.setState({
 				charlas: response
@@ -22,28 +22,28 @@ class Home extends Component {
 		});
 	};
 
-	getRondas = () => {
-		services.getRondas().then((response) => {
-			console.log(response);
-			this.setState({
-				rondas: response
-			});
-		});
-	};
+	// getRondas = () => {
+	// 	services.getRondas().then((response) => {
+	// 		console.log(response);
+	// 		this.setState({
+	// 			rondas: response
+	// 		});
+	// 	});
+	// };
 
-	getEstadosCharla = () => {
-		services.getEstadoCharla().then((response) => {
-			console.log(response);
-			this.setState({
-				estadoCharla: response
-			});
-		});
-	};
+	// getEstadosCharla = () => {
+	// 	services.getEstadoCharla().then((response) => {
+	// 		console.log(response);
+	// 		this.setState({
+	// 			estadoCharla: response
+	// 		});
+	// 	});
+	// };
 
 	componentDidMount = () => {
 		this.getCharlas();
-		this.getRondas();
-		this.getEstadosCharla();
+		// this.getRondas();
+		// this.getEstadosCharla();
 	};
 
 	render() {

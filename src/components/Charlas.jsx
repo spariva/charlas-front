@@ -11,7 +11,7 @@ class Charlas extends Component {
   }
 
   getCharlas = () => {
-    services.getCharlas().then((response) => {
+    services.getCharlasCurso().then((response) => {
       console.log(response);
       this.setState({
         charlas: response
@@ -20,7 +20,7 @@ class Charlas extends Component {
   }
 
   getRondas = () => {
-    services.getRondas().then((response) => {
+    services.getRondasCurso().then((response) => {
       console.log(response);
       this.setState({
         rondas: response
@@ -37,20 +37,20 @@ class Charlas extends Component {
     })
   }
 
-  // getCharlasRonda = () => {
-  //   services.getCharlasRonda().then((response) => {
-  //     console.log(response);
-  //     this.setState({
-  //       charlasRonda: response
-  //     });
-  //   })
-  // }
+  getCharlasRonda = () => {
+    services.getCharlasRonda().then((response) => {
+      console.log(response);
+      this.setState({
+        charlasRonda: response
+      });
+    })
+  }
 
   componentDidMount = () => {
     services.getToken();
     this.getCharlas();
     this.getRondas();
-    this.getEstadosCharla();
+    //this.getEstadosCharla();
   }
 
   render() {

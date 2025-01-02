@@ -24,11 +24,10 @@ export default class Login extends Component {
     status: false
   }
 
+
   signUp = (e) => {
     e.preventDefault();
-    let request = "api/usuarios/newalumno/" + 3213;
-
-    var user = {
+    var userRegister = {
       idUsuario: 0,
       nombre: this.cajaNombreSignup.current.value,
       apellidos: this.cajaApellidosSignup.current.value,
@@ -38,25 +37,31 @@ export default class Login extends Component {
       password: this.cajaPasswordSignup.current.value,
       idRole: 2
     }
-    //*Había pensado que el ponerte imagen sea en tu perfil en vez del registro.
-    // 1 = admin, 2 = user de momento entiendo que aún no sabemos cómo se gestiona lo de ser profe.
+    var user = {
+      userName: this.cajaNombreSignup.current.value,
+      password: this.cajaPasswordSignup.current.value
+    }
 
-    axios.post(this.url + request, user, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    services.signUp(userRegister)
       .then(res => {
-        console.log("token: " + res.data.response);
-        localStorage.setItem('token', res.data.response);
         this.setState({
           isRegistroForm: false,
-          status: true
-        })
+          status: false
+        });
+        alert("Usuario registrado correctamente ahora inicie sesión");
       }).catch(err => {
         console.log(err);
         alert("Error al registrar usuario");
       });;
+
+      // services.login(user)
+      // .then(res => {
+      //   this.setState({ status: true });
+      //   console.log("signup token: " + res);
+      // }).catch(err => {
+      //   console.log(err);
+      //   alert("Error de credenciales al registrar usuario");
+      // });
   }
 
   login = (e) => {
@@ -69,9 +74,9 @@ export default class Login extends Component {
     services.login(user)
       .then(res => {
         this.setState({ status: true });
-        console.log("token component: " + res);
       }).catch(err => {
         console.log(err);
+        alert("Error de credenciales");
       });
   }
 

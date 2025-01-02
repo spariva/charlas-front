@@ -57,7 +57,6 @@ class Charlas extends Component {
 	handleRondaChange = (event) => {
 		const rondaSeleccionada = event.target.value;
 		services.getCharlasRonda(rondaSeleccionada).then((response) => {
-			console.log(response+ "LOLOLOLO");
 			this.setState({
 				charlas: response
 			});

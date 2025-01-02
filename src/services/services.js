@@ -48,8 +48,8 @@ class serviceProfile {
 
 	//CHARLAS DE UNA RONDA
 	getCharlasRonda() {
-		const request = "api/charlas/charlasronda/" + "4";
-		const url = Global.api + request;
+        const request = "api/charlas/charlasronda/4";
+        const url = Global.api + request;
 
 		return axios.get(url, {
 			headers: {
@@ -82,8 +82,32 @@ class serviceProfile {
 		}).then((response => response.data));
 	}
 
-	logOut() {
+	//* Auth:
+	async login(user) {
+		let request = "api/auth/login";
+		try {
+			const response = await axios.post(Global.api + request, user);
+			localStorage.setItem('token', response.data.response);
+			return response.data.response;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	logout() {
 		this.token = "";
+		localStorage.removeItem('token');
+	}
+
+	async signUp(user) {
+		let request = "api/usuarios/newalumno/3213";
+		//* Esto se sustituira por el curso como parametro en el método.
+		try {
+			const response = await axios.post(Global.api + request, user);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	//PARA CREAR UNA RONDA TIENES QUE TENER UN TOKEN DE PROFESOR
@@ -124,5 +148,6 @@ class serviceProfile {
 	// }
 }
 
+const services = new serviceProfile();
 
-export default new serviceProfile;
+export default services;

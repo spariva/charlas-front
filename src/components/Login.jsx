@@ -3,79 +3,80 @@ import '../assets/css/login.css';
 import { Navigate } from 'react-router-dom';
 import Global from '../Global.js';
 import axios from 'axios';
+import services from "../services/services";
 
 export default class Login extends Component {
   url = Global.api;
-  //falta curso y gestionar el rol
 
   cajaUserLogin = React.createRef();
   cajaPasswordLogin = React.createRef();
 
-  cajaUserSignup = React.createRef();
+  cajaNombreSignup = React.createRef();
+  cajaApellidosSignup = React.createRef();
+  cajaIdCursoSignup = React.createRef();
   cajaEmailSignup = React.createRef();
   cajaPasswordSignup = React.createRef();
   cajaRolSignup = React.createRef();
 
+  //isRegistroForm: es si el usuario está en el formulario de registro o no. El status es si el usuario está logueado o no.
   state = {
     isRegistroForm: false,
-    status: false,
-    signUpObj: {
-      name: '',
-      email: '',
-      password: ''
-    },
-    loginObj: {
-      name: '',
-      password: ''
-    }
+    status: false
   }
+
 
   signUp = (e) => {
     e.preventDefault();
-    let request = "api/usuarios/newalumno/";
-
-    var user = {
+    var userRegister = {
       idUsuario: 0,
-      nombre: this.cajaUserSignup.current.value,
-      apellidos: "string prueba",
+      nombre: this.cajaNombreSignup.current.value,
+      apellidos: this.cajaApellidosSignup.current.value,
       email: this.cajaEmailSignup.current.value,
       estadoUsuario: true,
-      imagen: "string imagen",
+      imagen: "stringimagen", 
       password: this.cajaPasswordSignup.current.value,
-      idRole: 2 
+      idRole: 2
     }
-    //* 1 = admin, 2 = user de momento entiendo que aún no sabemos cómo se gestiona lo de ser profe.
+    var user = {
+      userName: this.cajaNombreSignup.current.value,
+      password: this.cajaPasswordSignup.current.value
+    }
 
-    axios.post(this.url + request, user)
+    services.signUp(userRegister)
       .then(res => {
-        console.log(res.data);
-        localStorage.setItem('token', res.response);
         this.setState({
           isRegistroForm: false,
-          status: true
-        }).catch(err => {
-          console.log(err);
+          status: false
         });
-      });
+        alert("Usuario registrado correctamente ahora inicie sesión");
+      }).catch(err => {
+        console.log(err);
+        alert("Error al registrar usuario");
+      });;
+
+      // services.login(user)
+      // .then(res => {
+      //   this.setState({ status: true });
+      //   console.log("signup token: " + res);
+      // }).catch(err => {
+      //   console.log(err);
+      //   alert("Error de credenciales al registrar usuario");
+      // });
   }
 
   login = (e) => {
     e.preventDefault();
-
-    let request = "api/auth/login";
-
     var user = {
       userName: this.cajaUserLogin.current.value,
       password: this.cajaPasswordLogin.current.value
     }
 
-    axios.post(this.url + request, user)
+    services.login(user)
       .then(res => {
-        console.log("Token "+res.data.response);
-        localStorage.setItem('token', res.data.response);
         this.setState({ status: true });
       }).catch(err => {
         console.log(err);
+        alert("Error de credenciales");
       });
   }
 
@@ -83,7 +84,6 @@ export default class Login extends Component {
     this.setState({
       isRegistroForm: !this.state.isRegistroForm
     });
-    console.log(this.state.isRegistroForm);
   }
 
 
@@ -96,10 +96,12 @@ export default class Login extends Component {
           <div className={`form-container sign-up ${this.state.isRegistroForm ? '' : 'active'}`}>
             <form onSubmit={this.signUp}>
               <h1>Crear Cuenta</h1>
-              <span>Introduzca nombre, mail y tipo de entidad</span>
-              <input type="text" name="name" placeholder="Nombre" ref={this.cajaUserSignup} />
+              <span>Introduzca nombre, apellidos, mail, curso</span>
+              <input type="text" name="name" placeholder="Nombre" ref={this.cajaNombreSignup} />
+              <input type="text" name="apellidos" placeholder="Apellidos" ref={this.cajaApellidosSignup} />
               <input type="email" name="email" placeholder="Email" ref={this.cajaEmailSignup} />
               <input type="password" name="password" placeholder="Contraseña" ref={this.cajaPasswordSignup} />
+              <input type="number" name="idCurso" placeholder="Curso" ref={this.cajaIdCursoSignup} />
               <button>Crear cuenta</button>
             </form>
           </div>
@@ -107,9 +109,9 @@ export default class Login extends Component {
           <div className={`form-container sign-in ${this.state.isRegistroForm ? 'active' : ''}`}>
             <form onSubmit={this.login}>
               <h1>Iniciar Sesión</h1>
-              <span>Introduzca apellido y contraseña</span>
-              <input type="text" name="email" placeholder="Email" ref={this.cajaUserLogin}/>
-              <input type="password" name="password" placeholder="Contraseña" ref={this.cajaPasswordLogin}/>
+              <span>Introduzca email y contraseña</span>
+              <input type="text" name="email" placeholder="Email" ref={this.cajaUserLogin} />
+              <input type="password" name="password" placeholder="Contraseña" ref={this.cajaPasswordLogin} />
               {/* <a href="#">→ ¿Olvidaste la contraseña? ←</a> */}
               <button >Acceder</button>
             </form>

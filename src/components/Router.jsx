@@ -9,6 +9,7 @@ import Charlas from './Charlas';
 import Header from './Header';
 import CreateRonda from './CreateRonda';
 import CreateCharla from './CreateCharla';
+import NotFound from './NotFound';
 
 export default class Router extends Component {
     render() {
@@ -40,6 +41,7 @@ export default class Router extends Component {
                                     <Route path="/charlas/:id" element={<CharlasRonda />} />
 									<Route path="/createronda" element={<CreateRonda />} />
 									<Route path="/createcharla" element={<CreateCharla />} />
+                                    <Route path="*" element={<NotFound />} />
                                 </Routes>
                         </div>
                         {/* CREAR COMPONENT PARA EL SELECT*/}

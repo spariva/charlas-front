@@ -8,7 +8,6 @@ class serviceProfile {
 	constructor() {
 		this.token = null;
 	}
-	//SE NECESITA TOKEN
 
 	getToken() {
 		this.token = localStorage.getItem('token');
@@ -23,7 +22,6 @@ class serviceProfile {
 
 			axios.get(url, {
 				headers: {
-					// TODAVIA NO ESTA IMPLEMENTADA LA FUNCION getToken
 					'Authorization': 'Bearer ' + this.token
 				}
 			}).then(response => {
@@ -38,12 +36,17 @@ class serviceProfile {
 	getCharlas() {
 		const request = "api/charlas";
 		const url = Global.api + request;
+		this.getToken();
 
 		return axios.get(url, {
 			headers: {
 				'Authorization': 'Bearer ' + this.token
 			},
-		}).then(response => response.data);
+		}).then(response => {
+			console.log(response.data);
+			return response.data
+		}
+		);
 	}
 
 	//CHARLAS DE UNA RONDA

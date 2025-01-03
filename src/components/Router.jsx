@@ -10,6 +10,7 @@ import Header from './Header';
 import CreateRonda from './CreateRonda';
 import CreateCharla from './CreateCharla';
 import NotFound from './NotFound';
+import UpdateProfile from './UpdateProfile';
 
 export default class Router extends Component {
     render() {
@@ -37,6 +38,7 @@ export default class Router extends Component {
                                     <Route path="/" element={<Home />} />
                                     <Route path="/login" element={<Login />} />
                                     <Route path="/profile" element={<Profile />} />
+                                    <Route path="/updateprofile" element={<UpdateProfile />} />
                                     <Route path="/charlas" element={<Charlas />} />
                                     <Route path="/charlas/:id" element={<CharlasRonda />} />
 									<Route path="/createronda" element={<CreateRonda />} />

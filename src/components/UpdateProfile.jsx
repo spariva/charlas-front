@@ -1,17 +1,15 @@
-import React, { Component } from "react";
-import logo from "./../assets/images/logotipo-positivo.jpg";
-import services from "../services/services";
-import { Navigate } from 'react-router-dom';
+import React, { Component } from 'react'
+import logo from './../assets/images/logotipo-positivo.jpg'
+import services from '../services/services'
 
-
-export default class Profile extends Component {
+export default class UpdateProfile extends Component {
   state = {
     usuario: null,
   };
 
   async getUsuario() {
-      const data = await services.getPerfilUsuario();
-      this.setState({ usuario: data.usuario });
+    const data = await services.getPerfilUsuario();
+    this.setState({ usuario: data.usuario });
   }
 
   componentDidMount() {
@@ -104,7 +102,6 @@ export default class Profile extends Component {
             <h2 className="fw-bold">{usuario?.nombre || "Cargando..."}</h2>
             {/* Email del usuario */}
             <p className="text-muted">{usuario?.email || "Cargando..."}</p>
-            <button className="btn btn-outline-dark">Editar perfil</button>
             <div
               className="divider"
               style={{

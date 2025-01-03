@@ -16,6 +16,10 @@ export default class UpdateProfile extends Component {
     this.getUsuario();
   }
 
+  guardarCambios = () => {
+    this.props.navigate('/profile');
+  };
+
   render() {
     const { usuario } = this.state;
 
@@ -119,6 +123,7 @@ export default class UpdateProfile extends Component {
                 <strong>Curso:</strong> {usuario?.curso || "Cargando..."}
               </p>
             </div>
+            <button className="btn btn-outline-dark" onClick={this.guardarCambios}>Guardar</button>
           </div>
         </div>
       </div>

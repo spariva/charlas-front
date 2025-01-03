@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import logo from "./../assets/images/logotipo-positivo.jpg";
 import services from "../services/services";
-import { Navigate } from 'react-router-dom';
-
 
 export default class Profile extends Component {
   state = {
@@ -17,6 +15,10 @@ export default class Profile extends Component {
   componentDidMount() {
     this.getUsuario();
   }
+
+  navigateUpdateProfile = () => {
+    this.props.navigate('/updateprofile');
+  };
 
   render() {
     const { usuario } = this.state;
@@ -104,7 +106,7 @@ export default class Profile extends Component {
             <h2 className="fw-bold">{usuario?.nombre || "Cargando..."}</h2>
             {/* Email del usuario */}
             <p className="text-muted">{usuario?.email || "Cargando..."}</p>
-            <button className="btn btn-outline-dark">Editar perfil</button>
+            <button className="btn btn-outline-dark" onClick={this.navigateUpdateProfile}>Editar perfil</button>
             <div
               className="divider"
               style={{

@@ -13,6 +13,7 @@ class serviceProfile {
 		this.token = localStorage.getItem('token');
 	}
 
+	//* Usuario:
 	getPerfilUsuario() {
 		return new Promise((resolve) => {
 			let usuario = null;
@@ -32,6 +33,17 @@ class serviceProfile {
 		})
 	}
 
+	async updatePerfilUsuario(user) {
+		let request = "api/usuarios";
+		try {
+			const response = await axios.put(Global.api + request, user);
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	//*Charlas
 	//todas las charlas
 	getCharlas() {
 		const request = "api/charlas";
@@ -104,7 +116,7 @@ class serviceProfile {
 
 	async signUp(user) {
 		let request = "api/usuarios/newalumno/3213";
-		//* Esto se sustituira por el curso como parametro en el método.
+		//* TODO: Esto se sustituira por el curso como parametro en el método.
 		try {
 			const response = await axios.post(Global.api + request, user);
 			return response.data;

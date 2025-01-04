@@ -20,6 +20,7 @@ class serviceProfile {
 			let request = "api/Usuarios/Perfil";
 			let url = Global.api + request;
 			this.getToken();
+			console.log(this.token);
 
 			axios.get(url, {
 				headers: {
@@ -35,10 +36,14 @@ class serviceProfile {
 
 	async updatePerfilUsuario(user) {
 		let request = "api/usuarios";
+		let headers= {
+			'Authorization': 'Bearer ' + this.token
+		}
 		try {
-			const response = await axios.put(Global.api + request, user);
+			const response = await axios.put(Global.api + request, headers, user);
 			return response;
 		} catch (error) {
+			console.log("error en el service update user: " + error);
 			throw error;
 		}
 	}

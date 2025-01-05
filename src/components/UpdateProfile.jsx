@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
-import logo from './../assets/images/logotipo-positivo.jpg'
 import services from '../services/services'
 
 export default class UpdateProfile extends Component {
+  cajaNombre = React.createRef();
+  cajaApellidos = React.createRef();
+  cajaEmail = React.createRef();
+  cajaPassword = React.createRef();
+  cajaImagen = React.createRef();
+
+
   state = {
     usuario: null,
   };
@@ -16,7 +22,28 @@ export default class UpdateProfile extends Component {
     this.getUsuario();
   }
 
-  guardarCambios = () => {
+  guardarCambios = (e) => {
+    e.preventDefault();
+    console.log(this.state.usuario.password + " 7 " + this.cajaPassword.current.value);
+
+    var userUpdated = {
+      idUsuario: this.state.usuario.idUsuario,
+      nombre: this.cajaNombre.current.value,
+      apellidos: this.cajaApellidos.current.value,
+      email: this.cajaEmail.current.value,
+      estadoUsuario: this.state.usuario.estadoUsuario,
+      imagen: this.cajaImagen.current.value,
+      password: this.cajaPassword.current.value,
+      idRole: this.state.usuario.idRole
+    }
+
+    services.updatePerfilUsuario(userUpdated).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+      alert("Error al actualizar usuario");
+    });
+
     this.props.navigate('/profile');
   };
 
@@ -25,15 +52,6 @@ export default class UpdateProfile extends Component {
 
     return (
       <div>
-        {/* Logo centrado */}
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <img
-            src={logo}
-            alt="Logo de la página"
-            style={{ maxWidth: "150px" }}
-          />
-        </div>
-
         {/* Contenedor principal */}
         <div
           className="container-fluid"
@@ -47,83 +65,38 @@ export default class UpdateProfile extends Component {
             position: "relative",
           }}
         >
-          {/* Tarjetas de estadísticas */}
-          <div
-            style={{
-              position: "absolute",
-              top: "20px",
-              right: "20px",
-              display: "flex",
-              gap: "15px",
-            }}
-          >
-            <div
-              className="info-box"
-              style={{
-                textAlign: "center",
-                padding: "10px",
-                border: "1px solid #ddd",
-                borderRadius: "5px",
-                width: "100px",
-              }}
-            >
-              <h3 style={{ margin: "0", fontSize: "24px" }}>3</h3>
-              <p style={{ margin: "0", fontSize: "14px", color: "gray" }}>
-                Propuestas
-              </p>
-            </div>
-            <div
-              className="info-box"
-              style={{
-                textAlign: "center",
-                padding: "10px",
-                border: "1px solid #ddd",
-                borderRadius: "5px",
-                width: "100px",
-              }}
-            >
-              <h3 style={{ margin: "0", fontSize: "24px" }}>1</h3>
-              <p style={{ margin: "0", fontSize: "14px", color: "gray" }}>
-                Aceptadas
-              </p>
-            </div>
-          </div>
-
           {/* Perfil */}
-          <div style={{ textAlign: "center" }}>
-            {/* Imagen de perfil */}
-            <img
-              src={usuario?.imagen || "https://th.bing.com/th?id=OIP.awAiMS1BCAQ2xS2lcdXGlwHaHH&w=255&h=245&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"}
-              alt="Foto de perfil"
-              style={{
-                width: "100px",
-                height: "100px",
-                borderRadius: "50%",
-                marginBottom: "10px",
-              }}
-            />
-            {/* Nombre del usuario */}
-            <h2 className="fw-bold">{usuario?.nombre || "Cargando..."}</h2>
-            {/* Email del usuario */}
-            <p className="text-muted">{usuario?.email || "Cargando..."}</p>
-            <div
-              className="divider"
-              style={{
-                borderTop: "2px solid black",
-                width: "50%",
-                margin: "10px auto",
-              }}
-            ></div>
-            <div className="mt-4">
-              {/* Rol y curso */}
-              <p>
-                <strong>Rol:</strong> {usuario?.role || "Cargando..."}
-              </p>
-              <p>
-                <strong>Curso:</strong> {usuario?.curso || "Cargando..."}
-              </p>
+          <div>
+            <form className="row g-3" onSubmit={this.guardarCambios}>
+              <div className="col-md-6">
+                <label htmlFor="inputName" className="form-label">Nombre</label>
+                <input type="text" className="form-control" id="inputName"
+                  defaultValue={usuario?.nombre} ref={this.cajaNombre} />
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="inputApellido" className="form-label">Apellidos</label>
+                <input type="text" className="form-control" id="inputApellido"
+                  defaultValue={usuario?.apellidos} ref={this.cajaApellidos} />
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="inputEmail" className="form-label">Email</label>
+                <input type="email" className="form-control" id="inputEmail"
+                  defaultValue={usuario?.email} ref={this.cajaEmail} />
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="inputPassword" className="form-label">Password</label>
+                <input type="text" className="form-control" id="inputPassword"
+                  defaultValue={usuario?.password} ref={this.cajaPassword} />
+              </div>
+              <div className="col-md-12">
+                <label htmlFor="inputImagen" className="form-label">Imagen de perfil</label>
+                <input type="text" className="form-control" id="inputImagen"
+                  defaultValue={usuario?.imagen} ref={this.cajaImagen} />
+              </div>
+            </form>
+            <div className='text-center'>
+              <button className="btn btn-outline-dark mt-3" onClick={this.guardarCambios}>Guardar</button>
             </div>
-            <button className="btn btn-outline-dark" onClick={this.guardarCambios}>Guardar</button>
           </div>
         </div>
       </div>

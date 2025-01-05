@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import '../assets/css/login.css';
 import { Navigate } from 'react-router-dom';
-import Global from '../Global.js';
-import axios from 'axios';
 import services from "../services/services";
 
 export default class Login extends Component {
-  url = Global.api;
 
   cajaUserLogin = React.createRef();
   cajaPasswordLogin = React.createRef();
@@ -37,10 +34,10 @@ export default class Login extends Component {
       password: this.cajaPasswordSignup.current.value,
       idRole: 2
     }
-    var user = {
-      userName: this.cajaNombreSignup.current.value,
-      password: this.cajaPasswordSignup.current.value
-    }
+    // var user = {
+    //   userName: this.cajaNombreSignup.current.value,
+    //   password: this.cajaPasswordSignup.current.value
+    // }
 
     services.signUp(userRegister)
       .then(res => {

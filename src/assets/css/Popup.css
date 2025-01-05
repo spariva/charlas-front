@@ -1,0 +1,36 @@
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed; /* Asegura que el popup esté fijo en la pantalla */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
+  z-index: 1050; /* Asegura que el popup esté por encima de otros elementos */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Popup Content */
+.popup-content {
+  background: #fff; /* Fondo blanco para el contenido */
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 600px;
+  width: 90%; /* Se ajusta al tamaño de la pantalla */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative; /* Necesario para el botón de cierre */
+}
+
+/* Close Button */
+.btn-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}

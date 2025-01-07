@@ -5,7 +5,7 @@ export default class UpdateProfile extends Component {
   cajaNombre = React.createRef();
   cajaApellidos = React.createRef();
   cajaEmail = React.createRef();
-  cajaPassword = React.createRef();
+  cajaPassword = React.createRef(); //getUsuario no devuelve password, por lo que pierdo la contraseña anterior al actulizar.
   cajaImagen = React.createRef();
 
 
@@ -24,7 +24,6 @@ export default class UpdateProfile extends Component {
 
   guardarCambios = (e) => {
     e.preventDefault();
-    console.log(this.state.usuario.password + " 7 " + this.cajaPassword.current.value);
 
     var userUpdated = {
       idUsuario: this.state.usuario.idUsuario,
@@ -44,7 +43,7 @@ export default class UpdateProfile extends Component {
       alert("Error al actualizar usuario");
     });
 
-    this.props.navigate('/profile');
+    this.props.navigate('/profile', { state: { usuario: userUpdated, updated: true } });
   };
 
   render() {

@@ -1,13 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Profile from './Profile';
-
-//* Para poder usar un navigate del profile al update profile sin que tenga que volver a renderizar el componente. 
 
 const ProfileWrapper = (props) => {
     const navigate = useNavigate();
+    const location = useLocation();
 
-    return <Profile {...props} navigate={navigate} />;
+    return <Profile {...props} navigate={navigate} location={location} />;
 };
 
 export default ProfileWrapper;

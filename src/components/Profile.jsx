@@ -5,15 +5,26 @@ import services from "../services/services";
 export default class Profile extends Component {
   state = {
     usuario: null,
+    updated: false
   };
 
   async getUsuario() {
       const data = await services.getPerfilUsuario();
       this.setState({ usuario: data.usuario });
+      console.log(data.usuario);
   }
 
   componentDidMount() {
     this.getUsuario();
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log("updated");
+    if (this.props.location.state?.updated && this.props.location.state.updated !== prevProps.location.state?.updated) {
+      this.getUsuario();
+      console.log("user state update: " + this.state.usuario);
+      this.props.navigate('/profile', { state: { updated: false } });
+    }
   }
 
   navigateUpdateProfile = () => {

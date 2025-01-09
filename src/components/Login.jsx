@@ -34,10 +34,6 @@ export default class Login extends Component {
       password: this.cajaPasswordSignup.current.value,
       idRole: 2
     }
-    // var user = {
-    //   userName: this.cajaNombreSignup.current.value,
-    //   password: this.cajaPasswordSignup.current.value
-    // }
 
     services.signUp(userRegister)
       .then(res => {
@@ -83,11 +79,20 @@ export default class Login extends Component {
     });
   }
 
-
   render() {
+    const { location } = this.props;
+    const mensaje = location.state?.mensaje;
+
     return (
       <div className="login-parent-container">
-        {this.state.status === true && <Navigate to="/profile" />}
+
+        {this.state.status && <Navigate to="/profile" />}
+
+        {mensaje && (
+            <div className="alert alert-danger" role="alert">
+              {mensaje}
+            </div>
+          )}
 
         <div className={`login-container ${this.state.isRegistroForm ? 'active' : ''}`}>
           <div className={`form-container sign-up ${this.state.isRegistroForm ? '' : 'active'}`}>
@@ -105,7 +110,7 @@ export default class Login extends Component {
 
           <div className={`form-container sign-in ${this.state.isRegistroForm ? 'active' : ''}`}>
             <form onSubmit={this.login}>
-              <h1>Iniciar Sesión</h1>
+              <h1>Iniciar Sesión {this.props.mensaje}</h1>
               <span>Introduzca email y contraseña</span>
               <input type="text" name="email" placeholder="Email" ref={this.cajaUserLogin} />
               <input type="password" name="password" placeholder="Contraseña" ref={this.cajaPasswordLogin} />

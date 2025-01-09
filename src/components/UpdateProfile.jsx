@@ -20,19 +20,16 @@ export default class UpdateProfile extends Component {
 
   componentDidMount() {
     const { usuario } = this.props.location.state || {};
+
     if (usuario) {
-      console.log("mounting UpdateProfile");
       this.setState({ usuario });
     } else {
-      console.log("mounting else updateprofile");
       this.getUsuario();
     }
   }
 
   // componentDidUpdate(prevProps) {
-  //   console.log("updated UpdateProfile");
   //   if (this.props !== prevProps) {
-  //     console.log("updated entra en el if de UpdateProfile");
   //     this.setState({ usuario: this.props.location.state.usuario });
   //   }
   // }
@@ -49,7 +46,9 @@ export default class UpdateProfile extends Component {
       imagen: this.cajaImagen.current.value,
       password: this.cajaPassword.current.value,
       idRole: this.state.usuario.idRole
-    }
+    };
+
+    const userCombined = { ...this.state.usuario, ...userUpdated };
 
     services.updatePerfilUsuario(userUpdated).then(res => {
       console.log(res);
@@ -58,7 +57,7 @@ export default class UpdateProfile extends Component {
       alert("Error al actualizar usuario");
     });
 
-    this.props.navigate('/profile', { state: { usuario: userUpdated, updated: true } });
+    this.props.navigate('/profile', { state: { usuario: userCombined, updated: true } });
   };
 
   render() {

@@ -1,40 +1,44 @@
 import React, { Component } from "react";
 import logo from "./../assets/images/logotipo-positivo.jpg";
 import services from "../services/services";
+import { Navigate } from "react-router-dom";
 
 export default class Profile extends Component {
   state = {
     usuario: null,
-    updated: false
+    updated: false,
+    token: true
   };
 
   async getUsuario() {
       const data = await services.getPerfilUsuario();
       this.setState({ usuario: data.usuario });
-      console.log(data.usuario);
   }
 
   componentDidMount() {
+    //Si no hay token te redirige al login con un mensaje
+    if (!localStorage.getItem("token")) {
+      this.setState({ token: false });
+      return;
+    }
+
     const { usuario, updated } = this.props.location.state || {};
     if (usuario) {
       this.setState({ usuario, updated });
     } else {
-      console.log("mounting else");
       this.getUsuario();
     }
   }
 
   // componentDidUpdate(prevProps) {
   //   console.log("updated");
-  //   //No entra nunca pero se updatea?
   //   if (this.props.location.state?.updated && this.props.location.state.updated !== prevProps.location.state?.updated) {
-  //     console.log("updated entra en el ifff");
-  //     console.log(this.state.usuario);
   //     this.setState({ usuario: this.props.location.state.usuario, updated: false });
   //   }
   // }
 
   navigateUpdateProfile = () => {
+    console.log(this.state.usuario);
     this.props.navigate('/updateprofile', {state: { usuario: this.state.usuario }});
   };
 
@@ -43,6 +47,7 @@ export default class Profile extends Component {
 
     return (
       <div>
+        {!this.state.token && <Navigate to="/login" state={{mensaje: "Debes iniciar sesión para acceder a tu perfil"}}/>}
         {/* Logo centrado */}
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <img

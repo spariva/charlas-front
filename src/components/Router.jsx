@@ -12,6 +12,7 @@ import CreateRonda from './CreateRonda';
 import CreateCharla from './CreateCharla';
 import NotFound from './NotFound';
 import UpdateProfileWrapper from './UpdateProfileWrapper';
+import LoginWrapper from './LoginWrapper';
 
 export default class Router extends Component {
     render() {
@@ -37,7 +38,7 @@ export default class Router extends Component {
                         <div className="col-8">
                                 <Routes>
                                     <Route path="/" element={<Home />} />
-                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/login" element={<LoginWrapper />} />
                                     <Route path="/profile" element={<ProfileWrapper />} />
                                     <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
                                     <Route path="/charlas" element={<Charlas />} />

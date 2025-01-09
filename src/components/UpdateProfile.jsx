@@ -44,6 +44,8 @@ export default class UpdateProfile extends Component {
     });
 
     this.props.navigate('/profile', { state: { usuario: userUpdated, updated: true } });
+
+    
   };
 
   render() {

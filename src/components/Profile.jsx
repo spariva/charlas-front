@@ -15,15 +15,20 @@ export default class Profile extends Component {
   }
 
   componentDidMount() {
-    this.getUsuario();
+    const { usuario, updated } = this.props.location.state || {};
+    if (usuario) {
+      console.log("mounting");
+      this.setState({ usuario, updated });
+    } else {
+      console.log("mounting else");
+      this.getUsuario();
+    }
   }
 
   componentDidUpdate(prevProps) {
     console.log("updated");
     if (this.props.location.state?.updated && this.props.location.state.updated !== prevProps.location.state?.updated) {
-      this.getUsuario();
-      console.log("user state update: " + this.state.usuario);
-      this.props.navigate('/profile', { state: { updated: false } });
+      this.setState({ usuario: this.props.location.state.usuario, updated: false });
     }
   }
 

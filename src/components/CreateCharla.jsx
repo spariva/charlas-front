@@ -21,7 +21,7 @@ export default class CreateCharla extends Component {
 	}
 
 	getRondas = () => {
-		services.getRondas().then((response) => {
+		services.getRondasCurso().then((response) => {
 			console.log(response);
 			this.setState({
 				rondas: response

@@ -24,15 +24,15 @@ export default class Profile extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    console.log("updated");
-    //No entra nunca pero se updatea?
-    if (this.props.location.state?.updated && this.props.location.state.updated !== prevProps.location.state?.updated) {
-      console.log("updated entra en el ifff");
-      console.log(this.state.usuario);
-      this.setState({ usuario: this.props.location.state.usuario, updated: false });
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   console.log("updated");
+  //   //No entra nunca pero se updatea?
+  //   if (this.props.location.state?.updated && this.props.location.state.updated !== prevProps.location.state?.updated) {
+  //     console.log("updated entra en el ifff");
+  //     console.log(this.state.usuario);
+  //     this.setState({ usuario: this.props.location.state.usuario, updated: false });
+  //   }
+  // }
 
   navigateUpdateProfile = () => {
     this.props.navigate('/updateprofile', {state: { usuario: this.state.usuario }});

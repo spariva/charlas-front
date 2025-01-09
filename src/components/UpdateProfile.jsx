@@ -29,13 +29,13 @@ export default class UpdateProfile extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    console.log("updated UpdateProfile");
-    if (this.props !== prevProps) {
-      console.log("updated entra en el if de UpdateProfile");
-      this.setState({ usuario: this.props.location.state.usuario });
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   console.log("updated UpdateProfile");
+  //   if (this.props !== prevProps) {
+  //     console.log("updated entra en el if de UpdateProfile");
+  //     this.setState({ usuario: this.props.location.state.usuario });
+  //   }
+  // }
 
   guardarCambios = (e) => {
     e.preventDefault();

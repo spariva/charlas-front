@@ -17,7 +17,6 @@ export default class Profile extends Component {
   componentDidMount() {
     const { usuario, updated } = this.props.location.state || {};
     if (usuario) {
-      console.log("mounting");
       this.setState({ usuario, updated });
     } else {
       console.log("mounting else");
@@ -27,13 +26,16 @@ export default class Profile extends Component {
 
   componentDidUpdate(prevProps) {
     console.log("updated");
+    //No entra nunca pero se updatea?
     if (this.props.location.state?.updated && this.props.location.state.updated !== prevProps.location.state?.updated) {
+      console.log("updated entra en el ifff");
+      console.log(this.state.usuario);
       this.setState({ usuario: this.props.location.state.usuario, updated: false });
     }
   }
 
   navigateUpdateProfile = () => {
-    this.props.navigate('/updateprofile');
+    this.props.navigate('/updateprofile', {state: { usuario: this.state.usuario }});
   };
 
   render() {

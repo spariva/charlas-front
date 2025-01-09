@@ -19,7 +19,22 @@ export default class UpdateProfile extends Component {
   }
 
   componentDidMount() {
-    this.getUsuario();
+    const { usuario } = this.props.location.state || {};
+    if (usuario) {
+      console.log("mounting UpdateProfile");
+      this.setState({ usuario });
+    } else {
+      console.log("mounting else updateprofile");
+      this.getUsuario();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log("updated UpdateProfile");
+    if (this.props !== prevProps) {
+      console.log("updated entra en el if de UpdateProfile");
+      this.setState({ usuario: this.props.location.state.usuario });
+    }
   }
 
   guardarCambios = (e) => {
@@ -44,8 +59,6 @@ export default class UpdateProfile extends Component {
     });
 
     this.props.navigate('/profile', { state: { usuario: userUpdated, updated: true } });
-
-    
   };
 
   render() {

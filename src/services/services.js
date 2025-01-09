@@ -35,19 +35,20 @@ class serviceProfile {
 	async updatePerfilUsuario(user) {
 		let request = "api/usuarios";
 		this.getToken();
-		let headers= {
+		let headers = {
 			'Authorization': 'Bearer ' + this.token,
-      		'Content-Type': 'application/json'
+			'Content-Type': 'application/json'
 		}
 
 		try {
-			const response = await axios.put(Global.api + request, user, {headers});
+			const response = await axios.put(Global.api + request, user, { headers });
 			return response;
 		} catch (error) {
 			console.log("error en el service update user: " + error);
 			throw error;
 		}
 	}
+
 
 	//*Charlas
 	//todas las charlas
@@ -69,14 +70,68 @@ class serviceProfile {
 
 	//CHARLAS DE UNA RONDA
 	getCharlasRonda() {
-        const request = "api/charlas/charlasronda/4";
-        const url = Global.api + request;
+		const request = "api/charlas/charlasronda/4";
+		const url = Global.api + request;
 
 		return axios.get(url, {
 			headers: {
 				'Authorization': 'Bearer ' + this.token
 			},
 		}).then(response => response.data);
+	}
+
+	async getCharlasUsuario() {
+		let request = "api/charlas/charlasalumno";
+		let url = Global.api + request;
+		this.getToken();
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.get(url, { headers });
+			return response.data;
+		} catch (error) {
+			console.log("error en el service get charlasusuario: " + error);
+			throw error;
+		}
+	}
+
+	async updateCharla(charla){
+		let request = "api/charlas/";
+		let url = Global.api + request;
+		this.getToken();
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.put(url, charla, { headers });
+			return response.data;
+		} catch (error){
+			console.log("error en el service update charla: " + error);
+			throw error;
+		}
+	}
+
+	async deleteCharla(id) {
+		let request = "api/charlas/" + id;
+		let url = Global.api + request;
+		this.getToken();
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.delete(url, { headers });
+			return response.data;
+		} catch (error){
+			console.log("error en el service delete charla: " + error);	
+			throw error;
+		}
 	}
 
 	//get rondas

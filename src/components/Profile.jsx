@@ -2,17 +2,30 @@ import React, { Component } from "react";
 import logo from "./../assets/images/logotipo-positivo.jpg";
 import services from "../services/services";
 import { Navigate } from "react-router-dom";
+import Card from "./CardCharla";
+
 
 export default class Profile extends Component {
   state = {
     usuario: null,
     updated: false,
-    token: true
+    token: true,
+    charlas: []
   };
 
   async getUsuario() {
-      const data = await services.getPerfilUsuario();
-      this.setState({ usuario: data.usuario });
+    const data = await services.getPerfilUsuario();
+    this.setState({ usuario: data.usuario });
+  }
+
+  getCharlasUser = () => {
+    services.getCharlasUsuario().then((res) => {
+      console.log(res);
+      this.setState({ charlas: res });
+    }).catch((err) => {
+      console.log(err);
+    });
+
   }
 
   componentDidMount() {
@@ -28,6 +41,8 @@ export default class Profile extends Component {
     } else {
       this.getUsuario();
     }
+
+    this.getCharlasUser();
   }
 
   // componentDidUpdate(prevProps) {
@@ -39,7 +54,7 @@ export default class Profile extends Component {
 
   navigateUpdateProfile = () => {
     console.log(this.state.usuario);
-    this.props.navigate('/updateprofile', {state: { usuario: this.state.usuario }});
+    this.props.navigate('/updateprofile', { state: { usuario: this.state.usuario } });
   };
 
   render() {
@@ -47,7 +62,7 @@ export default class Profile extends Component {
 
     return (
       <div>
-        {!this.state.token && <Navigate to="/login" state={{mensaje: "Debes iniciar sesión para acceder a tu perfil"}}/>}
+        {!this.state.token && <Navigate to="/login" state={{ mensaje: "Debes iniciar sesión para acceder a tu perfil" }} />}
         {/* Logo centrado */}
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <img
@@ -147,9 +162,28 @@ export default class Profile extends Component {
                 <strong>Curso:</strong> {usuario?.curso || "Cargando..."}
               </p>
             </div>
+            <div>
+              {/* Fila de charlas */}
+              {this.state.charlas.length > 0 ? (
+                <div>
+                  <h2 className="my-4 text-center">Charlas</h2>
+                  <div className="row d-flex flex-wrap justify-content-start">
+                    {this.state.charlas.map((charla, index) => (
+                      <div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
+                        <Card
+                          imagen={charla.charla.imagenCharla}
+                          titulo={charla.charla.titulo}
+                          descripcion={charla.charla.descripcion}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
     );
   }
 }

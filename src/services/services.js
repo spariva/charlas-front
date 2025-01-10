@@ -213,7 +213,7 @@ class serviceProfile {
 	}
 
 	getCharlasCurso = () => {
-		const request = "api/Charlas/CharlasCurso";
+		const request = "api/charlas/charlascurso";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -224,7 +224,7 @@ class serviceProfile {
 	}
 
 	getCharlasAlumno = () => {
-		const request = "/api/Charlas/CharlasAlumno";
+		const request = "/api/charlas/charlasalumno";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -247,7 +247,7 @@ class serviceProfile {
 
 	getCharlasRonda(ronda) {
 		console.log(ronda+ "LLLLLLLLL")
-	    const request = "/api/Charlas/CharlasRonda/" + ronda;
+	    const request = "/api/charlas/charlasRonda/" + ronda;
 	    const url = Global.api + request;
 	    return axios.get(url, {
 	        headers: {

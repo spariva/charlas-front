@@ -10,7 +10,11 @@ export default class Profile extends Component {
     usuario: null,
     updated: false,
     token: true,
-    charlas: []
+    charlas: [],
+    rondas: [],
+    charlasRonda: [],
+    estadoCharla: [],
+    rondaSeleccionada: ""
   };
 
   async getUsuario() {
@@ -25,8 +29,30 @@ export default class Profile extends Component {
     }).catch((err) => {
       console.log(err);
     });
-
   }
+
+  getRondas = () => {
+    services.getRondasCurso().then((response) => {
+      console.log(response);
+      this.setState({
+        rondas: response
+      });
+    });
+  }
+
+  handleRondaChange = (event) => {
+    const rondaSeleccionada = event.target.value;
+    services.getCharlasRonda(rondaSeleccionada).then((response) => {
+      this.setState({
+        charlas: response
+      });
+    })
+  }
+
+  navigateUpdateProfile = () => {
+    console.log(this.state.usuario);
+    this.props.navigate('/updateprofile', { state: { usuario: this.state.usuario } });
+  };
 
   componentDidMount() {
     //Si no hay token te redirige al login con un mensaje
@@ -43,19 +69,8 @@ export default class Profile extends Component {
     }
 
     this.getCharlasUser();
+    this.getRondas();
   }
-
-  // componentDidUpdate(prevProps) {
-  //   console.log("updated");
-  //   if (this.props.location.state?.updated && this.props.location.state.updated !== prevProps.location.state?.updated) {
-  //     this.setState({ usuario: this.props.location.state.usuario, updated: false });
-  //   }
-  // }
-
-  navigateUpdateProfile = () => {
-    console.log(this.state.usuario);
-    this.props.navigate('/updateprofile', { state: { usuario: this.state.usuario } });
-  };
 
   render() {
     const { usuario } = this.state;
@@ -163,27 +178,62 @@ export default class Profile extends Component {
               </p>
             </div>
             <div>
-              {/* Fila de charlas */}
-              {this.state.charlas.length > 0 ? (
-                <div>
-                  <h2 className="my-4 text-center">Charlas</h2>
-                  <div className="row d-flex flex-wrap justify-content-start">
-                    {this.state.charlas.map((charla, index) => (
-                      <div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
-                        <Card
-                          imagen={charla.charla.imagenCharla}
-                          titulo={charla.charla.titulo}
-                          descripcion={charla.charla.descripcion}
-                        />
-                      </div>
-                    ))}
-                  </div>
+
+              {/* Filtro charlas */}
+              <div className="row d-flex justify-content-end mt-4">
+                <h2 className="my-4 text-center">Charlas</h2>
+                <div className="col-6 col-md-3">
+                  <select
+                    className="form-select"
+                    value={this.state.rondaSeleccionada}
+                    onChange={this.handleRondaChange}
+                  >
+                    <option value="">Ronda</option>
+                    {this.state.rondas.map((ronda, index) => {
+                      return (
+                        <option key={index} value={ronda.idRonda}>
+                          Ronda {ronda.descripcionModulo}
+                        </option>
+                      );
+                    })}
+                  </select>
                 </div>
-              ) : null}
+                <div className="col-6 col-md-3">
+                  <select
+                    className="form-select"
+                  >
+                    <option value="">Estado</option>
+                    {this.state.estadoCharla.map((estado, index) => {
+                      return (
+                        <option key={index} value={estado.idEstadoRonda}>
+                          {estado.estado}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
               </div>
+
+              {/* Fila de charlas */}
+
+              <div className="row d-flex flex-wrap justify-content-start">
+                {this.state.charlas.map((c, index) => {
+                  return (
+                    <div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
+                      <Card
+                        imagen={c.charla.imagenCharla}
+                        titulo={c.charla.titulo}
+                        descripcion={c.charla.descripcion}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
             </div>
           </div>
         </div>
+      </div>
     );
   }
 }

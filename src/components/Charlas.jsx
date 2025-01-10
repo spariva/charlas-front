@@ -66,24 +66,7 @@ class Charlas extends Component {
 	render() {
 		return (
 			<div className="container">
-				<h1 className="my-4 text-center">Charlas</h1>
-
-				{/* Fila de charlas */}
-				<div className="row d-flex flex-wrap justify-content-start">
-					{this.state.charlas.map((charla, index) => {
-						return (
-							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
-								<Card
-									imagen={charla.imagenCharla}
-									titulo={charla.titulo}
-									descripcion={charla.descripcion}
-								/>
-							</div>
-						);
-					})}
-				</div>
-
-				<div className="row d-flex justify-content-end mt-4">
+								<div className="row d-flex justify-content-end mt-4">
 					<div className="col-6 col-md-3">
 						<select
 							className="form-select"
@@ -115,6 +98,25 @@ class Charlas extends Component {
 						</select>
 					</div>
 				</div>
+				
+				<h1 className="my-4 text-center">Charlas</h1>
+
+				{/* Fila de charlas */}
+				<div className="row d-flex flex-wrap justify-content-start">
+					{this.state.charlas.map((charla, index) => {
+						return (
+							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
+								<Card
+									imagen={charla.imagenCharla}
+									titulo={charla.titulo}
+									descripcion={charla.descripcion}
+								/>
+							</div>
+						);
+					})}
+				</div>
+
+
 			</div>
 		)
 	}

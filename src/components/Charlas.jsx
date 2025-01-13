@@ -6,7 +6,6 @@ class Charlas extends Component {
 	state = {
 		charlas: [],
 		rondas: [],
-		charlasRonda: [],
 		estadoCharla: [],
 		rondaSeleccionada: "",
 	}
@@ -22,7 +21,7 @@ class Charlas extends Component {
 
 	getRondas = () => {
 		services.getRondasCurso().then((response) => {
-			console.log(response);
+			// console.log(response);
 			this.setState({
 				rondas: response
 			});
@@ -35,15 +34,6 @@ class Charlas extends Component {
 			this.setState({
 				estadoCharla: response
 			})
-		})
-	}
-
-	getCharlasRonda = () => {
-		services.getCharlasRonda().then((response) => {
-			console.log(response);
-			this.setState({
-				charlasRonda: response
-			});
 		})
 	}
 
@@ -60,13 +50,15 @@ class Charlas extends Component {
 			this.setState({
 				charlas: response
 			});
+			console.log("change charlas ", response);
+			console.log(response);
 		})
-	  }
+	}
 
 	render() {
 		return (
 			<div className="container">
-								<div className="row d-flex justify-content-end mt-4">
+				<div className="row d-flex justify-content-end mt-4">
 					<div className="col-6 col-md-3">
 						<select
 							className="form-select"
@@ -98,7 +90,7 @@ class Charlas extends Component {
 						</select>
 					</div>
 				</div>
-				
+
 				<h1 className="my-4 text-center">Charlas</h1>
 
 				{/* Fila de charlas */}

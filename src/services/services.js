@@ -1,7 +1,5 @@
 import Global from "./../Global"
 import axios from "axios";
-import React from "react";
-import { Navigate } from "react-router-dom";
 
 class serviceProfile {
 
@@ -69,10 +67,9 @@ class serviceProfile {
 	}
 
 	//CHARLAS DE UNA RONDA
-	getCharlasRonda() {
-		const request = "api/charlas/charlasronda/4";
+	getCharlasRonda(ronda) {
+		const request = "api/charlas/charlasronda/" + ronda;
 		const url = Global.api + request;
-
 		return axios.get(url, {
 			headers: {
 				'Authorization': 'Bearer ' + this.token
@@ -132,18 +129,6 @@ class serviceProfile {
 			console.log("error en el service delete charla: " + error);	
 			throw error;
 		}
-	}
-
-	//get rondas
-	getRondas() {
-		const request = "api/rondas";
-		const url = Global.api + request;
-
-		return axios.get(url, {
-			headers: {
-				'Authorization': 'Bearer ' + this.token
-			},
-		}).then(response => response.data);
 	}
 
 	//get estados de las charlas para filtrar por estado
@@ -234,8 +219,10 @@ class serviceProfile {
 		}).then(response => response.data);
 	}
 
-	getRondasCurso = () => {
-		const request = "/api/Rondas/RondasCurso";
+	//* Rondas
+
+	getRondas() {
+		const request = "api/rondas";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -245,15 +232,15 @@ class serviceProfile {
 		}).then(response => response.data);
 	}
 
-	getCharlasRonda(ronda) {
-		console.log(ronda+ "LLLLLLLLL")
-	    const request = "/api/charlas/charlasRonda/" + ronda;
-	    const url = Global.api + request;
-	    return axios.get(url, {
-	        headers: {
-	            'Authorization': 'Bearer ' + this.token
-	        },
-	    }).then(response => response.data);
+	getRondasCurso = () => {
+		const request = "/api/rondas/rondascurso";
+		const url = Global.api + request;
+
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			},
+		}).then(response => response.data);
 	}
 }
 

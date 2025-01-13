@@ -12,7 +12,6 @@ export default class Profile extends Component {
     token: true,
     charlas: [],
     rondas: [],
-    charlasRonda: [],
     estadoCharla: [],
     rondaSeleccionada: ""
   };
@@ -33,20 +32,24 @@ export default class Profile extends Component {
 
   getRondas = () => {
     services.getRondasCurso().then((response) => {
-      console.log(response);
       this.setState({
         rondas: response
       });
+      console.log("rondas", response);
     });
   }
 
   handleRondaChange = (event) => {
-    const rondaSeleccionada = event.target.value;
-    services.getCharlasRonda(rondaSeleccionada).then((response) => {
-      this.setState({
-        charlas: response
-      });
-    })
+    const rondaSeleccionada = parseInt(event.target.value);
+    console.log("charlas state", this.state.charlas)
+
+    const charlasByRonda = this.state.charlas.filter((c) => {
+      return c.charla.idRonda === rondaSeleccionada;
+    });
+
+    this.setState({ charlas: charlasByRonda });
+    console.log("charlasbyronda", charlasByRonda);
+    
   }
 
   navigateUpdateProfile = () => {

@@ -11,8 +11,8 @@ export default class Profile extends Component {
     allCharlas: [],
     charlas: [],
     rondas: [],
-    estadoSeleccionado: "",
-    rondaSeleccionada: ""
+    estadoSeleccionado: "0",
+    rondaSeleccionada: "0"
   };
 
   async getUsuario() {
@@ -43,50 +43,45 @@ export default class Profile extends Component {
     this.setState({ [name]: value }, this.filterCharlas);
   }
 
-  //! Ahora mismo no funciona bien el combo de ronda y estado, y por separado sí */
+
   filterCharlas = () => {
     const { allCharlas, rondaSeleccionada, estadoSeleccionado } = this.state;
-
-    const charlasByRonda = rondaSeleccionada === "0"
-      ? allCharlas
-      : allCharlas.filter((c) => c.charla.idRonda === parseInt(rondaSeleccionada));
-
-    const charlasByEstado = estadoSeleccionado === "0"
-      ? charlasByRonda
-      : charlasByRonda.filter((c) => c.charla.idEstadoCharla === parseInt(estadoSeleccionado));
+    const charlasByRonda = rondaSeleccionada === "0" ? allCharlas : allCharlas.filter((c) => c.charla.idRonda === parseInt(rondaSeleccionada));
+    const charlasByEstado = estadoSeleccionado === "0" ? charlasByRonda : charlasByRonda.filter((c) => c.charla.idEstadoCharla === parseInt(estadoSeleccionado));
 
     this.setState({ charlas: charlasByEstado });
   }
 
-  handleRondaChange = (event) => {
-    const rondaSeleccionada = parseInt(event.target.value);
-    console.log("charlas state", this.state.allCharlas);
+    //? Métodos por separado por si los queremos para otro component */
+  // handleRondaChange = (event) => {
+  //   const rondaSeleccionada = parseInt(event.target.value);
+  //   console.log("charlas state", this.state.allCharlas);
 
-    const charlasByRonda = this.state.allCharlas.filter((c) => {
-      return c.charla.idRonda === rondaSeleccionada;
-    });
+  //   const charlasByRonda = this.state.allCharlas.filter((c) => {
+  //     return c.charla.idRonda === rondaSeleccionada;
+  //   });
 
-    if (rondaSeleccionada === 0) {
-      this.setState({ charlas: this.state.allCharlas, rondaSeleccionada });
-    } else {
-      this.setState({ charlas: charlasByRonda, rondaSeleccionada });
-      console.log("charlasbyronda", charlasByRonda);
-    }
-  }
+  //   if (rondaSeleccionada === 0) {
+  //     this.setState({ charlas: this.state.allCharlas, rondaSeleccionada });
+  //   } else {
+  //     this.setState({ charlas: charlasByRonda, rondaSeleccionada });
+  //     console.log("charlasbyronda", charlasByRonda);
+  //   }
+  // }
 
-  handleEstadoChange = (event) => {
-    const estadoSeleccionado = parseInt(event.target.value);
-    const charlasByEstado = this.state.allCharlas.filter((c) => {
-      return c.charla.idEstadoCharla === estadoSeleccionado;
-    });
+  // handleEstadoChange = (event) => {
+  //   const estadoSeleccionado = parseInt(event.target.value);
+  //   const charlasByEstado = this.state.allCharlas.filter((c) => {
+  //     return c.charla.idEstadoCharla === estadoSeleccionado;
+  //   });
 
-    if (estadoSeleccionado === 0) {
-      this.setState({ charlas: this.state.allCharlas, estadoSeleccionado });
-    } else {
-      this.setState({ charlas: charlasByEstado, estadoSeleccionado });
-      console.log("charlasbyestado", charlasByEstado);
-    }
-  }
+  //   if (estadoSeleccionado === 0) {
+  //     this.setState({ charlas: this.state.allCharlas, estadoSeleccionado });
+  //   } else {
+  //     this.setState({ charlas: charlasByEstado, estadoSeleccionado });
+  //     console.log("charlasbyestado", charlasByEstado);
+  //   }
+  // }
 
   componentDidMount() {
     //Si no hay token te redirige al login con un mensaje

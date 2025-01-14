@@ -38,25 +38,25 @@ export default class Profile extends Component {
     });
   }
 
-  // handleFilterChange = (event) => {
-  //   const { name, value } = event.target;
-  //   this.setState({ [name]: value });
-  //   this.filterCharlas();
-  // }
+  handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value }, this.filterCharlas);
+  }
 
-  // filterCharlas = () => {
-  //   const { allCharlas, rondaSeleccionada, estadoSeleccionado } = this.state;
+  //! Ahora mismo no funciona bien el combo de ronda y estado, y por separado sí */
+  filterCharlas = () => {
+    const { allCharlas, rondaSeleccionada, estadoSeleccionado } = this.state;
 
-  //   const charlasByRonda = rondaSeleccionada === "0"
-  //     ? allCharlas
-  //     : allCharlas.filter((c) => c.charla.idRonda === parseInt(rondaSeleccionada));
+    const charlasByRonda = rondaSeleccionada === "0"
+      ? allCharlas
+      : allCharlas.filter((c) => c.charla.idRonda === parseInt(rondaSeleccionada));
 
-  //   const charlasByEstado = estadoSeleccionado === "0"
-  //     ? charlasByRonda
-  //     : charlasByRonda.filter((c) => c.charla.idEstadoCharla === parseInt(estadoSeleccionado));
+    const charlasByEstado = estadoSeleccionado === "0"
+      ? charlasByRonda
+      : charlasByRonda.filter((c) => c.charla.idEstadoCharla === parseInt(estadoSeleccionado));
 
-  //   this.setState({ charlas: charlasByEstado });
-  // }
+    this.setState({ charlas: charlasByEstado });
+  }
 
   handleRondaChange = (event) => {
     const rondaSeleccionada = parseInt(event.target.value);
@@ -219,7 +219,7 @@ export default class Profile extends Component {
                     className="form-select"
                     name="rondaSeleccionada"
                     value={this.state.rondaSeleccionada}
-                    onChange={this.handleRondaChange}
+                    onChange={this.handleFilterChange}
                   >
                     <option value="0">Todas las rondas</option>
                     {this.state.rondas.map((ronda, index) => {
@@ -236,7 +236,7 @@ export default class Profile extends Component {
                     className="form-select"
                     name="estadoSeleccionado"
                     value={this.state.estadoSeleccionado}
-                    onChange={this.handleEstadoChange}
+                    onChange={this.handleFilterChange}
                   >
                     <option value="0">Cualquier estado</option>
                     {estadosCharla.map((e, index) => {

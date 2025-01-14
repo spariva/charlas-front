@@ -32,7 +32,7 @@ export default class Login extends Component {
       estadoUsuario: true,
       imagen: "stringimagen", 
       password: this.cajaPasswordSignup.current.value,
-      idRole: 2
+      idRole: this.cajaRolSignup.current.value
     }
 
     services.signUp(userRegister)
@@ -79,9 +79,14 @@ export default class Login extends Component {
     });
   }
 
+  handleRoleChange = (e) => {
+    this.setState({ rol: e.target.value });
+  }
+
   render() {
     const { location } = this.props;
     const mensaje = location.state?.mensaje;
+    const placeholderCurso = this.state.rol === "2" ? "Curso" : "Key Profesor";
 
     return (
       <div className="login-parent-container">
@@ -99,11 +104,15 @@ export default class Login extends Component {
             <form onSubmit={this.signUp}>
               <h1>Crear Cuenta</h1>
               <span>Introduzca nombre, apellidos, mail, curso</span>
+              <input type="radio" name="rol" id="rol1" value="1" ref={this.cajaRolSignup} onChange={this.handleRoleChange}></input>
+              <label for="rol1">Profesor</label>
+              <input type="radio" name="rol" id="rol2" value="2" ref={this.cajaRolSignup} onChange={this.handleRoleChange}></input>
+              <label for="rol2">Alumno</label>
               <input type="text" name="name" placeholder="Nombre" ref={this.cajaNombreSignup} />
               <input type="text" name="apellidos" placeholder="Apellidos" ref={this.cajaApellidosSignup} />
               <input type="email" name="email" placeholder="Email" ref={this.cajaEmailSignup} />
               <input type="password" name="password" placeholder="Contraseña" ref={this.cajaPasswordSignup} />
-              <input type="number" name="idCurso" placeholder="Curso" ref={this.cajaIdCursoSignup} />
+              <input type="number" name="idCurso" placeholder={placeholderCurso} ref={this.cajaIdCursoSignup} />
               <button>Crear cuenta</button>
             </form>
           </div>

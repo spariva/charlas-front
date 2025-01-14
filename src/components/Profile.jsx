@@ -236,7 +236,7 @@ export default class Profile extends Component {
                     className="form-select"
                     name="estadoSeleccionado"
                     value={this.state.estadoSeleccionado}
-                    onChange={this.this.handleEstadoChange}
+                    onChange={this.handleEstadoChange}
                   >
                     <option value="0">Cualquier estado</option>
                     {estadosCharla.map((e, index) => {

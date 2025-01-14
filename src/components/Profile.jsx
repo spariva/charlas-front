@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import logo from "./../assets/images/logotipo-positivo.jpg";
 import services from "../services/services";
 import { Navigate } from "react-router-dom";
 import Card from "./CardCharla";
-
 
 export default class Profile extends Component {
   state = {
     usuario: null,
     updated: false,
     token: true,
+    allCharlas: [],
     charlas: [],
     rondas: [],
-    estadoCharla: [],
+    estadoSeleccionado: "",
     rondaSeleccionada: ""
   };
 
@@ -24,7 +23,7 @@ export default class Profile extends Component {
   getCharlasUser = () => {
     services.getCharlasUsuario().then((res) => {
       console.log(res);
-      this.setState({ charlas: res });
+      this.setState({ charlas: res, allCharlas: res });
     }).catch((err) => {
       console.log(err);
     });
@@ -39,23 +38,55 @@ export default class Profile extends Component {
     });
   }
 
+  // handleFilterChange = (event) => {
+  //   const { name, value } = event.target;
+  //   this.setState({ [name]: value });
+  //   this.filterCharlas();
+  // }
+
+  // filterCharlas = () => {
+  //   const { allCharlas, rondaSeleccionada, estadoSeleccionado } = this.state;
+
+  //   const charlasByRonda = rondaSeleccionada === "0"
+  //     ? allCharlas
+  //     : allCharlas.filter((c) => c.charla.idRonda === parseInt(rondaSeleccionada));
+
+  //   const charlasByEstado = estadoSeleccionado === "0"
+  //     ? charlasByRonda
+  //     : charlasByRonda.filter((c) => c.charla.idEstadoCharla === parseInt(estadoSeleccionado));
+
+  //   this.setState({ charlas: charlasByEstado });
+  // }
+
   handleRondaChange = (event) => {
     const rondaSeleccionada = parseInt(event.target.value);
-    console.log("charlas state", this.state.charlas)
+    console.log("charlas state", this.state.allCharlas);
 
-    const charlasByRonda = this.state.charlas.filter((c) => {
+    const charlasByRonda = this.state.allCharlas.filter((c) => {
       return c.charla.idRonda === rondaSeleccionada;
     });
 
-    this.setState({ charlas: charlasByRonda });
-    console.log("charlasbyronda", charlasByRonda);
-    
+    if (rondaSeleccionada === 0) {
+      this.setState({ charlas: this.state.allCharlas, rondaSeleccionada });
+    } else {
+      this.setState({ charlas: charlasByRonda, rondaSeleccionada });
+      console.log("charlasbyronda", charlasByRonda);
+    }
   }
 
-  navigateUpdateProfile = () => {
-    console.log(this.state.usuario);
-    this.props.navigate('/updateprofile', { state: { usuario: this.state.usuario } });
-  };
+  handleEstadoChange = (event) => {
+    const estadoSeleccionado = parseInt(event.target.value);
+    const charlasByEstado = this.state.allCharlas.filter((c) => {
+      return c.charla.idEstadoCharla === estadoSeleccionado;
+    });
+
+    if (estadoSeleccionado === 0) {
+      this.setState({ charlas: this.state.allCharlas, estadoSeleccionado });
+    } else {
+      this.setState({ charlas: charlasByEstado, estadoSeleccionado });
+      console.log("charlasbyestado", charlasByEstado);
+    }
+  }
 
   componentDidMount() {
     //Si no hay token te redirige al login con un mensaje
@@ -75,20 +106,16 @@ export default class Profile extends Component {
     this.getRondas();
   }
 
+  navigateUpdateProfile = () => {
+    console.log(this.state.usuario);
+    this.props.navigate('/updateprofile', { state: { usuario: this.state.usuario } });
+  };
+
   render() {
     const { usuario } = this.state;
-
     return (
       <div>
         {!this.state.token && <Navigate to="/login" state={{ mensaje: "Debes iniciar sesión para acceder a tu perfil" }} />}
-        {/* Logo centrado */}
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <img
-            src={logo}
-            alt="Logo de la página"
-            style={{ maxWidth: "150px" }}
-          />
-        </div>
 
         {/* Contenedor principal */}
         <div
@@ -162,15 +189,6 @@ export default class Profile extends Component {
             <h2 className="fw-bold">{usuario?.nombre || "Cargando..."}</h2>
             {/* Email del usuario */}
             <p className="text-muted">{usuario?.email || "Cargando..."}</p>
-            <button className="btn btn-outline-dark" onClick={this.navigateUpdateProfile}>Editar perfil</button>
-            <div
-              className="divider"
-              style={{
-                borderTop: "2px solid black",
-                width: "50%",
-                margin: "10px auto",
-              }}
-            ></div>
             <div className="mt-4">
               {/* Rol y curso */}
               <p>
@@ -180,18 +198,30 @@ export default class Profile extends Component {
                 <strong>Curso:</strong> {usuario?.curso || "Cargando..."}
               </p>
             </div>
+            <button className="btn btn-outline-dark m-2 mb-3" onClick={this.navigateUpdateProfile}>Editar perfil</button>
+
+            <div
+              className="divider"
+              style={{
+                borderTop: "2px solid black",
+                width: "50%",
+                margin: "10px auto",
+              }}
+            ></div>
+
             <div>
 
               {/* Filtro charlas */}
-              <div className="row d-flex justify-content-end mt-4">
-                <h2 className="my-4 text-center">Charlas</h2>
+              <div className="row d-flex justify-content-end mt-2">
+                <h2 className="my-4 text-center">Mis charlas:</h2>
                 <div className="col-6 col-md-3">
                   <select
                     className="form-select"
+                    name="rondaSeleccionada"
                     value={this.state.rondaSeleccionada}
                     onChange={this.handleRondaChange}
                   >
-                    <option value="">Ronda</option>
+                    <option value="0">Todas las rondas</option>
                     {this.state.rondas.map((ronda, index) => {
                       return (
                         <option key={index} value={ronda.idRonda}>
@@ -204,12 +234,15 @@ export default class Profile extends Component {
                 <div className="col-6 col-md-3">
                   <select
                     className="form-select"
+                    name="estadoSeleccionado"
+                    value={this.state.estadoSeleccionado}
+                    onChange={this.this.handleEstadoChange}
                   >
-                    <option value="">Estado</option>
-                    {this.state.estadoCharla.map((estado, index) => {
+                    <option value="0">Cualquier estado</option>
+                    {estadosCharla.map((e, index) => {
                       return (
-                        <option key={index} value={estado.idEstadoRonda}>
-                          {estado.estado}
+                        <option key={index} value={e.idEstadoCharla}>
+                          {e.estado}
                         </option>
                       );
                     })}
@@ -232,7 +265,6 @@ export default class Profile extends Component {
                   );
                 })}
               </div>
-
             </div>
           </div>
         </div>
@@ -240,3 +272,14 @@ export default class Profile extends Component {
     );
   }
 }
+
+const estadosCharla = [
+  {
+    "idEstadoCharla": 1,
+    "estado": "PROPUESTA"
+  },
+  {
+    "idEstadoCharla": 2,
+    "estado": "ACEPTADA"
+  }
+];

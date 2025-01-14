@@ -131,7 +131,7 @@ class serviceProfile {
 		}
 	}
 
-	//get estados de las charlas para filtrar por estado
+	//* Estados Charlas (ADMIN)
 	getEstadoCharla() {
 		const request = "api/estadoscharlas";
 		const url = Global.api + request;
@@ -142,6 +142,14 @@ class serviceProfile {
 			},
 		}).then((response => response.data));
 	}
+	// {
+	// 	"idEstadoCharla": 1,
+	// 	"estado": "PROPUESTA"
+	//   },
+	//   {
+	// 	"idEstadoCharla": 2,
+	// 	"estado": "ACEPTADA"
+	//   }
 
 	//* Auth:
 	async login(user) {

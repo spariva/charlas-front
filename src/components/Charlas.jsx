@@ -6,7 +6,6 @@ class Charlas extends Component {
 	state = {
 		charlas: [],
 		rondas: [],
-		charlasRonda: [],
 		estadoCharla: [],
 		rondaSeleccionada: "",
 	}
@@ -22,36 +21,26 @@ class Charlas extends Component {
 
 	getRondas = () => {
 		services.getRondasCurso().then((response) => {
-			console.log(response);
 			this.setState({
 				rondas: response
 			});
 		});
 	}
 
-	getEstadosCharla = () => {
-		services.getEstadoCharla().then((response) => {
-			console.log(response);
-			this.setState({
-				estadoCharla: response
-			})
-		})
-	}
-
-	getCharlasRonda = () => {
-		services.getCharlasRonda().then((response) => {
-			console.log(response);
-			this.setState({
-				charlasRonda: response
-			});
-		})
-	}
+	// getEstadosCharla = () => {
+	// 	services.getEstadoCharla().then((response) => {
+	// 		this.setState({
+	// 			estadoCharla: response
+	// 		})
+	// 		console.log("estados charla ", response);
+	// 	})
+	// }
 
 	componentDidMount = () => {
 		services.getToken();
 		this.getCharlas();
 		this.getRondas();
-		//this.getEstadosCharla();
+		// this.getEstadosCharla();
 	}
 
 	handleRondaChange = (event) => {
@@ -60,29 +49,13 @@ class Charlas extends Component {
 			this.setState({
 				charlas: response
 			});
+			console.log("change charlas ", response);
 		})
-	  }
+	}
 
 	render() {
 		return (
 			<div className="container">
-				<h1 className="my-4 text-center">Charlas</h1>
-
-				{/* Fila de charlas */}
-				<div className="row d-flex flex-wrap justify-content-start">
-					{this.state.charlas.map((charla, index) => {
-						return (
-							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
-								<Card
-									imagen={charla.imagenCharla}
-									titulo={charla.titulo}
-									descripcion={charla.descripcion}
-								/>
-							</div>
-						);
-					})}
-				</div>
-
 				<div className="row d-flex justify-content-end mt-4">
 					<div className="col-6 col-md-3">
 						<select
@@ -115,6 +88,25 @@ class Charlas extends Component {
 						</select>
 					</div>
 				</div>
+
+				<h1 className="my-4 text-center">Charlas</h1>
+
+				{/* Fila de charlas */}
+				<div className="row d-flex flex-wrap justify-content-start">
+					{this.state.charlas.map((charla, index) => {
+						return (
+							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
+								<Card
+									imagen={charla.imagenCharla}
+									titulo={charla.titulo}
+									descripcion={charla.descripcion}
+								/>
+							</div>
+						);
+					})}
+				</div>
+
+
 			</div>
 		)
 	}

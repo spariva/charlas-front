@@ -1,7 +1,5 @@
 import Global from "./../Global"
 import axios from "axios";
-import React from "react";
-import { Navigate } from "react-router-dom";
 
 class serviceProfile {
 
@@ -69,10 +67,9 @@ class serviceProfile {
 	}
 
 	//CHARLAS DE UNA RONDA
-	getCharlasRonda() {
-		const request = "api/charlas/charlasronda/4";
+	getCharlasRonda(ronda) {
+		const request = "api/charlas/charlasronda/" + ronda;
 		const url = Global.api + request;
-
 		return axios.get(url, {
 			headers: {
 				'Authorization': 'Bearer ' + this.token
@@ -134,19 +131,7 @@ class serviceProfile {
 		}
 	}
 
-	//get rondas
-	getRondas() {
-		const request = "api/rondas";
-		const url = Global.api + request;
-
-		return axios.get(url, {
-			headers: {
-				'Authorization': 'Bearer ' + this.token
-			},
-		}).then(response => response.data);
-	}
-
-	//get estados de las charlas para filtrar por estado
+	//* Estados Charlas (ADMIN)
 	getEstadoCharla() {
 		const request = "api/estadoscharlas";
 		const url = Global.api + request;
@@ -157,6 +142,14 @@ class serviceProfile {
 			},
 		}).then((response => response.data));
 	}
+	// {
+	// 	"idEstadoCharla": 1,
+	// 	"estado": "PROPUESTA"
+	//   },
+	//   {
+	// 	"idEstadoCharla": 2,
+	// 	"estado": "ACEPTADA"
+	//   }
 
 	//* Auth:
 	async login(user) {
@@ -213,7 +206,7 @@ class serviceProfile {
 	}
 
 	getCharlasCurso = () => {
-		const request = "api/Charlas/CharlasCurso";
+		const request = "api/charlas/charlascurso";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -224,7 +217,20 @@ class serviceProfile {
 	}
 
 	getCharlasAlumno = () => {
-		const request = "/api/Charlas/CharlasAlumno";
+		const request = "/api/charlas/charlasalumno";
+		const url = Global.api + request;
+
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			},
+		}).then(response => response.data);
+	}
+
+	//* Rondas
+
+	getRondas() {
+		const request = "api/rondas";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -235,7 +241,7 @@ class serviceProfile {
 	}
 
 	getRondasCurso = () => {
-		const request = "/api/Rondas/RondasCurso";
+		const request = "/api/rondas/rondascurso";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -243,17 +249,6 @@ class serviceProfile {
 				'Authorization': 'Bearer ' + this.token
 			},
 		}).then(response => response.data);
-	}
-
-	getCharlasRonda(ronda) {
-		console.log(ronda+ "LLLLLLLLL")
-	    const request = "/api/Charlas/CharlasRonda/" + ronda;
-	    const url = Global.api + request;
-	    return axios.get(url, {
-	        headers: {
-	            'Authorization': 'Bearer ' + this.token
-	        },
-	    }).then(response => response.data);
 	}
 }
 

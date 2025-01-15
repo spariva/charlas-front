@@ -7,24 +7,43 @@ import TooltipHeader from "./TooltipHeader";
 class Header extends Component {
   state = {
     tokenAvailable: false,
+    perfilUsuario: null,
   };
 
   componentDidMount() {
+    console.log("checktoken");
     this.checkToken();
   }
+
 
   // Función para verificar si el token está presente
   checkToken() {
     const token = localStorage.getItem("token");
     if (token) {
-      this.setState({ tokenAvailable: true }); 
+      this.setState({ tokenAvailable: true });
+      this.getUsuario();
     } else {
-      this.setState({ tokenAvailable: false });
+      this.setState({ tokenAvailable: false, perfilUsuario: null });
     }
   }
 
+  // Función para obtener el perfil del usuario
+  getUsuario() {
+    services.getPerfilUsuario().then((response) => {
+      this.setState({
+        perfilUsuario: response.usuario,
+      });
+    });
+  }
+
+  logout = () => {
+    services.logout();
+    this.setState({ tokenAvailable: false, perfilUsuario: null });
+    this.props.onLogout();
+  };
+
   render() {
-    const { tokenAvailable } = this.state;
+    const { tokenAvailable, perfilUsuario } = this.state;
     return (
       <div className="container container__header">
         <div className="header">
@@ -32,7 +51,7 @@ class Header extends Component {
             <img src={logo} alt="Logo" style={{ width: "200px" }} />
           </div>
           {/* Mostrar TooltipHeader solo si el token está presente */}
-          {tokenAvailable && <TooltipHeader />}
+          {tokenAvailable && perfilUsuario && <TooltipHeader perfilUsuario={perfilUsuario} logout={this.logout} />}
         </div>
       </div>
     );

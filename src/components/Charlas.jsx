@@ -152,7 +152,9 @@ class Charlas extends Component {
 									src={this.state.seleccionadaCharla.imagenCharla}
 									alt={this.state.seleccionadaCharla.titulo}
 								/>
-								<span className="charla_descripcion">{this.state.seleccionadaCharla.descripcion}</span>
+								<div className="charla_descripcion">
+									<span className="descripcion">{this.state.seleccionadaCharla.descripcion}</span>
+								</div>
 							</div>
 						</>
 					)}

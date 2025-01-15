@@ -15,11 +15,11 @@ export default class Menu extends Component {
 				<h4>Charlas front</h4>
 			</div>
 			<div className="options__menu">
-				<NavLink to="/" className="option">
+				<NavLink to="/home" className="option">
 					<i className="fas fa-home"></i>
 					<h4>Inicio</h4>
 				</NavLink>
-				<NavLink to="/login">
+				<NavLink to="/">
 					<div className="option">
 						<i className="fas fa-video"></i>
 						<h4>Login</h4>

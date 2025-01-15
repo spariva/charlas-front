@@ -8,7 +8,10 @@ class serviceProfile {
 	}
 
 	getToken() {
-		this.token = localStorage.getItem('token');
+		if (!this.token) {
+			this.token = localStorage.getItem('token');
+		}
+		return this.token;	
 	}
 
 	//* Usuario:

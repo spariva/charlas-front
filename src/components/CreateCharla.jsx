@@ -66,7 +66,7 @@ export default class CreateCharla extends Component {
 
 	render() {
 		if (this.state.status == true) {
-			return (<Navigate to="/" />)
+			return (<Navigate to="/home" />)
 		} else {
 			return (
 				<div>

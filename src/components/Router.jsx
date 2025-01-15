@@ -16,47 +16,71 @@ import LoginWrapper from './LoginWrapper';
 import VotarCharlas from './VotarCharlas';
 
 export default class Router extends Component {
-    render() {
 
-        function CharlasRonda() {
-            let {id} = useParams();
-            return  (<Charlas id={id} />)
-        }
+  //todo: SOLUCIONAR QUE NO APAREZCA NADA AL INICIAR SESION -> REEDIRIGE A /PROFILE
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: null,
+    };
+  }
 
-        return (
-            <BrowserRouter>
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-12">
-                            <Header /> 
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-2 p-0">
-                            <Menu /> 
-                        </div>
+  async componentDidMount() {
+    // Usa el método del servicio para obtener el token
+    const token = localStorage.getItem('token'); // Alternativamente, puedes crear un método en el servicio para esto.
+    this.setState({ token });
+  }
 
-                        <div className="col-8">
-                                <Routes>
-                                    <Route path="/" element={<Home />} />
-                                    <Route path="/login" element={<LoginWrapper />} />
-                                    <Route path="/profile" element={<ProfileWrapper />} />
-                                    <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
-                                    <Route path="/charlas" element={<Charlas />} />
-                                    <Route path="/charlas/:id" element={<CharlasRonda />} />
-									<Route path="/createronda" element={<CreateRonda />} />
-									<Route path="/createcharla" element={<CreateCharla />} />
-									<Route path="/votar" element={<VotarCharlas />} />
-                                    <Route path="*" element={<NotFound />} />
-                                </Routes>
-                        </div>
-                        <div className="col-2">
+  handleLogout = () => {
+    localStorage.removeItem("token");
+    this.setState({ token: null });
+  };
 
-                        </div>
-                    </div>
-                </div>
-            </BrowserRouter>
-        );
+  render() {
+    const { token } = this.state;
+
+    function CharlasRonda() {
+      let { id } = useParams();
+      return (<Charlas id={id} />)
     }
+
+    return (
+      <BrowserRouter>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              {token && <Header onLogout={this.handleLogout} />}            
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-2 p-0">
+              {token && <Menu />}
+            </div>
+
+            <div className="col-8">
+              <Routes>
+                {!token ? (<Route path="/" element={<LoginWrapper />} />
+                ) : (
+                  <>
+                    <Route path="/" element={<LoginWrapper />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/profile" element={<ProfileWrapper />} />
+                    <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
+                    <Route path="/charlas" element={<Charlas />} />
+                    <Route path="/charlas/:id" element={<CharlasRonda />} />
+                    <Route path="/createronda" element={<CreateRonda />} />
+                    <Route path="/createcharla" element={<CreateCharla />} />
+                    <Route path="/votar" element={<VotarCharlas />} />
+                    <Route path="*" element={<NotFound />} />
+                  </>)}
+              </Routes>
+            </div>
+            <div className="col-2">
+
+            </div>
+          </div>
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
-//hola

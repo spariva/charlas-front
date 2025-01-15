@@ -156,7 +156,8 @@ class serviceProfile {
 		let request = "api/auth/login";
 		try {
 			const response = await axios.post(Global.api + request, user);
-			localStorage.setItem('token', response.data.response);
+			localStorage.setItem('token', response.data.response); 
+			Global.rol = response.data.idrole;
 			return response.data.response;
 		} catch (error) {
 			throw error;
@@ -168,9 +169,18 @@ class serviceProfile {
 		localStorage.removeItem('token');
 	}
 
-	async signUp(user) {
-		let request = "api/usuarios/newalumno/3213";
-		//* TODO: Esto se sustituira por el curso como parametro en el método.
+	async signUpAlumno(user, curso) {
+		let request = "api/usuarios/newalumno/" + curso;
+		try {
+			const response = await axios.post(Global.api + request, user);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async signUpProfesor(user, key) {
+		let request = "api/profesor/newprofesor/" + key;
 		try {
 			const response = await axios.post(Global.api + request, user);
 			return response.data;

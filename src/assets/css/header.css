@@ -107,7 +107,7 @@
 }
 
 .tooltip-container:hover .tooltip2:hover {
-  background: #b43c3c;
+  background: #ea8c4d;
   fill: #fff;
 }
 
@@ -124,7 +124,6 @@
   opacity: 0;
   visibility: hidden;
   background: #fff;
-  fill: #ea8c4d;
   padding: 10px;
   border-radius: 50px;
   transition:
@@ -148,7 +147,7 @@
   justify-content: center;
 }
 .tooltip-container:hover .tooltip4:hover {
-  background: #ea8c4d;
+  background: #b43c3c;
   fill: #fff;
 }
 

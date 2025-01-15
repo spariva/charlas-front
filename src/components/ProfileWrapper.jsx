@@ -1,12 +1,11 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Profile from './Profile';
+import { useLocation } from 'react-router-dom';
+import Login from './Login';
 
-const ProfileWrapper = (props) => {
-    const navigate = useNavigate();
-    const location = useLocation();
+const LoginWrapper = (props) => {
+  const location = useLocation();
 
-    return <Profile {...props} navigate={navigate} location={location} />;
+  return <Login {...props} location={location} />;
 };
 
-export default ProfileWrapper;
+export default LoginWrapper;

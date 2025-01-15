@@ -251,11 +251,21 @@ class serviceProfile {
 		}).then(response => response.data);
 	}
 
-	VotarCharla = (voto) => {
+	votarCharla = (voto) => {
 		const request = "/api/Votos";
 		const url = Global.api + request;
 
 		return axios.post(url, voto, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
+	
+	getAlumnosProfesor = () => {
+		const request = "/api/Profesor/AlumnosCursoProfesor"
+		const url = Global.api + request;
+		return axios.get(url, {
 			headers: {
 				'Authorization': 'Bearer ' + this.token
 			}

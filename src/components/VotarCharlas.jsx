@@ -34,6 +34,7 @@ export default class VotarCharlas extends Component {
 	}
 
 	votarCharlaSeleccionda = () => {
+		let idCharla = this.state.charlaSeleccionada;
 		
 	}
 
@@ -66,7 +67,7 @@ export default class VotarCharlas extends Component {
 				</div>
 				<button
 					className="btn btn-info"
-					onClick={() => this.seleccionarCharla(charla.idCharla)}
+					onClick={() => this.votarCharlaSeleccionda()}
 				>Votar charla seleccionada</button>
 			</div>
 		)

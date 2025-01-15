@@ -13,6 +13,7 @@ import CreateCharla from './CreateCharla';
 import NotFound from './NotFound';
 import UpdateProfileWrapper from './UpdateProfileWrapper';
 import LoginWrapper from './LoginWrapper';
+import VotarCharlas from './VotarCharlas';
 
 export default class Router extends Component {
     render() {
@@ -45,6 +46,7 @@ export default class Router extends Component {
                                     <Route path="/charlas/:id" element={<CharlasRonda />} />
 									<Route path="/createronda" element={<CreateRonda />} />
 									<Route path="/createcharla" element={<CreateCharla />} />
+									<Route path="/votar" element={<VotarCharlas />} />
                                     <Route path="*" element={<NotFound />} />
                                 </Routes>
                         </div>

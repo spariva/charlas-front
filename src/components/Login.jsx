@@ -44,7 +44,7 @@ export default class Login extends Component {
           status: false
         });
         alert("Usuario registrado correctamente ahora inicie sesión");
-      }).catch(err => {
+      }).catch(err => { 
         console.log(err);
         alert("Error al registrar usuario");
       });

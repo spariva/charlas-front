@@ -43,6 +43,7 @@ export default class Profile extends Component {
     this.setState({ [name]: value }, this.filterCharlas);
   }
 
+
   filterCharlas = () => {
     const { allCharlas, rondaSeleccionada, estadoSeleccionado } = this.state;
     const charlasByRonda = rondaSeleccionada === "0" ? allCharlas : allCharlas.filter((c) => c.charla.idRonda === parseInt(rondaSeleccionada));
@@ -211,6 +212,7 @@ export default class Profile extends Component {
             ></div>
 
             <div>
+
               {/* Filtro charlas */}
               <div className="row d-flex justify-content-end mt-2">
                 <h2 className="my-4 text-center">Mis charlas:</h2>
@@ -251,6 +253,7 @@ export default class Profile extends Component {
               </div>
 
               {/* Fila de charlas */}
+
               <div className="row d-flex flex-wrap justify-content-start">
                 {this.state.charlas.map((c, index) => {
                   return (

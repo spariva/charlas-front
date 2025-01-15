@@ -1,6 +1,7 @@
 import { Component } from "react";
 import services from "../services/services";
 import Card from "./CardCharla";
+import PopupCharla from "./PopupCharla";
 
 class Charlas extends Component {
 	state = {
@@ -8,6 +9,8 @@ class Charlas extends Component {
 		rondas: [],
 		estadoCharla: [],
 		rondaSeleccionada: "",
+		seleccionadaCharla: null,
+		showPopup: false,
 	}
 
 	getCharlas = () => {
@@ -53,6 +56,21 @@ class Charlas extends Component {
 		})
 	}
 
+
+	handleCardClick = (charla) => {
+		this.setState({
+			seleccionadaCharla: charla,
+			showPopup: true
+		});
+	}
+
+	handleClosePopup = () => {
+		this.setState({
+			seleccionadaCharla: null,
+			showPopup: false
+		});
+	}
+
 	render() {
 		return (
 			<div className="container">
@@ -95,7 +113,9 @@ class Charlas extends Component {
 				<div className="row d-flex flex-wrap justify-content-start">
 					{this.state.charlas.map((charla, index) => {
 						return (
-							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
+							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4"
+								onClick={() => this.handleCardClick(charla)}
+								style={{ cursor: "pointer" }}>
 								<Card
 									imagen={charla.imagenCharla}
 									titulo={charla.titulo}
@@ -105,11 +125,42 @@ class Charlas extends Component {
 						);
 					})}
 				</div>
-
-
+				<PopupCharla
+					show={this.state.showPopup}
+					onClose={this.handleClosePopup}
+				>
+					{this.state.seleccionadaCharla && (
+						<>
+							<div className="charla_estado">
+								<span className="estado" style={{
+									backgroundColor: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#b7eab0' : '#e5a879',
+									color: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#29721f' : '#d57018',
+								}}>{this.state.seleccionadaCharla.estadoCharla}</span>
+							</div>
+							<div className="charla_title">
+								<div className="title">
+									<h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
+									<hr className="card_divisor"></hr>
+								</div>
+								<div className="icon_tiempo">
+									<i class="fa-regular fa-clock"></i>
+									<span className="charla_tiempo">{this.state.seleccionadaCharla.tiempo} min.</span>
+								</div>
+							</div>
+							<div className="charla_image">
+								<img
+									src={this.state.seleccionadaCharla.imagenCharla}
+									alt={this.state.seleccionadaCharla.titulo}
+								/>
+								<span className="charla_descripcion">{this.state.seleccionadaCharla.descripcion}</span>
+							</div>
+						</>
+					)}
+				</PopupCharla>
 			</div>
-		)
+		);
 	}
 }
+
 
 export default Charlas;

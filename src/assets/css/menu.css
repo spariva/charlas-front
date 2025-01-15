@@ -1,5 +1,6 @@
 .menu__side {
-    position: fixed; /* Fija el menú en la izquierda */
+    position: fixed;
+    /* Fija el menú en la izquierda */
     top: 0;
     left: 0;
     height: 100vh;
@@ -29,8 +30,10 @@
 
 .options__menu {
     display: flex;
-    flex-direction: column; /* Opciones en columna */
-    gap: 10px; /* Espacio entre las opciones */
+    flex-direction: column;
+    /* Opciones en columna */
+    gap: 10px;
+    /* Espacio entre las opciones */
 }
 
 .option {
@@ -40,7 +43,8 @@
     color: black;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transición suave */
 }
 
 .option:hover {
@@ -51,4 +55,12 @@
 .option i {
     font-size: 1.2rem;
     margin-right: 10px;
+}
+
+/* TIPO DE LETRAS PARA LAS CARDS Y DEMÁS*/
+.poiret-one-regular {
+    font-family: "Poiret One", serif;
+    font-size: 50px;
+    font-weight: 400;
+    font-style: normal;
 }

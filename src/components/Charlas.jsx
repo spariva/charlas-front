@@ -52,6 +52,7 @@ class Charlas extends Component {
 			this.setState({
 				charlas: response
 			});
+			console.log("change charlas ", response);
 		})
 	}
 

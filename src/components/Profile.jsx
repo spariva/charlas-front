@@ -43,7 +43,6 @@ export default class Profile extends Component {
     this.setState({ [name]: value }, this.filterCharlas);
   }
 
-
   filterCharlas = () => {
     const { allCharlas, rondaSeleccionada, estadoSeleccionado } = this.state;
     const charlasByRonda = rondaSeleccionada === "0" ? allCharlas : allCharlas.filter((c) => c.charla.idRonda === parseInt(rondaSeleccionada));
@@ -52,7 +51,7 @@ export default class Profile extends Component {
     this.setState({ charlas: charlasByEstado });
   }
 
-    //? Métodos por separado por si los queremos para otro component */
+  //? Métodos por separado por si los queremos para otro component */
   // handleRondaChange = (event) => {
   //   const rondaSeleccionada = parseInt(event.target.value);
   //   console.log("charlas state", this.state.allCharlas);
@@ -102,7 +101,6 @@ export default class Profile extends Component {
   }
 
   navigateUpdateProfile = () => {
-    console.log(this.state.usuario);
     this.props.navigate('/updateprofile', { state: { usuario: this.state.usuario } });
   };
 
@@ -145,7 +143,11 @@ export default class Profile extends Component {
                 width: "100px",
               }}
             >
-              <h3 style={{ margin: "0", fontSize: "24px" }}>3</h3>
+              <h3 style={{ margin: "0", fontSize: "24px" }}>
+                {this.state.allCharlas.filter((c) => {
+                  return c.charla.idEstadoCharla === 1;
+                }).length}
+              </h3>
               <p style={{ margin: "0", fontSize: "14px", color: "gray" }}>
                 Propuestas
               </p>
@@ -160,7 +162,11 @@ export default class Profile extends Component {
                 width: "100px",
               }}
             >
-              <h3 style={{ margin: "0", fontSize: "24px" }}>1</h3>
+              <h3 style={{ margin: "0", fontSize: "24px" }}>
+                {this.state.allCharlas.filter((c) => {
+                  return c.charla.idEstadoCharla === 2;
+                }).length}
+              </h3>
               <p style={{ margin: "0", fontSize: "14px", color: "gray" }}>
                 Aceptadas
               </p>
@@ -205,7 +211,6 @@ export default class Profile extends Component {
             ></div>
 
             <div>
-
               {/* Filtro charlas */}
               <div className="row d-flex justify-content-end mt-2">
                 <h2 className="my-4 text-center">Mis charlas:</h2>
@@ -246,7 +251,6 @@ export default class Profile extends Component {
               </div>
 
               {/* Fila de charlas */}
-
               <div className="row d-flex flex-wrap justify-content-start">
                 {this.state.charlas.map((c, index) => {
                   return (

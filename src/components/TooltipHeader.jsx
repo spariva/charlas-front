@@ -12,7 +12,6 @@ export default class TooltipHeader extends Component {
 
   getUsuario() {
     services.getPerfilUsuario().then((response) => {
-      console.log("AQUIII" + response.usuario.nombre);
       this.setState({
         perfilUsuario: response.usuario
       })

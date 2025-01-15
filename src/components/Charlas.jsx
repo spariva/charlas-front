@@ -7,7 +7,6 @@ class Charlas extends Component {
 	state = {
 		charlas: [],
 		rondas: [],
-		charlasRonda: [],
 		estadoCharla: [],
 		rondaSeleccionada: "",
 		seleccionadaCharla: null, 
@@ -25,36 +24,26 @@ class Charlas extends Component {
 
 	getRondas = () => {
 		services.getRondasCurso().then((response) => {
-			console.log(response);
 			this.setState({
 				rondas: response
 			});
 		});
 	}
 
-	getEstadosCharla = () => {
-		services.getEstadoCharla().then((response) => {
-			console.log(response);
-			this.setState({
-				estadoCharla: response
-			})
-		})
-	}
-
-	getCharlasRonda = () => {
-		services.getCharlasRonda().then((response) => {
-			console.log(response);
-			this.setState({
-				charlasRonda: response
-			});
-		})
-	}
+	// getEstadosCharla = () => {
+	// 	services.getEstadoCharla().then((response) => {
+	// 		this.setState({
+	// 			estadoCharla: response
+	// 		})
+	// 		console.log("estados charla ", response);
+	// 	})
+	// }
 
 	componentDidMount = () => {
 		services.getToken();
 		this.getCharlas();
 		this.getRondas();
-		//this.getEstadosCharla();
+		// this.getEstadosCharla();
 	}
 
 	handleRondaChange = (event) => {
@@ -65,6 +54,7 @@ class Charlas extends Component {
 			});
 		})
 	}
+	
 
 	handleCardClick = (charla) => {
 		this.setState({
@@ -147,7 +137,7 @@ class Charlas extends Component {
       </div>
     );
   }
-  
 }
+
 
 export default Charlas;

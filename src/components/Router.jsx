@@ -4,11 +4,15 @@ import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';
 import Menu from './Menu';
-import Profile from './Profile'
+// import Profile from './Profile'
+import ProfileWrapper from './ProfileWrapper';
 import Charlas from './Charlas';
 import Header from './Header';
 import CreateRonda from './CreateRonda';
 import CreateCharla from './CreateCharla';
+import NotFound from './NotFound';
+import UpdateProfileWrapper from './UpdateProfileWrapper';
+import LoginWrapper from './LoginWrapper';
 
 export default class Router extends Component {
     render() {
@@ -34,15 +38,16 @@ export default class Router extends Component {
                         <div className="col-8">
                                 <Routes>
                                     <Route path="/" element={<Home />} />
-                                    <Route path="/login" element={<Login />} />
-                                    <Route path="/profile" element={<Profile />} />
+                                    <Route path="/login" element={<LoginWrapper />} />
+                                    <Route path="/profile" element={<ProfileWrapper />} />
+                                    <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
                                     <Route path="/charlas" element={<Charlas />} />
                                     <Route path="/charlas/:id" element={<CharlasRonda />} />
 									<Route path="/createronda" element={<CreateRonda />} />
 									<Route path="/createcharla" element={<CreateCharla />} />
+                                    <Route path="*" element={<NotFound />} />
                                 </Routes>
                         </div>
-                        {/* CREAR COMPONENT PARA EL SELECT*/}
                         <div className="col-2">
 
                         </div>

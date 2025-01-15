@@ -1,19 +1,17 @@
 import Global from "./../Global"
 import axios from "axios";
-import React from "react";
-import { Navigate } from "react-router-dom";
 
 class serviceProfile {
 
 	constructor() {
 		this.token = null;
 	}
-	//SE NECESITA TOKEN
 
 	getToken() {
 		this.token = localStorage.getItem('token');
 	}
 
+	//* Usuario:
 	getPerfilUsuario() {
 		return new Promise((resolve) => {
 			let usuario = null;
@@ -23,48 +21,55 @@ class serviceProfile {
 
 			axios.get(url, {
 				headers: {
-					// TODAVIA NO ESTA IMPLEMENTADA LA FUNCION getToken
 					'Authorization': 'Bearer ' + this.token
 				}
 			}).then(response => {
 				usuario = response.data;
-				console.log(usuario.usuario);
 				resolve(usuario);
 			})
 		})
 	}
 
+	async updatePerfilUsuario(user) {
+		let request = "api/usuarios";
+		this.getToken();
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.put(Global.api + request, user, { headers });
+			return response;
+		} catch (error) {
+			console.log("error en el service update user: " + error);
+			throw error;
+		}
+	}
+
+
+	//*Charlas
 	//todas las charlas
 	getCharlas() {
 		const request = "api/charlas";
 		const url = Global.api + request;
+		this.getToken();
 
 		return axios.get(url, {
 			headers: {
 				'Authorization': 'Bearer ' + this.token
 			},
-		}).then(response => response.data);
+		}).then(response => {
+			console.log(response.data);
+			return response.data
+		}
+		);
 	}
-
-	
 
 	//CHARLAS DE UNA RONDA
-	getCharlasRonda() {
-        const request = "api/charlas/charlasronda/4";
-        const url = Global.api + request;
-
-		return axios.get(url, {
-			headers: {
-				'Authorization': 'Bearer ' + this.token
-			},
-		}).then(response => response.data);
-	}
-
-	//get rondas
-	getRondas() {
-		const request = "api/rondas";
+	getCharlasRonda(ronda) {
+		const request = "api/charlas/charlasronda/" + ronda;
 		const url = Global.api + request;
-
 		return axios.get(url, {
 			headers: {
 				'Authorization': 'Bearer ' + this.token
@@ -72,7 +77,61 @@ class serviceProfile {
 		}).then(response => response.data);
 	}
 
-	//get estados de las charlas para filtrar por estado
+	async getCharlasUsuario() {
+		let request = "api/charlas/charlasalumno";
+		let url = Global.api + request;
+		this.getToken();
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.get(url, { headers });
+			return response.data;
+		} catch (error) {
+			console.log("error en el service get charlasusuario: " + error);
+			throw error;
+		}
+	}
+
+	async updateCharla(charla){
+		let request = "api/charlas/";
+		let url = Global.api + request;
+		this.getToken();
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.put(url, charla, { headers });
+			return response.data;
+		} catch (error){
+			console.log("error en el service update charla: " + error);
+			throw error;
+		}
+	}
+
+	async deleteCharla(id) {
+		let request = "api/charlas/" + id;
+		let url = Global.api + request;
+		this.getToken();
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.delete(url, { headers });
+			return response.data;
+		} catch (error){
+			console.log("error en el service delete charla: " + error);	
+			throw error;
+		}
+	}
+
+	//* Estados Charlas (ADMIN)
 	getEstadoCharla() {
 		const request = "api/estadoscharlas";
 		const url = Global.api + request;
@@ -83,6 +142,14 @@ class serviceProfile {
 			},
 		}).then((response => response.data));
 	}
+	// {
+	// 	"idEstadoCharla": 1,
+	// 	"estado": "PROPUESTA"
+	//   },
+	//   {
+	// 	"idEstadoCharla": 2,
+	// 	"estado": "ACEPTADA"
+	//   }
 
 	//* Auth:
 	async login(user) {
@@ -103,7 +170,7 @@ class serviceProfile {
 
 	async signUp(user) {
 		let request = "api/usuarios/newalumno/3213";
-		//* Esto se sustituira por el curso como parametro en el método.
+		//* TODO: Esto se sustituira por el curso como parametro en el método.
 		try {
 			const response = await axios.post(Global.api + request, user);
 			return response.data;
@@ -139,7 +206,7 @@ class serviceProfile {
 	}
 
 	getCharlasCurso = () => {
-		const request = "api/Charlas/CharlasCurso";
+		const request = "api/charlas/charlascurso";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -150,7 +217,20 @@ class serviceProfile {
 	}
 
 	getCharlasAlumno = () => {
-		const request = "/api/Charlas/CharlasAlumno";
+		const request = "/api/charlas/charlasalumno";
+		const url = Global.api + request;
+
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			},
+		}).then(response => response.data);
+	}
+
+	//* Rondas
+
+	getRondas() {
+		const request = "api/rondas";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -161,7 +241,7 @@ class serviceProfile {
 	}
 
 	getRondasCurso = () => {
-		const request = "/api/Rondas/RondasCurso";
+		const request = "/api/rondas/rondascurso";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -169,17 +249,6 @@ class serviceProfile {
 				'Authorization': 'Bearer ' + this.token
 			},
 		}).then(response => response.data);
-	}
-
-	getCharlasRonda(ronda) {
-		console.log(ronda+ "LLLLLLLLL")
-	    const request = "/api/Charlas/CharlasRonda/" + ronda;
-	    const url = Global.api + request;
-	    return axios.get(url, {
-	        headers: {
-	            'Authorization': 'Bearer ' + this.token
-	        },
-	    }).then(response => response.data);
 	}
 }
 

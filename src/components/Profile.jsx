@@ -1,34 +1,116 @@
 import React, { Component } from "react";
-import logo from "./../assets/images/logotipo-positivo.jpg";
 import services from "../services/services";
+import { Navigate } from "react-router-dom";
+import Card from "./CardCharla";
 
 export default class Profile extends Component {
   state = {
     usuario: null,
+    updated: false,
+    token: true,
+    allCharlas: [],
+    charlas: [],
+    rondas: [],
+    estadoSeleccionado: "0",
+    rondaSeleccionada: "0"
   };
 
   async getUsuario() {
-      const data = await services.getPerfilUsuario();
-      this.setState({ usuario: data.usuario });
+    const data = await services.getPerfilUsuario();
+    this.setState({ usuario: data.usuario });
   }
 
-  componentDidMount() {
-    this.getUsuario();
+  getCharlasUser = () => {
+    services.getCharlasUsuario().then((res) => {
+      console.log(res);
+      this.setState({ charlas: res, allCharlas: res });
+    }).catch((err) => {
+      console.log(err);
+    });
   }
+
+  getRondas = () => {
+    services.getRondasCurso().then((response) => {
+      this.setState({
+        rondas: response
+      });
+      console.log("rondas", response);
+    });
+  }
+
+  handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value }, this.filterCharlas);
+  }
+
+
+  filterCharlas = () => {
+    const { allCharlas, rondaSeleccionada, estadoSeleccionado } = this.state;
+    const charlasByRonda = rondaSeleccionada === "0" ? allCharlas : allCharlas.filter((c) => c.charla.idRonda === parseInt(rondaSeleccionada));
+    const charlasByEstado = estadoSeleccionado === "0" ? charlasByRonda : charlasByRonda.filter((c) => c.charla.idEstadoCharla === parseInt(estadoSeleccionado));
+
+    this.setState({ charlas: charlasByEstado });
+  }
+
+    //? Métodos por separado por si los queremos para otro component */
+  // handleRondaChange = (event) => {
+  //   const rondaSeleccionada = parseInt(event.target.value);
+  //   console.log("charlas state", this.state.allCharlas);
+
+  //   const charlasByRonda = this.state.allCharlas.filter((c) => {
+  //     return c.charla.idRonda === rondaSeleccionada;
+  //   });
+
+  //   if (rondaSeleccionada === 0) {
+  //     this.setState({ charlas: this.state.allCharlas, rondaSeleccionada });
+  //   } else {
+  //     this.setState({ charlas: charlasByRonda, rondaSeleccionada });
+  //     console.log("charlasbyronda", charlasByRonda);
+  //   }
+  // }
+
+  // handleEstadoChange = (event) => {
+  //   const estadoSeleccionado = parseInt(event.target.value);
+  //   const charlasByEstado = this.state.allCharlas.filter((c) => {
+  //     return c.charla.idEstadoCharla === estadoSeleccionado;
+  //   });
+
+  //   if (estadoSeleccionado === 0) {
+  //     this.setState({ charlas: this.state.allCharlas, estadoSeleccionado });
+  //   } else {
+  //     this.setState({ charlas: charlasByEstado, estadoSeleccionado });
+  //     console.log("charlasbyestado", charlasByEstado);
+  //   }
+  // }
+
+  componentDidMount() {
+    //Si no hay token te redirige al login con un mensaje
+    if (!localStorage.getItem("token")) {
+      this.setState({ token: false });
+      return;
+    }
+
+    const { usuario, updated } = this.props.location.state || {};
+    if (usuario) {
+      this.setState({ usuario, updated });
+    } else {
+      this.getUsuario();
+    }
+
+    this.getCharlasUser();
+    this.getRondas();
+  }
+
+  navigateUpdateProfile = () => {
+    console.log(this.state.usuario);
+    this.props.navigate('/updateprofile', { state: { usuario: this.state.usuario } });
+  };
 
   render() {
     const { usuario } = this.state;
-
     return (
       <div>
-        {/* Logo centrado */}
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <img
-            src={logo}
-            alt="Logo de la página"
-            style={{ maxWidth: "150px" }}
-          />
-        </div>
+        {!this.state.token && <Navigate to="/login" state={{ mensaje: "Debes iniciar sesión para acceder a tu perfil" }} />}
 
         {/* Contenedor principal */}
         <div
@@ -102,14 +184,6 @@ export default class Profile extends Component {
             <h2 className="fw-bold">{usuario?.nombre || "Cargando..."}</h2>
             {/* Email del usuario */}
             <p className="text-muted">{usuario?.email || "Cargando..."}</p>
-            <div
-              className="divider"
-              style={{
-                borderTop: "2px solid black",
-                width: "50%",
-                margin: "10px auto",
-              }}
-            ></div>
             <div className="mt-4">
               {/* Rol y curso */}
               <p>
@@ -119,9 +193,88 @@ export default class Profile extends Component {
                 <strong>Curso:</strong> {usuario?.curso || "Cargando..."}
               </p>
             </div>
+            <button className="btn btn-outline-dark m-2 mb-3" onClick={this.navigateUpdateProfile}>Editar perfil</button>
+
+            <div
+              className="divider"
+              style={{
+                borderTop: "2px solid black",
+                width: "50%",
+                margin: "10px auto",
+              }}
+            ></div>
+
+            <div>
+
+              {/* Filtro charlas */}
+              <div className="row d-flex justify-content-end mt-2">
+                <h2 className="my-4 text-center">Mis charlas:</h2>
+                <div className="col-6 col-md-3">
+                  <select
+                    className="form-select"
+                    name="rondaSeleccionada"
+                    value={this.state.rondaSeleccionada}
+                    onChange={this.handleFilterChange}
+                  >
+                    <option value="0">Todas las rondas</option>
+                    {this.state.rondas.map((ronda, index) => {
+                      return (
+                        <option key={index} value={ronda.idRonda}>
+                          Ronda {ronda.descripcionModulo}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-6 col-md-3">
+                  <select
+                    className="form-select"
+                    name="estadoSeleccionado"
+                    value={this.state.estadoSeleccionado}
+                    onChange={this.handleFilterChange}
+                  >
+                    <option value="0">Cualquier estado</option>
+                    {estadosCharla.map((e, index) => {
+                      return (
+                        <option key={index} value={e.idEstadoCharla}>
+                          {e.estado}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+
+              {/* Fila de charlas */}
+
+              <div className="row d-flex flex-wrap justify-content-start">
+                {this.state.charlas.map((c, index) => {
+                  return (
+                    <div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
+                      <Card
+                        imagen={c.charla.imagenCharla}
+                        titulo={c.charla.titulo}
+                        descripcion={c.charla.descripcion}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 }
+
+const estadosCharla = [
+  {
+    "idEstadoCharla": 1,
+    "estado": "PROPUESTA"
+  },
+  {
+    "idEstadoCharla": 2,
+    "estado": "ACEPTADA"
+  }
+];

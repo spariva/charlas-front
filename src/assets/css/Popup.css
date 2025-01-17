@@ -222,3 +222,28 @@
 .comentario_text {
   font-size: 15px;
 }
+
+.rec_elementos {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.icon {
+  color: #bdbdbd;
+}
+
+.recursos_txt {
+  color: #bdbdbd;
+}
+.rec_title {
+  display: flex;
+  align-items: center;
+  
+  gap: 10px;
+  color: #bdbdbd;
+  font-size: 40px;
+}
+.icon_recursos {
+  font-size: 25px;
+}

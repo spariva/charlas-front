@@ -49,6 +49,7 @@ class Charlas extends Component {
 	}
 
 	handleCardClick = (charla) => {
+		console.log(charla.idCharla);
 		this.setState({
 			idCharlaSeleccionada: charla.idCharla,
 			seleccionadaCharla: charla,
@@ -145,7 +146,7 @@ class Charlas extends Component {
 									<hr className="card_divisor" />
 								</div>
 								<div className="icon_tiempo">
-									<i className="fa-regular fa-clock"></i>
+									<i className="fa-regular fa-clock icon"></i>
 									<span className="charla_tiempo">{this.state.seleccionadaCharla.tiempo} min.</span>
 								</div>
 							</div>
@@ -155,46 +156,52 @@ class Charlas extends Component {
 									alt={this.state.seleccionadaCharla.titulo}
 								/>
 								<div className="charla_descripcion">
-									<span className="descripcion">{this.state.idCharlaSeleccionada.descripcion}</span>
+									<span className="descripcion">{this.state.seleccionadaCharla.descripcion}</span>
 								</div>
 							</div>
 							<hr />
-
 							{/* Sección de recursos */}
-							<div className="recursos">
-								<h3 onClick={this.toggleRecursos} style={{ cursor: 'pointer', color: '#007bff' }}>
-									{this.state.showRecursos ? "Ocultar Recursos" : "Mostrar Recursos"}
-								</h3>
-								{this.state.showRecursos && (
-									<ul>
-										{this.state.recursosCharla.map((recurso, index) => {
-											return (
-												<li key={index}>
-													<strong>{recurso.nombre}</strong>: {recurso.descripcion}
-													<br />
-													<a href={recurso.url} target="_blank" rel="noopener noreferrer">
-														Acceder al recurso
-													</a>
-												</li>
-											);
-										})}
-									</ul>
-								)}
-							</div>
-							<hr />
+							{this.state.recursosCharla.length > 0 && (
+								<div className="recursos">
+									<h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
+										{this.state.showRecursos ? (
+											<div className="rec_title">
+												<i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
+											</div>
+										) : (
+											<div className="rec_title">												
+											<i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
+											</div>
+										)}
+									</h3>
+									{this.state.showRecursos && (
+										<div className="recursos_content">
+											{this.state.recursosCharla.map((recurso, index) => (
+												<div className="rec_elementos" key={index}>
+													<span className="recurso_desc">{recurso.descripcion}</span>
+													<i class="fa-solid fa-arrow-right icon"></i>
+													<a className="recurso_link" href={recurso.url} target="_blank">{recurso.nombre}</a>
+												</div>
+											))}
+										</div>
+									)}
+									<hr />
+								</div>
+							)}
+
 							{/* Sección de comentarios */}
 							<div className="comentarios">
 								<div className="comentarios_title">
 									<span className="comentarios_text">Comentarios</span>
 									<input className="comentarios_input" type="text" placeholder="Agregar nuevo comentario..." />
-									<button className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario"></i></button>
+									<button className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario icon" ></i></button>
 								</div>
 								<div className="comentarios_content">
 									{this.state.comentariosCharla.map((comentario, index) => {
 										return (
 											<div className="container_comentario" key={index}>
 												<div className="comentario">
-													<span className="comentario_text">{comentario.contenido}</span> 
+													<span className="comentario_text">{comentario.contenido}</span>
 													<span className="comentario_user">-{comentario.usuario}-</span>
 												</div>
 											</div>

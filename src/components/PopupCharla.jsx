@@ -12,6 +12,7 @@ const PopupCharla = ({ show, onClose, children }) => {
         </button>
         {children}
       </div>
+      <div className="popup-scroll-hint">Desliza hacia abajo</div>
     </div>
   );
 };

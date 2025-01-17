@@ -11,6 +11,8 @@ class Charlas extends Component {
 		rondaSeleccionada: "",
 		seleccionadaCharla: null,
 		showPopup: false,
+		idCharlaSeleccionada: null,
+		comentariosCharla: []
 	}
 
 	getCharlas = () => {
@@ -29,6 +31,15 @@ class Charlas extends Component {
 			});
 		});
 	}
+
+	// getDetallesCharla = () => {
+	// 	services.getCharlaId(this.idCharlaSeleccionada).then((response) => {
+	// 		this.setState({
+	// 			charlas: response
+	// 		})
+	// 		console.log(this.charlas);
+	// 	})
+	// }
 
 	// getEstadosCharla = () => {
 	// 	services.getEstadoCharla().then((response) => {
@@ -56,11 +67,22 @@ class Charlas extends Component {
 		})
 	}
 
-
+	//CAMBIAR METODO 
 	handleCardClick = (charla) => {
 		this.setState({
+			idCharlaSeleccionada: charla.idCharla,
 			seleccionadaCharla: charla,
 			showPopup: true
+		});
+		console.log("idCharla seleccionada:", charla.idCharla);
+		services.getCharlaId(charla.idCharla).then((response) => {
+			console.log("Respuesta de charla:", response.comentarios);
+			this.setState({
+				comentariosCharla: response.comentarios
+			});
+			console.log(this.state.comentariosCharla);
+		}).catch((error) => {
+			console.error("Error fetching charla details:", error);
 		});
 	}
 
@@ -114,6 +136,7 @@ class Charlas extends Component {
 					{this.state.charlas.map((charla, index) => {
 						return (
 							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4"
+								//pasar como parametro el id
 								onClick={() => this.handleCardClick(charla)}
 								style={{ cursor: "pointer" }}>
 								<Card
@@ -153,7 +176,29 @@ class Charlas extends Component {
 									alt={this.state.seleccionadaCharla.titulo}
 								/>
 								<div className="charla_descripcion">
-									<span className="descripcion">{this.state.seleccionadaCharla.descripcion}</span>
+									<span className="descripcion">{this.state.idCharlaSeleccionada.descripcion}</span>
+								</div>
+							</div>
+							<hr />
+							<div className="comentarios">
+								<div className="comentarios_title">
+									<span className="comentarios_text">Comentarios</span>
+									<input className="comentarios_input" type="text" placeholder="Agregar nuevo comentario..." />
+									<button className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario"></i></button>
+								</div>
+								<div className="comentarios_content">
+									{this.state.comentariosCharla.map((comentario, index) => {
+										return (
+											<div className="container_comentario">
+												{/* sacar foto perfil user */}
+												<div className="comentarios_user"></div>
+												<div className="comentario">
+													<span key={index}>{comentario.contenido}</span> 
+												</div>
+											</div>
+										);
+									})}
+
 								</div>
 							</div>
 						</>

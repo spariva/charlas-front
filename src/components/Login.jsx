@@ -109,7 +109,7 @@ export default class Login extends Component {
     return (
       <div className="login-parent-container">
 
-        {this.state.status && <Navigate to="/profile" />}
+        {this.state.status && <Navigate to="/home" />}
 
         {mensaje && (
           <div className="alert alert-danger" role="alert">

@@ -22,6 +22,7 @@ class Home extends Component {
 		});
 	};
 
+	//TODO: METODO CHECKTOKEN?????? PARA QUE APAREZCAN LOS COMPONENTS
 	// getRondas = () => {
 	// 	services.getRondas().then((response) => {
 	// 		console.log(response);
@@ -39,7 +40,7 @@ class Home extends Component {
 	// 		});
 	// 	});
 	// };
-
+	
 	componentDidMount = () => {
 		this.getCharlas();
 		// this.getRondas();

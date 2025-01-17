@@ -26,10 +26,11 @@ export default class Router extends Component {
   }
 
   async componentDidMount() {
-    // Usa el método del servicio para obtener el token
-    const token = localStorage.getItem('token'); // Alternativamente, puedes crear un método en el servicio para esto.
+    const token = localStorage.getItem('token'); 
     this.setState({ token });
   }
+
+  
 
   handleLogout = () => {
     localStorage.removeItem("token");

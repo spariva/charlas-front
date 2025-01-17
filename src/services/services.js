@@ -264,6 +264,16 @@ class serviceProfile {
 		}).then(response => response.data);
 	}
 
+	getCharlaId = (id) => {
+		const request = "/api/charlas/" + id;
+		const url = Global.api + request;
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			},
+		}).then(response => response.data);
+	}
+
 	votarCharla = (voto) => {
 		const request = "/api/Votos";
 		const url = Global.api + request;

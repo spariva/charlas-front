@@ -109,7 +109,7 @@ export default class Profile extends Component {
     const { usuario } = this.state;
     return (
       <div>
-        {!this.state.token && <Navigate to="/login" state={{ mensaje: "Debes iniciar sesión para acceder a tu perfil" }} />}
+        {!this.state.token && <Navigate to="/" state={{ mensaje: "Debes iniciar sesión para acceder a tu perfil" }} />}
 
         {/* Contenedor principal */}
         <div

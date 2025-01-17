@@ -12,12 +12,13 @@ class Charlas extends Component {
 		seleccionadaCharla: null,
 		showPopup: false,
 		idCharlaSeleccionada: null,
-		comentariosCharla: []
+		comentariosCharla: [],
+		recursosCharla: [],
+		showRecursos: false, // Estado para controlar la visibilidad de los recursos
 	}
 
 	getCharlas = () => {
 		services.getCharlasCurso().then((response) => {
-			console.log(response);
 			this.setState({
 				charlas: response
 			});
@@ -32,29 +33,10 @@ class Charlas extends Component {
 		});
 	}
 
-	// getDetallesCharla = () => {
-	// 	services.getCharlaId(this.idCharlaSeleccionada).then((response) => {
-	// 		this.setState({
-	// 			charlas: response
-	// 		})
-	// 		console.log(this.charlas);
-	// 	})
-	// }
-
-	// getEstadosCharla = () => {
-	// 	services.getEstadoCharla().then((response) => {
-	// 		this.setState({
-	// 			estadoCharla: response
-	// 		})
-	// 		console.log("estados charla ", response);
-	// 	})
-	// }
-
 	componentDidMount = () => {
 		services.getToken();
 		this.getCharlas();
 		this.getRondas();
-		// this.getEstadosCharla();
 	}
 
 	handleRondaChange = (event) => {
@@ -63,24 +45,20 @@ class Charlas extends Component {
 			this.setState({
 				charlas: response
 			});
-			console.log("change charlas ", response);
-		})
+		});
 	}
 
-	//CAMBIAR METODO 
 	handleCardClick = (charla) => {
 		this.setState({
 			idCharlaSeleccionada: charla.idCharla,
 			seleccionadaCharla: charla,
 			showPopup: true
 		});
-		console.log("idCharla seleccionada:", charla.idCharla);
 		services.getCharlaId(charla.idCharla).then((response) => {
-			console.log("Respuesta de charla:", response.comentarios);
 			this.setState({
-				comentariosCharla: response.comentarios
+				comentariosCharla: response.comentarios,
+				recursosCharla: response.recursos
 			});
-			console.log(this.state.comentariosCharla);
 		}).catch((error) => {
 			console.error("Error fetching charla details:", error);
 		});
@@ -91,6 +69,13 @@ class Charlas extends Component {
 			seleccionadaCharla: null,
 			showPopup: false
 		});
+	}
+
+	// Función para alternar la visibilidad de los recursos
+	toggleRecursos = () => {
+		this.setState(prevState => ({
+			showRecursos: !prevState.showRecursos
+		}));
 	}
 
 	render() {
@@ -114,9 +99,7 @@ class Charlas extends Component {
 						</select>
 					</div>
 					<div className="col-6 col-md-3">
-						<select
-							className="form-select"
-						>
+						<select className="form-select">
 							<option value="">Estado</option>
 							{this.state.estadoCharla.map((estado, index) => {
 								return (
@@ -135,10 +118,7 @@ class Charlas extends Component {
 				<div className="row d-flex flex-wrap justify-content-start">
 					{this.state.charlas.map((charla, index) => {
 						return (
-							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4"
-								//pasar como parametro el id
-								onClick={() => this.handleCardClick(charla)}
-								style={{ cursor: "pointer" }}>
+							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>
 								<Card
 									imagen={charla.imagenCharla}
 									titulo={charla.titulo}
@@ -148,10 +128,9 @@ class Charlas extends Component {
 						);
 					})}
 				</div>
-				<PopupCharla
-					show={this.state.showPopup}
-					onClose={this.handleClosePopup}
-				>
+
+				{/* Popup para charla seleccionada */}
+				<PopupCharla show={this.state.showPopup} onClose={this.handleClosePopup}>
 					{this.state.seleccionadaCharla && (
 						<>
 							<div className="charla_estado">
@@ -163,10 +142,10 @@ class Charlas extends Component {
 							<div className="charla_title">
 								<div className="title">
 									<h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
-									<hr className="card_divisor"></hr>
+									<hr className="card_divisor" />
 								</div>
 								<div className="icon_tiempo">
-									<i class="fa-regular fa-clock"></i>
+									<i className="fa-regular fa-clock"></i>
 									<span className="charla_tiempo">{this.state.seleccionadaCharla.tiempo} min.</span>
 								</div>
 							</div>
@@ -180,6 +159,30 @@ class Charlas extends Component {
 								</div>
 							</div>
 							<hr />
+
+							{/* Sección de recursos */}
+							<div className="recursos">
+								<h3 onClick={this.toggleRecursos} style={{ cursor: 'pointer', color: '#007bff' }}>
+									{this.state.showRecursos ? "Ocultar Recursos" : "Mostrar Recursos"}
+								</h3>
+								{this.state.showRecursos && (
+									<ul>
+										{this.state.recursosCharla.map((recurso, index) => {
+											return (
+												<li key={index}>
+													<strong>{recurso.nombre}</strong>: {recurso.descripcion}
+													<br />
+													<a href={recurso.url} target="_blank" rel="noopener noreferrer">
+														Acceder al recurso
+													</a>
+												</li>
+											);
+										})}
+									</ul>
+								)}
+							</div>
+							<hr />
+							{/* Sección de comentarios */}
 							<div className="comentarios">
 								<div className="comentarios_title">
 									<span className="comentarios_text">Comentarios</span>
@@ -189,16 +192,14 @@ class Charlas extends Component {
 								<div className="comentarios_content">
 									{this.state.comentariosCharla.map((comentario, index) => {
 										return (
-											<div className="container_comentario">
-												{/* sacar foto perfil user */}
-												<div className="comentarios_user"></div>
+											<div className="container_comentario" key={index}>
 												<div className="comentario">
-													<span key={index}>{comentario.contenido}</span> 
+													<span className="comentario_text">{comentario.contenido}</span> 
+													<span className="comentario_user">-{comentario.usuario}-</span>
 												</div>
 											</div>
 										);
 									})}
-
 								</div>
 							</div>
 						</>
@@ -208,6 +209,5 @@ class Charlas extends Component {
 		);
 	}
 }
-
 
 export default Charlas;

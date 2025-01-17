@@ -11,16 +11,33 @@ class Header extends Component {
 
   componentDidMount() {
     this.checkToken();
+    window.addEventListener('storage', this.handleStorageChange);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.handleStorageChange);
+  }
+
+  handleStorageChange = (event) => {
+    if (event.key === 'token') {
+      console.log("handle", event.newValue);
+      this.checkToken();
+    }
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    const isTokenAvailable = !!localStorage.getItem("token");
+    if (isTokenAvailable !== this.state.tokenAvailable) {
+      console.log("Token has changed", isTokenAvailable);
+      this.setState({ tokenAvailable: isTokenAvailable });
+    }
   }
 
   // Función para verificar si el token está presente
   checkToken() {
     const token = localStorage.getItem("token");
-    if (token) {
-      this.setState({ tokenAvailable: true }); 
-    } else {
-      this.setState({ tokenAvailable: false });
-    }
+    console.log("Token", !!token);
+    this.setState({ tokenAvailable: !!token });
   }
 
   render() {

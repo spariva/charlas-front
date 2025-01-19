@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import services from "../services/services";
 import Card from "./CardCharla";
 import PopupCharla from "./PopupCharla";
@@ -15,6 +15,7 @@ class Charlas extends Component {
 		comentariosCharla: [],
 		recursosCharla: [],
 		showRecursos: false, // Estado para controlar la visibilidad de los recursos
+		idUsuarioCharlaSeleccionada: null
 	}
 
 	getCharlas = () => {
@@ -56,9 +57,11 @@ class Charlas extends Component {
 			showPopup: true
 		});
 		services.getCharlaId(charla.idCharla).then((response) => {
+			console.log("charla id: " + JSON.stringify(response));
 			this.setState({
 				comentariosCharla: response.comentarios,
-				recursosCharla: response.recursos
+				recursosCharla: response.recursos,
+				idUsuarioCharlaSeleccionada: response.charla.idUsuario
 			});
 		}).catch((error) => {
 			console.error("Error fetching charla details:", error);
@@ -77,6 +80,48 @@ class Charlas extends Component {
 		this.setState(prevState => ({
 			showRecursos: !prevState.showRecursos
 		}));
+	}
+
+	//agregar comentarios
+	//ref para añadir comentarios
+	cajaContenido = React.createRef();
+
+	postComentario = (e) => {
+		e.preventDefault();
+		let comentarioText = this.cajaContenido.current.value;
+		let idCharla = this.state.idCharlaSeleccionada;
+		let idUsuario = this.state.idUsuarioCharlaSeleccionada;
+		let date = new Date();
+		let comentario = {
+			"idComentario": 0,
+			"idCharla": idCharla,
+			"idUsuario": idUsuario,
+			"contenido": comentarioText,
+			"fecha": date
+		}
+
+		services
+        .postComentario(comentario)
+        .then(() => {
+            console.log("Comentario agregado");
+
+            // Obtener los comentarios actualizados desde el servidor
+            return services.getCharlaId(idCharla);
+        })
+        .then((charlaData) => {
+            console.log("Comentarios actualizados:", charlaData.comentarios);
+
+            // Actualiza el estado con los comentarios completos
+            this.setState({
+                comentariosCharla: charlaData.comentarios,
+            });
+
+            // Limpia el input después de enviar
+            this.cajaContenido.current.value = "";
+        })
+        .catch((error) => {
+            console.error("Error al enviar el comentario o actualizar comentarios:", error);
+        });
 	}
 
 	render() {
@@ -169,8 +214,8 @@ class Charlas extends Component {
 												<i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
 											</div>
 										) : (
-											<div className="rec_title">												
-											<i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
+											<div className="rec_title">
+												<i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
 											</div>
 										)}
 									</h3>
@@ -193,8 +238,8 @@ class Charlas extends Component {
 							<div className="comentarios">
 								<div className="comentarios_title">
 									<span className="comentarios_text">Comentarios</span>
-									<input className="comentarios_input" type="text" placeholder="Agregar nuevo comentario..." />
-									<button className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario icon" ></i></button>
+									<input className="comentarios_input" ref={this.cajaContenido} type="text" placeholder="Agregar nuevo comentario..." />
+									<button onClick={this.postComentario} className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario icon" ></i></button>
 								</div>
 								<div className="comentarios_content">
 									{this.state.comentariosCharla.map((comentario, index) => {

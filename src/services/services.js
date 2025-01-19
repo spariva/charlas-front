@@ -294,6 +294,17 @@ class serviceProfile {
 			}
 		})
 	}
+
+	//comentarios
+	postComentario = (comentario) => {
+		const request = "/api/comentarios";
+		const url = Global.api + request;
+		return axios.post(url, comentario, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
 }
 
 const services = new serviceProfile();

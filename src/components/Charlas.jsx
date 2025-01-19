@@ -15,7 +15,9 @@ class Charlas extends Component {
 		comentariosCharla: [],
 		recursosCharla: [],
 		showRecursos: false, // Estado para controlar la visibilidad de los recursos
-		idUsuarioCharlaSeleccionada: null
+		idUsuarioCharlaSeleccionada: null,
+		//para borrar un comentario
+		idComentarioSeleccionado: null
 	}
 
 	getCharlas = () => {
@@ -101,27 +103,28 @@ class Charlas extends Component {
 		}
 
 		services
-        .postComentario(comentario)
-        .then(() => {
-            console.log("Comentario agregado");
+			.postComentario(comentario)
+			.then(() => {
+				console.log("Comentario agregado");
+				return services.getCharlaId(idCharla);
+			})
+			.then((charlaData) => {
+				console.log("Comentarios actualizados:", charlaData.comentarios);
 
-            // Obtener los comentarios actualizados desde el servidor
-            return services.getCharlaId(idCharla);
-        })
-        .then((charlaData) => {
-            console.log("Comentarios actualizados:", charlaData.comentarios);
+				this.setState({
+					comentariosCharla: charlaData.comentarios,
+				});
 
-            // Actualiza el estado con los comentarios completos
-            this.setState({
-                comentariosCharla: charlaData.comentarios,
-            });
+				// Limpia el input después de enviar
+				this.cajaContenido.current.value = "";
+			})
+			.catch((error) => {
+				console.error("Error al enviar el comentario o actualizar comentarios:", error);
+			});
+	}
+	//borrar un comentario
+	deleteComentario = () => {
 
-            // Limpia el input después de enviar
-            this.cajaContenido.current.value = "";
-        })
-        .catch((error) => {
-            console.error("Error al enviar el comentario o actualizar comentarios:", error);
-        });
 	}
 
 	render() {
@@ -248,6 +251,8 @@ class Charlas extends Component {
 												<div className="comentario">
 													<span className="comentario_text">{comentario.contenido}</span>
 													<span className="comentario_user">-{comentario.usuario}-</span>
+												{/* boton borrar */}
+
 												</div>
 											</div>
 										);

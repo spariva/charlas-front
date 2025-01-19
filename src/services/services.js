@@ -305,6 +305,20 @@ class serviceProfile {
 			}
 		})
 	}
+
+	deleteComentario = (idComentario) => {
+		const request = "api/comentarios/" + idComentario;
+		const url = Global.api + request;
+		return axios.delete(url,
+			{
+				headers: {
+					'Authorization': 'Bearer ' + this.token
+				}
+			}
+		).then((response)=> {
+			console.log("comentario eliminado correctamente");
+		})
+	}
 }
 
 const services = new serviceProfile();

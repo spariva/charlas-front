@@ -64,7 +64,7 @@ export default class Menu extends Component {
 						<h4>Votar charlas</h4>
 					</div>
 				</NavLink>
-				<NavLink to="/login" onClick={this.logout}>
+				<NavLink to="/" onClick={this.logout}>
 					<div className="option">
 						<i className="far fa-address-card"></i>
 						<h4>Log out</h4>

@@ -34,6 +34,7 @@ export default class VotarCharlas extends Component {
 	}
 
 	votarCharlaSeleccionda = () => {
+		const userId = localStorage.getItem('userId');
 		let idCharla = this.state.charlaSeleccionada;
 		
 	}
@@ -44,9 +45,11 @@ export default class VotarCharlas extends Component {
 	}
 
 	render() {
+		const userId = localStorage.getItem('userId');
 		return (
 			<div className="container">
-				<h1 className="my-4 text-center">Charlas</h1>
+				<h1 className="my-4 text-center">Votar Charlas</h1>
+				<p>Usuario ID: {userId}</p>
 				<div className="row d-flex flex-wrap justify-content-start">
 					{this.state.charlas.map((charla, index) => {
 						const isSelected = this.state.charlaSeleccionada === charla.idCharla;

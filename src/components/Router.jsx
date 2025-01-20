@@ -22,7 +22,6 @@ export default class Router extends Component {
             let {id} = useParams();
             return  (<Charlas id={id} />)
         }
-
         return (
             <BrowserRouter>
                 <div className="container-fluid">
@@ -33,7 +32,7 @@ export default class Router extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-2 p-0">
-                            <Menu /> 
+                            <Menu />
                         </div>
 
                         <div className="col-8">

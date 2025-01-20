@@ -4,11 +4,20 @@ import { NavLink } from 'react-router-dom'
 import services from '../services/services'
 
 export default class Menu extends Component {
+	constructor(props) {
+        super(props);
+        this.state = {
+            userId: props.userId
+        };
+    }
 	logout = () => {
 		services.logout();
 	}
 
 	render() {
+		const userId = localStorage.getItem('userId');
+		console.log(userId);
+
 		return (<div className="menu__side">
 			<div className="name__page">
 				<i className="fab fa-youtube"></i>
@@ -49,7 +58,7 @@ export default class Menu extends Component {
 						<h4>Crear Charla</h4>
 					</div>
 				</NavLink>
-				<NavLink to="/votar">
+				<NavLink to={'/votar'}>
 					<div className="option">
 						<i className="far fa-sticky-note"></i>
 						<h4>Votar charlas</h4>

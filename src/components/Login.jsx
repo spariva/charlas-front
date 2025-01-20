@@ -19,7 +19,8 @@ export default class Login extends Component {
   state = {
     isRegistroForm: false,
     status: false,
-    rol: "2"
+    rol: "2",
+	usuario: "",
   }
 
 
@@ -75,6 +76,13 @@ export default class Login extends Component {
     // });
   }
 
+  async getUsuario() {
+    const data = await services.getPerfilUsuario();
+	console.log("data"+data.usuario);
+    this.setState({ usuario: data.usuario });
+	return data.usuario;
+  }
+
   login = (e) => {
     e.preventDefault();
     var user = {
@@ -82,13 +90,20 @@ export default class Login extends Component {
       password: this.cajaPasswordLogin.current.value
     }
 
+	
+
     services.login(user)
-      .then(res => {
-        this.setState({ status: true });
-      }).catch(err => {
-        console.log(err);
-        alert("Error de credenciales");
-      });
+            .then(res => {
+                return this.getUsuario();
+            })
+            .then(profile => {
+                this.setState({ status: true });
+				localStorage.setItem('userId', profile.idUsuario);
+            })
+            .catch(err => {
+                console.log(err);
+                alert("Error de credenciales");
+            });
   }
 
   swap = () => {
@@ -109,7 +124,7 @@ export default class Login extends Component {
     return (
       <div className="login-parent-container">
 
-        {this.state.status && <Navigate to="/home" />}
+		{this.state.status && <Navigate to="/home" />}
 
         {mensaje && (
           <div className="alert alert-danger" role="alert">

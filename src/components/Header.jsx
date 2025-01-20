@@ -20,10 +20,9 @@ class Header extends Component {
   checkToken() {
     const token = localStorage.getItem("token");
     if (token) {
-      this.setState({ tokenAvailable: true });
-      this.getUsuario();
+      this.setState({ tokenAvailable: true }); 
     } else {
-      this.setState({ tokenAvailable: false, perfilUsuario: null });
+      this.setState({ tokenAvailable: false });
     }
   }
 

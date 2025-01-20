@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import services from "../services/services";
 import Card from "./CardCharla";
 import PopupCharla from "./PopupCharla";
+import BtnDel from "./BtnDel";
+import BtnUpdate from "./BtnUpdate";
 
 class Charlas extends Component {
 	state = {
@@ -127,6 +129,11 @@ class Charlas extends Component {
 
 	}
 
+	//PRUEBA CLICK BTN DELETE
+	clickDelete = () => {
+		console.log("click");
+	}
+
 	render() {
 		return (
 			<div className="container">
@@ -191,7 +198,10 @@ class Charlas extends Component {
 							<div className="charla_title">
 								<div className="title">
 									<h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
-									<hr className="card_divisor" />
+									{/* PRUEBA BOTONES COMPONENT DELETE Y UPDATE */}
+									{/* <BtnDel onClick={this.clickDelete}/>
+									<BtnUpdate/> */}
+									<hr className="card_divisor"></hr>
 								</div>
 								<div className="icon_tiempo">
 									<i className="fa-regular fa-clock icon"></i>

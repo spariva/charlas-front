@@ -8,12 +8,16 @@ export default class VotarCharlas extends Component {
 		rondas: [],
 		rondaSeleccionada: "",
 		charlaSeleccionada: "0",
+		ultimaRonda: "",
 	}
 
 	getCharlasUltimaRonda = () => {
 		services.getRondasCurso().then((rondasResponse) => {
 			if (rondasResponse.length > 0) {
 				const ultimaRonda = rondasResponse[rondasResponse.length - 1];
+				this.setState({
+					ultimaRonda: ultimaRonda
+				})
 				services.getCharlasRonda(ultimaRonda.idRonda).then((charlasResponse) => {
 					this.setState({
 						charlas: charlasResponse,
@@ -35,8 +39,18 @@ export default class VotarCharlas extends Component {
 
 	votarCharlaSeleccionda = () => {
 		const userId = localStorage.getItem('userId');
-		let idCharla = this.state.charlaSeleccionada;
-		
+		const idCharla = this.state.charlaSeleccionada;
+		const ultimaRonda = this.state.ultimaRonda.idRonda;
+		console.log("user: "+userId+", idCharla: "+idCharla+", idRonda: "+ultimaRonda);
+		let voto = {
+			idVoto: 0,
+			idCharla: idCharla,
+			idUsuario: userId,
+			idRonda: ultimaRonda
+		}
+		services.votarCharla(voto).then(res => {
+			alert("SU VOTO HA SIDO REGISTRADO" + res);
+		})
 	}
 
 	componentDidMount = () => {
@@ -64,6 +78,7 @@ export default class VotarCharlas extends Component {
 									titulo={charla.titulo}
 									descripcion={charla.descripcion}
 								/>
+								<p>Id charla: {charla.idCharla}</p>
 							</div>
 						);
 					})}

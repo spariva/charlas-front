@@ -320,6 +320,16 @@ class serviceProfile {
 			console.log("comentario eliminado correctamente");
 		})
 	}
+
+	updateComentario = (comentario) => {
+		const request = "api/comentarios";
+		const url = Global.api + request;
+		return axios.put(url , comentario, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
 }
 
 const services = new serviceProfile();

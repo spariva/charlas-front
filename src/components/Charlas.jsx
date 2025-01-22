@@ -19,9 +19,19 @@ class Charlas extends Component {
 		showRecursos: false, // Estado para controlar la visibilidad de los recursos
 		idUsuarioCharlaSeleccionada: null,
 		//para borrar un comentario
-		idComentarioSeleccionado: null
+		idComentarioSeleccionado: null,
+	idUsuarioPerfil: null		
 	}
 
+	//llamar al usuario getperfil
+	getPerfil = () => {
+		services.getPerfilUsuario().then((response) => {
+			this.setState({
+				idUsuarioPerfil: response.usuario.idUsuario
+			})
+			console.log("Id usuario " + response.usuario.idUsuario)
+		})
+	}
 	getCharlas = () => {
 		services.getCharlasCurso().then((response) => {
 			this.setState({
@@ -42,6 +52,7 @@ class Charlas extends Component {
 		services.getToken();
 		this.getCharlas();
 		this.getRondas();
+		this.getPerfil();
 	}
 
 	handleRondaChange = (event) => {
@@ -62,14 +73,15 @@ class Charlas extends Component {
 		});
 		services.getCharlaId(charla.idCharla).then((response) => {
 			console.log("charla id: " + JSON.stringify(response));
+
 			this.setState({
 				comentariosCharla: response.comentarios,
 				recursosCharla: response.recursos,
-				idUsuarioCharlaSeleccionada: response.charla.idUsuario
+				idUsuarioCharlaSeleccionada: response.charla.idUsuario,
+				// idUsuarioComentario: comentariosFiltrados
 			});
-		}).catch((error) => {
-			console.error("Error fetching charla details:", error);
-		});
+			console.log(response.comentarios)
+		})
 	}
 
 	handleClosePopup = () => {
@@ -125,13 +137,36 @@ class Charlas extends Component {
 			});
 	}
 	//borrar un comentario
-	deleteComentario = () => {
-
+	deleteComentario = (idComentario) => {
+		services
+			.deleteComentario(idComentario)
+			.then(() => {
+				console.log(`Comentario con ID ${idComentario} eliminado`);
+				return services.getCharlaId(this.state.idCharlaSeleccionada);
+			})
+			.then((charlaData) => {
+				this.setState({
+					comentariosCharla: charlaData.comentarios,
+				});
+			})
+			.catch((error) => {
+				console.error(`Error al eliminar comentario con ID ${idComentario}:`, error);
+			});
 	}
 
-	//PRUEBA CLICK BTN DELETE
-	clickDelete = () => {
-		console.log("click");
+	updateComentario = () => {
+
+		// e.preventDefault();
+		// let comentario = {
+		// 	"idComentario": 0,
+		// 	"idCharla": idCharla,
+		// 	"idUsuario": idUsuario,
+		// 	"contenido": comentarioText,
+		// 	"fecha": date
+		// }
+		// services.updateComentario(idComentario).then(() => {
+		// 	console.log("Comentario con id" + idComentario);
+		// })
 	}
 
 	render() {
@@ -257,15 +292,23 @@ class Charlas extends Component {
 								<div className="comentarios_content">
 									{this.state.comentariosCharla.map((comentario, index) => {
 										return (
-											<div className="container_comentario" key={index}>
+											<div key={index} className="container_comentario">
 												<div className="comentario">
 													<span className="comentario_text">{comentario.contenido}</span>
 													<span className="comentario_user">-{comentario.usuario}-</span>
-													{/* boton borrar */}
-													<div className="btnAcciones">
-													<BtnDel className="btnDel--peq"/>
-													<BtnUpdate className="btnUpdate--peq" />
-													</div>
+													{/* <p>{comentario.idUsuario}</p> */}
+													{comentario.idUsuario === this.state.idUsuarioPerfil && (
+														<div className="btnAcciones">
+															<BtnDel
+																className="btnDel--peq"
+																onClick={() => this.deleteComentario(comentario.idComentario)}
+															/>
+															<BtnUpdate
+																className="btnUpdate--peq"
+																
+															/>
+														</div>
+													)}
 												</div>
 											</div>
 										);

@@ -28,3 +28,16 @@
 .bin-button:active {
   transform: scale(0.9);
 }
+
+.btnDel--peq {
+  width: 40px;
+  height: 40px;
+}
+
+.btnDel--peq .bin-bottom {
+  width: 11px;
+}
+
+.btnDel--peq .bin-top {
+  width: 14px;
+}

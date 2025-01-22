@@ -276,3 +276,9 @@
   font-size: 1.2rem;
   color: #bdbdbd;
 }
+
+.btnAcciones {
+  display: flex;
+  flex-direction: row;
+}
+

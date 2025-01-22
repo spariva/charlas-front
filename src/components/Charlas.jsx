@@ -261,8 +261,11 @@ class Charlas extends Component {
 												<div className="comentario">
 													<span className="comentario_text">{comentario.contenido}</span>
 													<span className="comentario_user">-{comentario.usuario}-</span>
-												{/* boton borrar */}
-
+													{/* boton borrar */}
+													<div className="btnAcciones">
+													<BtnDel className="btnDel--peq"/>
+													<BtnUpdate className="btnUpdate--peq" />
+													</div>
 												</div>
 											</div>
 										);

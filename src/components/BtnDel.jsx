@@ -1,9 +1,9 @@
 import React from "react";
-import btnDelete from './../assets/css/btnDelete.css';
+import btnDelete from './../assets/css/btnDelete.css'; // Asegúrate de que este import funcione correctamente.
 
-const BtnDel = ({ onClick }) => {
+const BtnDel = ({ onClick, className = "" }) => {
   return (
-    <button className="bin-button" onClick={onClick}>
+    <button className={`bin-button ${className}`} onClick={onClick}>
       <svg
         className="bin-top"
         viewBox="0 0 39 7"

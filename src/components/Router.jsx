@@ -2,9 +2,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
 import Home from './Home';
-import Login from './Login';
 import Menu from './Menu';
-// import Profile from './Profile'
 import ProfileWrapper from './ProfileWrapper';
 import Charlas from './Charlas';
 import Header from './Header';
@@ -14,6 +12,7 @@ import NotFound from './NotFound';
 import UpdateProfileWrapper from './UpdateProfileWrapper';
 import LoginWrapper from './LoginWrapper';
 import VotarCharlas from './VotarCharlas';
+import UpdateCharla from './UpdateCharla';
 
 export default class Router extends Component {
 
@@ -67,6 +66,7 @@ export default class Router extends Component {
                     <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
                     <Route path="/charlas" element={<Charlas />} />
                     <Route path="/charlas/:id" element={<CharlasRonda />} />
+                    <Route path="/updatecharla" element={<UpdateCharla />} />
                     <Route path="/createronda" element={<CreateRonda />} />
                     <Route path="/createcharla" element={<CreateCharla />} />
                     <Route path="/votar" element={<VotarCharlas />} />

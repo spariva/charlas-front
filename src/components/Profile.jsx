@@ -94,32 +94,50 @@ export default class Profile extends Component {
   //   }
   // }
 
-  
-	handleCardClick = (charla) => {
-		console.log("clickar", charla.idCharla);
-		this.setState({
-			idCharlaSeleccionada: charla.idCharla,
-			seleccionadaCharla: charla,
-			showPopup: true
-		});
-		services.getCharlaId(charla.idCharla).then((response) => {
-			console.log("charla id: " + JSON.stringify(response));
-			this.setState({
-				comentariosCharla: response.comentarios,
-				recursosCharla: response.recursos,
-				idUsuarioCharlaSeleccionada: response.charla.idUsuario
-			});
-		}).catch((error) => {
-			console.error("Error fetching charla details:", error);
-		});
-	}
 
-	handleClosePopup = () => {
-		this.setState({
-			seleccionadaCharla: null,
-			showPopup: false
-		});
-	}
+  handleCardClick = (charla) => {
+    this.setState({
+      idCharlaSeleccionada: charla.idCharla,
+      seleccionadaCharla: charla,
+      showPopup: true
+    });
+    services.getCharlaId(charla.idCharla).then((response) => {
+      // console.log("charla id: " + JSON.stringify(response));
+      this.setState({
+        comentariosCharla: response.comentarios,
+        recursosCharla: response.recursos,
+        idUsuarioCharlaSeleccionada: response.charla.idUsuario
+      });
+    }).catch((error) => {
+      console.error("Error fetching charla details:", error);
+    });
+  }
+
+  handleClosePopup = () => {
+    this.setState({
+      seleccionadaCharla: null,
+      showPopup: false
+    });
+  }
+
+  updateCharla = () => {
+    console.log("idCharla seleccionada: ", this.state.idCharlaSeleccionada);
+    console.log("charla seleccionada: ", this.state.seleccionadaCharla);
+    this.handleClosePopup();
+    this.props.navigate('/updatecharla');
+  }
+
+  deleteCharla = () => {
+    console.log("idCharla seleccionada: ", this.state.idCharlaSeleccionada);
+    services.deleteCharla(this.state.idCharlaSeleccionada).then((response) => {
+      this.getCharlasUser();
+      this.handleClosePopup();
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+
 
   componentDidMount() {
     //Si no hay token te redirige al login con un mensaje
@@ -309,22 +327,23 @@ export default class Profile extends Component {
               <PopupCharla show={this.state.showPopup} onClose={this.handleClosePopup}>
                 {this.state.seleccionadaCharla && (
                   <>
-                    <div className="charla_estado">
+                    {/* <div className="charla_estado">
                       <span className="estado" style={{
                         backgroundColor: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#b7eab0' : '#e5a879',
                         color: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#29721f' : '#d57018',
                       }}>{this.state.seleccionadaCharla.estadoCharla}</span>
-                    </div>
+                    </div> */}
                     <div className="charla_title">
                       <div className="title">
                         <h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
-                        {/* PRUEBA BOTONES COMPONENT DELETE Y UPDATE */}
-                        {/* <BtnDel onClick={this.clickDelete}/>
-									<BtnUpdate/> */}
                         <hr className="card_divisor"></hr>
                       </div>
-                      <div className="icon_tiempo">
-                        <i className="fa-regular fa-clock icon"></i>
+                      <div className="icon_tiempo gap-1">
+                        <div className="btnAcciones gap-3">
+                          <BtnUpdate onClick={this.updateCharla}/>
+                          <BtnDel onClick={this.deleteCharla}/>
+                        </div>
+                        <i className="fa-regular fa-clock icon ms-2"></i>
                         <span className="charla_tiempo">{this.state.seleccionadaCharla.tiempo} min.</span>
                       </div>
                     </div>
@@ -357,7 +376,7 @@ export default class Profile extends Component {
                             {this.state.recursosCharla.map((recurso, index) => (
                               <div className="rec_elementos" key={index}>
                                 <span className="recurso_desc">{recurso.descripcion}</span>
-                                <i class="fa-solid fa-arrow-right icon"></i>
+                                <i className="fa-solid fa-arrow-right icon"></i>
                                 <a className="recurso_link" href={recurso.url} target="_blank" rel="noopener noreferrer">{recurso.nombre}</a>
                               </div>
                             ))}
@@ -366,7 +385,6 @@ export default class Profile extends Component {
                         <hr />
                       </div>
                     )}
-
                     {/* Sección de comentarios */}
                     <div className="comentarios">
                       <div className="comentarios_title">
@@ -383,7 +401,7 @@ export default class Profile extends Component {
                                 <span className="comentario_user">-{comentario.usuario}-</span>
                                 {/* boton borrar */}
                                 <div className="btnAcciones">
-                                  <BtnDel className="btnDel--peq" />
+                                  <BtnDel className="btnDel--peq"/>
                                   <BtnUpdate className="btnUpdate--peq" />
                                 </div>
                               </div>

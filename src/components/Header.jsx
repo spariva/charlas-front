@@ -11,7 +11,6 @@ class Header extends Component {
   };
 
   componentDidMount() {
-    console.log("checktoken");
     this.checkToken();
   }
 

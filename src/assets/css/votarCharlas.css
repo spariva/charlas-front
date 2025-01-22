@@ -1,0 +1,15 @@
+.selected-charla {
+    border: 2px solid transparent;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 255, 0.5);
+}
+
+.btn-dark {
+    background-color: #343a40;
+    border: 1px solid black;
+}
+
+.form-select-lg {
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+}

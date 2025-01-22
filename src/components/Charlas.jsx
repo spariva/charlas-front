@@ -238,7 +238,7 @@ class Charlas extends Component {
 												<div className="rec_elementos" key={index}>
 													<span className="recurso_desc">{recurso.descripcion}</span>
 													<i class="fa-solid fa-arrow-right icon"></i>
-													<a className="recurso_link" href={recurso.url} target="_blank">{recurso.nombre}</a>
+													<a className="recurso_link" href={recurso.url} target="_blank" rel="noopener noreferrer">{recurso.nombre}</a>
 												</div>
 											))}
 										</div>

@@ -60,8 +60,6 @@ export default class Router extends Component {
 
             <div className="col-8">
               <Routes>
-                {!token ? (<Route path="/" element={<LoginWrapper />} />
-                ) : (
                   <>
                     <Route path="/" element={<LoginWrapper />} />
                     <Route path="/home" element={<Home />} />
@@ -73,7 +71,7 @@ export default class Router extends Component {
                     <Route path="/createcharla" element={<CreateCharla />} />
                     <Route path="/votar" element={<VotarCharlas />} />
                     <Route path="*" element={<NotFound />} />
-                  </>)}
+                  </>
               </Routes>
             </div>
             <div className="col-2">

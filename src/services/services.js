@@ -330,7 +330,19 @@ class serviceProfile {
 			}
 		})
 	}
+
+	//añadir recursos a tu charla
+	postRecurso = (recurso) => {
+		const request = "api/recursos";
+		const url = Global.api + request;
+		return axios.post(url, recurso, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
 }
+
 
 const services = new serviceProfile();
 

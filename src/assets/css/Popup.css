@@ -180,7 +180,6 @@
 
 .comentarios_btn:hover {
   background-color: #A4C2A8;
-  
 }
 
 .comentarios_btn:hover .enviar_comentario {
@@ -282,3 +281,28 @@
   flex-direction: row;
 }
 
+.recu_title {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.add_recurso{
+  background-color: #ea8c4d;
+}
+
+.icon--white {
+  color: white;
+}
+
+.add_recurso:hover {
+  background-color: white;
+  border: 2px solid #ea8c4d;
+}
+
+.add_recurso:hover .icon--white{
+  color: #ea8c4d;
+}
+
+.recursos_content {
+  margin-top: 0.5rem;
+}

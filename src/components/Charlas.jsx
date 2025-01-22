@@ -20,7 +20,7 @@ class Charlas extends Component {
 		idUsuarioCharlaSeleccionada: null,
 		//para borrar un comentario
 		idComentarioSeleccionado: null,
-	idUsuarioPerfil: null		
+		idUsuarioPerfil: null
 	}
 
 	//llamar al usuario getperfil
@@ -129,7 +129,6 @@ class Charlas extends Component {
 					comentariosCharla: charlaData.comentarios,
 				});
 
-				// Limpia el input después de enviar
 				this.cajaContenido.current.value = "";
 			})
 			.catch((error) => {
@@ -154,7 +153,8 @@ class Charlas extends Component {
 			});
 	}
 
-	updateComentario = () => {
+	updateComentario = (idComentario) => {
+		console.log(idComentario);
 
 		// e.preventDefault();
 		// let comentario = {
@@ -168,6 +168,46 @@ class Charlas extends Component {
 		// 	console.log("Comentario con id" + idComentario);
 		// })
 	}
+
+	postRecurso = (e, idCharla) => {
+		e.preventDefault();
+		console.log(idCharla);
+		let urlRecurso = this.cajaUrl.current.value;
+		let nombreRecurso = this.cajaNombreRecurso.current.value;
+		let descripconRecurso = this.cajaDescripcionRecurso.current.value;
+
+		let recurso = {
+			"idRecurso": 0,
+			"idCharla": idCharla,
+			"url": urlRecurso,
+			"nombre": nombreRecurso,
+			"descripcion": descripconRecurso
+		}
+
+		services
+    .postRecurso(recurso)
+    .then(() => {
+      console.log("Recurso añadido");
+      return services.getCharlaId(idCharla);
+    })
+    .then((charlaData) => {
+      this.setState({
+        recursosCharla: charlaData.recursos,
+      });
+
+      // Limpiar los campos del formulario
+      this.cajaUrl.current.value = "";
+      this.cajaNombreRecurso.current.value = "";
+      this.cajaDescripcionRecurso.current.value = "";
+    })
+    .catch((error) => {
+      console.error("Error al añadir el recurso:", error);
+    });
+	}
+
+	cajaUrl = React.createRef();
+	cajaNombreRecurso = React.createRef();
+	cajaDescripcionRecurso = React.createRef();
 
 	render() {
 		return (
@@ -233,9 +273,6 @@ class Charlas extends Component {
 							<div className="charla_title">
 								<div className="title">
 									<h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
-									{/* PRUEBA BOTONES COMPONENT DELETE Y UPDATE */}
-									{/* <BtnDel onClick={this.clickDelete}/>
-									<BtnUpdate/> */}
 									<hr className="card_divisor"></hr>
 								</div>
 								<div className="icon_tiempo">
@@ -256,17 +293,69 @@ class Charlas extends Component {
 							{/* Sección de recursos */}
 							{this.state.recursosCharla.length > 0 && (
 								<div className="recursos">
-									<h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
-										{this.state.showRecursos ? (
-											<div className="rec_title">
-												<i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
-											</div>
-										) : (
-											<div className="rec_title">
-												<i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
-											</div>
+									<div className="recu_title">
+										<h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
+											{this.state.showRecursos ? (
+												<div className="rec_title">
+													<i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
+												</div>
+											) : (
+												<div className="rec_title">
+													<i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
+												</div>
+											)}
+										</h3>
+										{/* CUANDO AÑADA LA FUNCION DE AÑADIR RECURSOS, COMPROBAR QUE FUNCIONA ESTE CONDICIONAL */}
+										{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
+											<button className="comentarios_btn add_recurso" onClick={() => this.postRecurso(this.state.idCharlaSeleccionada)}>
+												<i className="fa-solid fa-plus icon--white"></i>
+											</button>
 										)}
-									</h3>
+										<div class="formulario-recurso">
+											<form onSubmit={(e) => this.postRecurso(e, this.state.idCharlaSeleccionada)}>
+												<div class="form-group">
+													<label htmlFor="url">URL del Recurso</label>
+													<input
+														ref={this.cajaUrl}
+														type="url"
+														className="form-control"
+														id="url"
+														placeholder="Ingresa la URL"
+														required
+													/>
+												</div>
+												<div class="form-group">
+													<label htmlFor="nombre">Nombre del Recurso</label>
+													<input
+														ref={this.cajaNombreRecurso}
+														type="text"
+														className="form-control"
+														id="nombre"
+														placeholder="Ingresa el nombre del recurso"
+														required
+													/>
+												</div>
+												<div class="form-group">
+													<label htmlFor="descripcion">Descripción del Recurso</label>
+													<input
+														ref={this.cajaDescripcionRecurso}
+														type="text"
+														className="form-control"
+														id="descripcion"
+														placeholder="Ingresa una descripción"
+														required
+													/>
+												</div>
+												<button type="submit" className="btn btn-primary">
+													Añadir Recurso
+												</button>
+												<button type="button" className="btn btn-secondary" onClick={this.toggleRecursos}>
+													Cancelar
+												</button>
+											</form>
+										</div>
+
+									</div>
 									{this.state.showRecursos && (
 										<div className="recursos_content">
 											{this.state.recursosCharla.map((recurso, index) => (
@@ -296,17 +385,13 @@ class Charlas extends Component {
 												<div className="comentario">
 													<span className="comentario_text">{comentario.contenido}</span>
 													<span className="comentario_user">-{comentario.usuario}-</span>
-													{/* <p>{comentario.idUsuario}</p> */}
 													{comentario.idUsuario === this.state.idUsuarioPerfil && (
 														<div className="btnAcciones">
 															<BtnDel
 																className="btnDel--peq"
 																onClick={() => this.deleteComentario(comentario.idComentario)}
 															/>
-															<BtnUpdate
-																className="btnUpdate--peq"
-																
-															/>
+															<BtnUpdate className="btnUpdate--peq" onClick={() => this.updateComentario(comentario.idComentario)} />
 														</div>
 													)}
 												</div>

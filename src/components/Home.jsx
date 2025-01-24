@@ -56,12 +56,12 @@ class Home extends Component {
 			arrows: true,
 			prevArrow: (
 				<button type="button" className="slick-prev">
-					<i className="fa-solid fa-circle-arrow-left"></i>
+					{/* <i className="fa-solid fa-arrow-left"></i> */}
 				</button>
 			),
 			nextArrow: (
 				<button type="button" className="slick-next">
-					<i className="fa-solid fa-circle-arrow-right"></i>
+					{/* <i className="fa-solid fa-arrow-right"></i> */}
 				</button>
 			),
 			responsive: [
@@ -95,12 +95,12 @@ class Home extends Component {
 					<Slider {...settings}>
 						{this.state.charlas.map((charla, index) => (
 							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
-								<div className="card">
+								<div className="card" style={{ width: '300px', height: '400px' }}>
 									<img
-										src={charla.imagenCharla}
+										src={charla.imagenCharla ? charla.imagenCharla : 'https://as1.ftcdn.net/v2/jpg/05/03/24/40/1000_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg' }
 										alt={charla.titulo}
 										className="imgcharla card-img-top"
-										
+										style={{ height: '200px', objectFit: 'cover' }}
 									/>
 									<div className="card-body">
 										<h5 className="card-title">{charla.titulo}</h5>

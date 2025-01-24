@@ -16,14 +16,15 @@ export default class VotarCharlas extends Component {
     getCharlasUltimaRonda = () => {
         services.getRondasCurso().then((rondasResponse) => {
             if (rondasResponse.length > 0) {
-                const ultimaRonda = rondasResponse[rondasResponse.length - 1];
+                
                 let rondasActivas = [];
+				console.log("Rondas:", rondasResponse);
                 rondasResponse.forEach(ronda => {
                     if (new Date(ronda.fechaPresentacion) > new Date()) {
                         rondasActivas.push(ronda);
                     }
                 });
-
+				const ultimaRonda = rondasActivas[rondasActivas.length - 1];
                 this.setState({
                     charlas: [],
                     rondas: rondasActivas,

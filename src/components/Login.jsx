@@ -99,6 +99,7 @@ export default class Login extends Component {
             .then(profile => {
                 this.setState({ status: true });
 				localStorage.setItem('userId', profile.idUsuario);
+				localStorage.setItem('idRole', profile.idRole);
             })
             .catch(err => {
                 console.log(err);

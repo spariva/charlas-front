@@ -12,8 +12,7 @@ import NotFound from './NotFound';
 import UpdateProfileWrapper from './UpdateProfileWrapper';
 import LoginWrapper from './LoginWrapper';
 import VotarCharlas from './VotarCharlas';
-import UpdateCharla from './UpdateCharla';
-
+import UpdateCharlaWrapper from './UpdateCharlaWrapper';
 export default class Router extends Component {
 
   //todo: SOLUCIONAR QUE NO APAREZCA NADA AL INICIAR SESION -> REEDIRIGE A /PROFILE
@@ -66,7 +65,7 @@ export default class Router extends Component {
                     <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
                     <Route path="/charlas" element={<Charlas />} />
                     <Route path="/charlas/:id" element={<CharlasRonda />} />
-                    <Route path="/updatecharla" element={<UpdateCharla />} />
+                    <Route path="/updatecharla" element={<UpdateCharlaWrapper />} />
                     <Route path="/createronda" element={<CreateRonda />} />
                     <Route path="/createcharla" element={<CreateCharla />} />
                     <Route path="/votar" element={<VotarCharlas />} />

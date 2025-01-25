@@ -29,11 +29,12 @@ export default class Profile extends Component {
   async getUsuario() {
     const data = await services.getPerfilUsuario();
     this.setState({ usuario: data.usuario });
+    console.log("usuario", data.usuario);
   }
 
   getCharlasUser = () => {
     services.getCharlasUsuario().then((res) => {
-      console.log(res);
+      console.log("charlas user", res);
       this.setState({ charlas: res, allCharlas: res });
     }).catch((err) => {
       console.log(err);
@@ -121,10 +122,9 @@ export default class Profile extends Component {
   }
 
   updateCharla = () => {
-    console.log("idCharla seleccionada: ", this.state.idCharlaSeleccionada);
     console.log("charla seleccionada: ", this.state.seleccionadaCharla);
     this.handleClosePopup();
-    this.props.navigate('/updatecharla');
+    this.props.navigate('/updatecharla', { state: { charla: this.state.seleccionadaCharla } });
   }
 
   deleteCharla = () => {
@@ -140,7 +140,6 @@ export default class Profile extends Component {
 
 
   componentDidMount() {
-    //Si no hay token te redirige al login con un mensaje
     if (!localStorage.getItem("token")) {
       this.setState({ token: false });
       return;
@@ -152,7 +151,7 @@ export default class Profile extends Component {
     } else {
       this.getUsuario();
     }
-
+    console.log("mounted");
     this.getCharlasUser();
     this.getRondas();
   }
@@ -163,6 +162,7 @@ export default class Profile extends Component {
 
   render() {
     const { usuario } = this.state;
+
     return (
       <div>
         {!this.state.token && <Navigate to="/" state={{ mensaje: "Debes iniciar sesión para acceder a tu perfil" }} />}

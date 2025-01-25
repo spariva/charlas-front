@@ -40,7 +40,7 @@ class Home extends Component {
 	// 		});
 	// 	});
 	// };
-	
+
 	componentDidMount = () => {
 		// window.location.reload();
 		this.getCharlas();
@@ -101,7 +101,7 @@ class Home extends Component {
 										src={charla.imagenCharla}
 										alt={charla.titulo}
 										className="imgcharla card-img-top"
-										
+
 									/>
 									<div className="card-body">
 										<h5 className="card-title">{charla.titulo}</h5>

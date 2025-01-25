@@ -2,60 +2,80 @@ import React, { Component } from 'react'
 import services from '../services/services'
 
 export default class UpdateCharla extends Component {
-  // cajaNombre = React.createRef();
-  // cajaApellidos = React.createRef();
-  // cajaEmail = React.createRef();
-  // cajaPassword = React.createRef(); //getUsuario no devuelve password, por lo que pierdo la contraseña anterior al actulizar.
-  // cajaImagen = React.createRef();
+  cajaTitulo = React.createRef();
+  cajaDescripcion = React.createRef();
+  cajaTiempo = React.createRef();
+  cajaFecha = React.createRef();
+  cajaRonda = React.createRef();
+  cajaImagen = React.createRef();
+
+  state = {
+    charla: null,
+  };
+
+  charla = {
+    "descripcion": "descripcion",
+    "estadoCharla": "PROPUESTA",
+    "fechaPropuesta": "2025-01-30T22:41:00",
+    "idCharla": 83,
+    "idCurso": 3213,
+    "idEstadoCharla": 1,
+    "idRonda": 10,
+    "idUsuario": 18,
+    "imagenCharla": "https://avatars.githubusercontent.com/u/110998002?v=4",
+    "nombreCurso": "Master Desarrollo Cloud",
+    "tiempo": 30,
+    "titulo": "Titulo charla",
+    "usuario": "Maki Spariva Mirón Olona"
+  }
 
 
-  // state = {
-  //   usuario: null,
-  // };
-
-  // async getUsuario() {
-  //   const data = await services.getPerfilUsuario();
-  //   this.setState({ usuario: data.usuario });
+  // async getcharla() {
+  //   const data = await services.getPerfilcharla();
+  //   this.setState({ charla: data.charla });
   // }
 
-  // componentDidMount() {
-  //   const { usuario } = this.props.location.state || {};
+  componentDidMount() {
+    const { charla } = this.props.location.state || {};
 
-  //   if (usuario) {
-  //     this.setState({ usuario });
-  //   } else {
-  //     this.getUsuario();
-  //   }
-  // }
+    if (charla) {
+      this.setState({ charla });
+    } else {
+      console.log("No se ha encontrado la charla");
+    }
+  }
 
-  // guardarCambios = (e) => {
-  //   e.preventDefault();
+  guardarCambios = (e) => {
+    e.preventDefault();
 
-  //   var userUpdated = {
-  //     idUsuario: this.state.usuario.idUsuario,
-  //     nombre: this.cajaNombre.current.value,
-  //     apellidos: this.cajaApellidos.current.value,
-  //     email: this.cajaEmail.current.value,
-  //     estadoUsuario: this.state.usuario.estadoUsuario,
-  //     imagen: this.cajaImagen.current.value,
-  //     password: this.cajaPassword.current.value,
-  //     idRole: this.state.usuario.idRole
-  //   };
+    var charlaUpdated =
+    {
+      "idCharla": this.state.charla.idCharla,
+      "titulo": this.cajaTitulo.current.value,
+      "descripcion": this.cajaDescripcion.current.value,
+      "tiempo": this.cajaTiempo.current.value,
+      "fechaPropuesta": this.cajaFecha.current.value,
+      "idUsuario": this.state.charla.idUsuario,
+      "idEstadoCharla": this.state.charla.idEstadoCharla,
+      "idRonda": this.cajaRonda.current.value,
+      "imagenCharla": this.cajaImagen.current.value
+    }
 
-  //   const userCombined = { ...this.state.usuario, ...userUpdated };
+    // const userCombined = { ...this.state.charla, ...charlaUpdated };
+    
+    services.updateCharla(charlaUpdated).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+      alert("Error al actualizar charla");
+    });
 
-  //   services.updatePerfilUsuario(userUpdated).then(res => {
-  //     console.log(res);
-  //   }).catch(err => {
-  //     console.log(err);
-  //     alert("Error al actualizar usuario");
-  //   });
-
-  //   this.props.navigate('/profile', { state: { usuario: userCombined, updated: true } });
-  // };
+    //*TODO: pasar de vuelta la charla para que cambie sus datos dentro dela array de charlas this.props.navigate('/profile', { state: { charla: userCombined, updated: true } });
+    this.props.navigate('/profile');
+  };
 
   render() {
-    // const { usuario } = this.state;
+    const { charla } = this.state;
 
     return (
       <div>
@@ -72,38 +92,43 @@ export default class UpdateCharla extends Component {
             position: "relative",
           }}
         >
-          {/* Perfil */}
+          {/* UpdateCharla */}
           <div>
-            {/* <form className="row g-3" onSubmit={this.guardarCambios}>
+            <h1 className='text-center mb-4'>Editar charla:</h1>
+            <form className="row g-3" onSubmit={this.guardarCambios}>
               <div className="col-md-6">
-                <label htmlFor="inputName" className="form-label">Nombre</label>
+                <label htmlFor="inputName" className="form-label">Título</label>
                 <input type="text" className="form-control" id="inputName"
-                  defaultValue={usuario?.nombre} ref={this.cajaNombre} />
+                  defaultValue={charla?.titulo} ref={this.cajaTitulo} />
               </div>
               <div className="col-md-6">
-                <label htmlFor="inputApellido" className="form-label">Apellidos</label>
-                <input type="text" className="form-control" id="inputApellido"
-                  defaultValue={usuario?.apellidos} ref={this.cajaApellidos} />
+                <label htmlFor="inputDescripcion" className="form-label">Descripcion</label>
+                <input type="text" className="form-control" id="inputDescripcion"
+                  defaultValue={charla?.descripcion} ref={this.cajaDescripcion} />
               </div>
               <div className="col-md-6">
-                <label htmlFor="inputEmail" className="form-label">Email</label>
-                <input type="email" className="form-control" id="inputEmail"
-                  defaultValue={usuario?.email} ref={this.cajaEmail} />
+                <label htmlFor="inputEmail" className="form-label">Tiempo</label>
+                <input type="number" className="form-control" id="inputEmail"
+                  defaultValue={charla?.tiempo} ref={this.cajaTiempo} />
               </div>
               <div className="col-md-6">
-                <label htmlFor="inputPassword" className="form-label">Password</label>
-                <input type="text" className="form-control" id="inputPassword"
-                  defaultValue={usuario?.password} ref={this.cajaPassword} />
+                <label htmlFor="inputPassword" className="form-label">Fecha</label>
+                <input type="datetime-local" className="form-control" id="inputPassword"
+                  defaultValue={charla?.password} ref={this.cajaFecha} />
+              </div>
+              <div className="col-md-12">
+                <label htmlFor="inputImagen" className="form-label">Ronda</label>
+                <input type="text" className="form-control" id="inputImagen"
+                  defaultValue={charla?.idRonda} ref={this.cajaRonda} />
               </div>
               <div className="col-md-12">
                 <label htmlFor="inputImagen" className="form-label">Imagen de perfil</label>
                 <input type="text" className="form-control" id="inputImagen"
-                  defaultValue={usuario?.imagen} ref={this.cajaImagen} />
+                  defaultValue={charla?.imagen} ref={this.cajaImagen} />
               </div>
-            </form> */}
+            </form>
             <div className='text-center'>
-              <h1>Update charlas</h1>
-              {/* <button className="btn btn-outline-dark mt-3" onClick={this.guardarCambios}>Guardar</button> */}
+              <button className="btn btn-outline-dark mt-4" onClick={this.guardarCambios}>Guardar</button>
             </div>
           </div>
         </div>

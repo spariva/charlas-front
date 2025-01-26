@@ -12,9 +12,9 @@ const PopupCharla = ({ show, onClose, children }) => {
         </button>
         {children}
       </div>
-      <div class="container_mouse">
-        <span class="mouse-btn">
-          <span class="mouse-scroll"></span>
+      <div className="container_mouse">
+        <span className="mouse-btn">
+          <span className="mouse-scroll"></span>
         </span>
         <span className="scroll_text poiret-one-regular">Scroll</span>
       </div>    

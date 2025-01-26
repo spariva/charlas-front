@@ -29,13 +29,30 @@ export default class Profile extends Component {
   async getUsuario() {
     const data = await services.getPerfilUsuario();
     this.setState({ usuario: data.usuario });
-    console.log("usuario", data.usuario);
+    console.log("usuario ", data.usuario);
   }
-
-  getCharlasUser = () => {
+    getCharlasUser = () => {
     services.getCharlasUsuario().then((res) => {
-      console.log("charlas user", res);
-      this.setState({ charlas: res, allCharlas: res });
+      console.log("charlas user: ", res);
+      const { charlaUpdated } = this.props.location.state || {};
+      if (charlaUpdated) {
+        // si hay una nueva charla, la sustituimos por la charla en el array cuyo id coincida
+        const updatedCharlas = res.map((c) => {
+          if (c.charla.idCharla === charlaUpdated.idCharla) {
+            return {
+              ...c,
+              charla: {
+                ...c.charla,
+                ...charlaUpdated
+              }
+            };
+          }
+          return c;
+        });
+        this.setState({ charlas: updatedCharlas, allCharlas: updatedCharlas });
+      } else {
+        this.setState({ charlas: res, allCharlas: res });
+      }
     }).catch((err) => {
       console.log(err);
     });
@@ -46,7 +63,6 @@ export default class Profile extends Component {
       this.setState({
         rondas: response
       });
-      console.log("rondas", response);
     });
   }
 
@@ -103,7 +119,6 @@ export default class Profile extends Component {
       showPopup: true
     });
     services.getCharlaId(charla.idCharla).then((response) => {
-      // console.log("charla id: " + JSON.stringify(response));
       this.setState({
         comentariosCharla: response.comentarios,
         recursosCharla: response.recursos,
@@ -128,7 +143,6 @@ export default class Profile extends Component {
   }
 
   deleteCharla = () => {
-    console.log("idCharla seleccionada: ", this.state.idCharlaSeleccionada);
     services.deleteCharla(this.state.idCharlaSeleccionada).then((response) => {
       this.getCharlasUser();
       this.handleClosePopup();
@@ -151,7 +165,6 @@ export default class Profile extends Component {
     } else {
       this.getUsuario();
     }
-    console.log("mounted");
     this.getCharlasUser();
     this.getRondas();
   }

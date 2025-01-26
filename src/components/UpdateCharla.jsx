@@ -13,28 +13,6 @@ export default class UpdateCharla extends Component {
     charla: null,
   };
 
-  charla = {
-    "descripcion": "descripcion",
-    "estadoCharla": "PROPUESTA",
-    "fechaPropuesta": "2025-01-30T22:41:00",
-    "idCharla": 83,
-    "idCurso": 3213,
-    "idEstadoCharla": 1,
-    "idRonda": 10,
-    "idUsuario": 18,
-    "imagenCharla": "https://avatars.githubusercontent.com/u/110998002?v=4",
-    "nombreCurso": "Master Desarrollo Cloud",
-    "tiempo": 30,
-    "titulo": "Titulo charla",
-    "usuario": "Maki Spariva Mirón Olona"
-  }
-
-
-  // async getcharla() {
-  //   const data = await services.getPerfilcharla();
-  //   this.setState({ charla: data.charla });
-  // }
-
   componentDidMount() {
     const { charla } = this.props.location.state || {};
 
@@ -53,16 +31,15 @@ export default class UpdateCharla extends Component {
       "idCharla": this.state.charla.idCharla,
       "titulo": this.cajaTitulo.current.value,
       "descripcion": this.cajaDescripcion.current.value,
-      "tiempo": this.cajaTiempo.current.value,
+      "tiempo": parseInt(this.cajaTiempo.current.value),
       "fechaPropuesta": this.cajaFecha.current.value,
       "idUsuario": this.state.charla.idUsuario,
       "idEstadoCharla": this.state.charla.idEstadoCharla,
-      "idRonda": this.cajaRonda.current.value,
+      "idRonda": parseInt(this.cajaRonda.current.value),
       "imagenCharla": this.cajaImagen.current.value
-    }
-
-    // const userCombined = { ...this.state.charla, ...charlaUpdated };
-    
+    };
+    const charlaCombined = { ...this.state.charla, ...charlaUpdated };
+   
     services.updateCharla(charlaUpdated).then(res => {
       console.log(res);
     }).catch(err => {
@@ -70,8 +47,7 @@ export default class UpdateCharla extends Component {
       alert("Error al actualizar charla");
     });
 
-    //*TODO: pasar de vuelta la charla para que cambie sus datos dentro dela array de charlas this.props.navigate('/profile', { state: { charla: userCombined, updated: true } });
-    this.props.navigate('/profile');
+    this.props.navigate('/profile', { state: { charlaUpdated: charlaCombined } });
   };
 
   render() {
@@ -114,7 +90,7 @@ export default class UpdateCharla extends Component {
               <div className="col-md-6">
                 <label htmlFor="inputPassword" className="form-label">Fecha</label>
                 <input type="datetime-local" className="form-control" id="inputPassword"
-                  defaultValue={charla?.password} ref={this.cajaFecha} />
+                  defaultValue={charla?.fechaPropuesta} ref={this.cajaFecha} />
               </div>
               <div className="col-md-12">
                 <label htmlFor="inputImagen" className="form-label">Ronda</label>
@@ -124,7 +100,7 @@ export default class UpdateCharla extends Component {
               <div className="col-md-12">
                 <label htmlFor="inputImagen" className="form-label">Imagen de perfil</label>
                 <input type="text" className="form-control" id="inputImagen"
-                  defaultValue={charla?.imagen} ref={this.cajaImagen} />
+                  defaultValue={charla?.imagenCharla} ref={this.cajaImagen} />
               </div>
             </form>
             <div className='text-center'>

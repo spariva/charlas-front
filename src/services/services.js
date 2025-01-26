@@ -170,6 +170,7 @@ class serviceProfile {
 		this.token = "";
 		localStorage.removeItem('token');
 		localStorage.removeItem('userId');
+		localStorage.removeItem('idRole');
 	}
 
 	async signUpAlumno(user, curso) {

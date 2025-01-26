@@ -91,17 +91,18 @@ export default class Login extends Component {
     }
 
     services.login(user)
-      .then(res => {
-        return this.getUsuario();
-      })
-      .then(profile => {
-        this.setState({ status: true });
-        localStorage.setItem('userId', profile.idUsuario);
-      })
-      .catch(err => {
-        console.log(err);
-        alert("Error de credenciales");
-      });
+            .then(res => {
+                return this.getUsuario();
+            })
+            .then(profile => {
+                this.setState({ status: true });
+				localStorage.setItem('userId', profile.idUsuario);
+				localStorage.setItem('idRole', profile.idRole);
+            })
+            .catch(err => {
+                console.log(err);
+                alert("Error de credenciales");
+            });
   }
 
   swap = () => {

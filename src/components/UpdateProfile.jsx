@@ -28,12 +28,6 @@ export default class UpdateProfile extends Component {
     }
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props !== prevProps) {
-  //     this.setState({ usuario: this.props.location.state.usuario });
-  //   }
-  // }
-
   guardarCambios = (e) => {
     e.preventDefault();
 

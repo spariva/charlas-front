@@ -2,9 +2,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
 import Home from './Home';
-import Login from './Login';
 import Menu from './Menu';
-// import Profile from './Profile'
 import ProfileWrapper from './ProfileWrapper';
 import Charlas from './Charlas';
 import Header from './Header';
@@ -14,7 +12,7 @@ import NotFound from './NotFound';
 import UpdateProfileWrapper from './UpdateProfileWrapper';
 import LoginWrapper from './LoginWrapper';
 import VotarCharlas from './VotarCharlas';
-
+import UpdateCharlaWrapper from './UpdateCharlaWrapper';
 export default class Router extends Component {
 
   //todo: SOLUCIONAR QUE NO APAREZCA NADA AL INICIAR SESION -> REEDIRIGE A /PROFILE
@@ -60,8 +58,6 @@ export default class Router extends Component {
 
             <div className="col-8">
               <Routes>
-                {!token ? (<Route path="/" element={<LoginWrapper />} />
-                ) : (
                   <>
                     <Route path="/" element={<LoginWrapper />} />
                     <Route path="/home" element={<Home />} />
@@ -69,11 +65,12 @@ export default class Router extends Component {
                     <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
                     <Route path="/charlas" element={<Charlas />} />
                     <Route path="/charlas/:id" element={<CharlasRonda />} />
+                    <Route path="/updatecharla" element={<UpdateCharlaWrapper />} />
                     <Route path="/createronda" element={<CreateRonda />} />
                     <Route path="/createcharla" element={<CreateCharla />} />
                     <Route path="/votar" element={<VotarCharlas />} />
                     <Route path="*" element={<NotFound />} />
-                  </>)}
+                  </>
               </Routes>
             </div>
             <div className="col-2">

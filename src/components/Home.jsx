@@ -40,8 +40,9 @@ class Home extends Component {
 	// 		});
 	// 	});
 	// };
-	
+
 	componentDidMount = () => {
+		// window.location.reload();
 		this.getCharlas();
 		// this.getRondas();
 		// this.getEstadosCharla();

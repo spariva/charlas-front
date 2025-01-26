@@ -20,7 +20,7 @@ export default class Login extends Component {
     isRegistroForm: false,
     status: false,
     rol: "2",
-	usuario: "",
+    usuario: "",
   }
 
 
@@ -39,29 +39,29 @@ export default class Login extends Component {
 
     if (this.state.rol === "2") {
       services.signUpAlumno(userRegister, this.cajaIdCursoSignup.current.value)
-      .then(res => {
-        this.setState({
-          isRegistroForm: false,
-          status: false
+        .then(res => {
+          this.setState({
+            isRegistroForm: false,
+            status: false
+          });
+          alert("Usuario registrado correctamente ahora inicie sesión");
+        }).catch(err => {
+          console.log(err);
+          alert("Error al registrar usuario");
         });
-        alert("Usuario registrado correctamente ahora inicie sesión");
-      }).catch(err => { 
-        console.log(err);
-        alert("Error al registrar usuario");
-      });
     } else if (this.state.rol === "1") {
       console.log("signup profesor");
       services.signUpProfesor(userRegister, "yosoytuprofe")
-      .then(res => {
-        this.setState({
-          isRegistroForm: false,
-          status: false
+        .then(res => {
+          this.setState({
+            isRegistroForm: false,
+            status: false
+          });
+          alert("Usuario registrado correctamente ahora inicie sesión");
+        }).catch(err => {
+          console.log(err);
+          alert("Error al registrar usuario");
         });
-        alert("Usuario registrado correctamente ahora inicie sesión");
-      }).catch(err => {
-        console.log(err);
-        alert("Error al registrar usuario");
-      });
     } else {
       console.log("Error registro, rol ni 1, ni 2: ", this.state.rol);
       console.log(this.cajaRolSignup.current.value);
@@ -78,9 +78,9 @@ export default class Login extends Component {
 
   async getUsuario() {
     const data = await services.getPerfilUsuario();
-	console.log("data"+data.usuario);
+    console.log("data" + data.usuario);
     this.setState({ usuario: data.usuario });
-	return data.usuario;
+    return data.usuario;
   }
 
   login = (e) => {
@@ -89,8 +89,6 @@ export default class Login extends Component {
       userName: this.cajaUserLogin.current.value,
       password: this.cajaPasswordLogin.current.value
     }
-
-	
 
     services.login(user)
             .then(res => {
@@ -125,7 +123,7 @@ export default class Login extends Component {
     return (
       <div className="login-parent-container">
 
-		{this.state.status && <Navigate to="/home" />}
+        {this.state.status && <Navigate to="/home" />}
 
         {mensaje && (
           <div className="alert alert-danger" role="alert">
@@ -138,7 +136,7 @@ export default class Login extends Component {
             <form onSubmit={this.signUp}>
               <h1>Crear Cuenta</h1>
               <span>Introduzca nombre, apellidos, mail, curso o key</span>
-              <div className="d-flex align-items-center gap-3 mt-2"> 
+              <div className="d-flex align-items-center gap-3 mt-2">
                 <input type="radio" name="rol" id="rol1" value="1" ref={this.cajaRolSignup} onChange={this.handleRoleChange} />
                 <label htmlFor="rol1" className='me-4'>Profesor</label>
                 <input type="radio" name="rol" id="rol2" value="2" ref={this.cajaRolSignup} onChange={this.handleRoleChange} />

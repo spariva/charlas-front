@@ -237,8 +237,8 @@ class Charlas extends Component {
 											{this.state.recursosCharla.map((recurso, index) => (
 												<div className="rec_elementos" key={index}>
 													<span className="recurso_desc">{recurso.descripcion}</span>
-													<i class="fa-solid fa-arrow-right icon"></i>
-													<a className="recurso_link" href={recurso.url} target="_blank">{recurso.nombre}</a>
+													<i className="fa-solid fa-arrow-right icon"></i>
+													<a className="recurso_link" href={recurso.url} target="_blank" rel="noopener noreferrer">{recurso.nombre}</a>
 												</div>
 											))}
 										</div>

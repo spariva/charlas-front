@@ -283,7 +283,7 @@
 
 .recu_title {
   display: flex;
-  gap: 1.5rem;
+  flex-direction: column;
 }
 
 .add_recurso{
@@ -306,3 +306,63 @@
 .recursos_content {
   margin-top: 0.5rem;
 }
+
+.recursosElements {
+  display: flex;
+  gap: 15px;
+}
+
+.recursosBtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+  gap: 1rem;
+}
+
+.form-group {
+  position: relative;
+  margin: 1.5rem;
+}
+
+.floating-label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #aaa;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.form-control {
+  width: 100%;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  background-color: #fff;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.form-control:focus + .floating-label,
+.form-control:not(:placeholder-shown) + .floating-label {
+  top: 0;
+  font-size: 0.8rem;
+  color: #007bff;
+  background-color: #fff;
+  padding: 0 5px;
+  transform: translateY(-50%);
+}
+
+.recursosBtn {
+  display: flex;
+  gap: 1rem;
+}
+

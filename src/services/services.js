@@ -341,6 +341,30 @@ class serviceProfile {
 			}
 		})
 	}
+
+	updateRecurso = (recurso) => {
+		const request = "api/recursos";
+		const url = Global.api + request;
+		return axios.put(url, recurso, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
+
+	deleteRecurso = (idRecurso) => {
+		const request = "api/recursos/" + idRecurso;
+		const url = Global.api + request;
+		return axios.delete(url,
+			{
+				headers: {
+					'Authorization': 'Bearer ' + this.token
+				}
+			}
+		).then(()=> {
+			console.log("Recurso eliminado correctamente");
+		})
+	}
 }
 
 

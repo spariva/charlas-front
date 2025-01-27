@@ -2,7 +2,6 @@ import Global from "./../Global"
 import axios from "axios";
 
 class serviceProfile {
-
 	constructor() {
 		this.token = null;
 	}
@@ -171,6 +170,7 @@ class serviceProfile {
 		this.token = "";
 		localStorage.removeItem('token');
 		localStorage.removeItem('userId');
+		localStorage.removeItem('idRole');
 	}
 
 	async signUpAlumno(user, curso) {
@@ -242,7 +242,6 @@ class serviceProfile {
 	}
 
 	//* Rondas
-
 	getRondas() {
 		const request = "api/rondas";
 		const url = Global.api + request;

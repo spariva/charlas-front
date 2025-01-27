@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import services from "../services/services";
 import { Navigate } from "react-router-dom";
 import Card from "./CardCharla";
+import PopupCharla from "./PopupCharla";
+import BtnDel from "./BtnDel";
+import BtnUpdate from "./BtnUpdate";
 
 export default class Profile extends Component {
   state = {
@@ -12,18 +15,44 @@ export default class Profile extends Component {
     charlas: [],
     rondas: [],
     estadoSeleccionado: "0",
-    rondaSeleccionada: "0"
+    rondaSeleccionada: "0",
+    showPopup: false,
+    seleccionadaCharla: null,
+    idCharlaSeleccionada: null,
+    comentariosCharla: [],
+    recursosCharla: [],
+    showRecursos: false,
+    idUsuarioCharlaSeleccionada: null,
+    idComentarioSeleccionado: null
   };
 
   async getUsuario() {
     const data = await services.getPerfilUsuario();
     this.setState({ usuario: data.usuario });
+    console.log("usuario ", data.usuario);
   }
-
-  getCharlasUser = () => {
+    getCharlasUser = () => {
     services.getCharlasUsuario().then((res) => {
-      console.log(res);
-      this.setState({ charlas: res, allCharlas: res });
+      console.log("charlas user: ", res);
+      const { charlaUpdated } = this.props.location.state || {};
+      if (charlaUpdated) {
+        // si hay una nueva charla, la sustituimos por la charla en el array cuyo id coincida
+        const updatedCharlas = res.map((c) => {
+          if (c.charla.idCharla === charlaUpdated.idCharla) {
+            return {
+              ...c,
+              charla: {
+                ...c.charla,
+                ...charlaUpdated
+              }
+            };
+          }
+          return c;
+        });
+        this.setState({ charlas: updatedCharlas, allCharlas: updatedCharlas });
+      } else {
+        this.setState({ charlas: res, allCharlas: res });
+      }
     }).catch((err) => {
       console.log(err);
     });
@@ -34,7 +63,6 @@ export default class Profile extends Component {
       this.setState({
         rondas: response
       });
-      console.log("rondas", response);
     });
   }
 
@@ -83,8 +111,49 @@ export default class Profile extends Component {
   //   }
   // }
 
+
+  handleCardClick = (charla) => {
+    this.setState({
+      idCharlaSeleccionada: charla.idCharla,
+      seleccionadaCharla: charla,
+      showPopup: true
+    });
+    services.getCharlaId(charla.idCharla).then((response) => {
+      this.setState({
+        comentariosCharla: response.comentarios,
+        recursosCharla: response.recursos,
+        idUsuarioCharlaSeleccionada: response.charla.idUsuario
+      });
+    }).catch((error) => {
+      console.error("Error fetching charla details:", error);
+    });
+  }
+
+  handleClosePopup = () => {
+    this.setState({
+      seleccionadaCharla: null,
+      showPopup: false
+    });
+  }
+
+  updateCharla = () => {
+    console.log("charla seleccionada: ", this.state.seleccionadaCharla);
+    this.handleClosePopup();
+    this.props.navigate('/updatecharla', { state: { charla: this.state.seleccionadaCharla } });
+  }
+
+  deleteCharla = () => {
+    services.deleteCharla(this.state.idCharlaSeleccionada).then((response) => {
+      this.getCharlasUser();
+      this.handleClosePopup();
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+
+
   componentDidMount() {
-    //Si no hay token te redirige al login con un mensaje
     if (!localStorage.getItem("token")) {
       this.setState({ token: false });
       return;
@@ -96,7 +165,6 @@ export default class Profile extends Component {
     } else {
       this.getUsuario();
     }
-
     this.getCharlasUser();
     this.getRondas();
   }
@@ -107,6 +175,7 @@ export default class Profile extends Component {
 
   render() {
     const { usuario } = this.state;
+
     return (
       <div>
         {!this.state.token && <Navigate to="/" state={{ mensaje: "Debes iniciar sesión para acceder a tu perfil" }} />}
@@ -257,7 +326,7 @@ export default class Profile extends Component {
               <div className="row d-flex flex-wrap justify-content-start">
                 {this.state.charlas.map((c, index) => {
                   return (
-                    <div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
+                    <div key={index} className="col-12 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(c.charla)} style={{ cursor: "pointer" }}>
                       <Card
                         imagen={c.charla.imagenCharla}
                         titulo={c.charla.titulo}
@@ -267,6 +336,96 @@ export default class Profile extends Component {
                   );
                 })}
               </div>
+              {/* Popup para charla seleccionada */}
+              <PopupCharla show={this.state.showPopup} onClose={this.handleClosePopup}>
+                {this.state.seleccionadaCharla && (
+                  <>
+                    {/* <div className="charla_estado">
+                      <span className="estado" style={{
+                        backgroundColor: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#b7eab0' : '#e5a879',
+                        color: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#29721f' : '#d57018',
+                      }}>{this.state.seleccionadaCharla.estadoCharla}</span>
+                    </div> */}
+                    <div className="charla_title">
+                      <div className="title">
+                        <h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
+                        <hr className="card_divisor"></hr>
+                      </div>
+                      <div className="icon_tiempo gap-1">
+                        <div className="btnAcciones gap-3">
+                          <BtnUpdate onClick={this.updateCharla}/>
+                          <BtnDel onClick={this.deleteCharla}/>
+                        </div>
+                        <i className="fa-regular fa-clock icon ms-2"></i>
+                        <span className="charla_tiempo">{this.state.seleccionadaCharla.tiempo} min.</span>
+                      </div>
+                    </div>
+                    <div className="charla_image">
+                      <img
+                        src={this.state.seleccionadaCharla.imagenCharla}
+                        alt={this.state.seleccionadaCharla.titulo}
+                      />
+                      <div className="charla_descripcion">
+                        <span className="descripcion">{this.state.seleccionadaCharla.descripcion}</span>
+                      </div>
+                    </div>
+                    <hr />
+                    {/* Sección de recursos */}
+                    {this.state.recursosCharla.length > 0 && (
+                      <div className="recursos">
+                        <h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
+                          {this.state.showRecursos ? (
+                            <div className="rec_title">
+                              <i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
+                            </div>
+                          ) : (
+                            <div className="rec_title">
+                              <i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
+                            </div>
+                          )}
+                        </h3>
+                        {this.state.showRecursos && (
+                          <div className="recursos_content">
+                            {this.state.recursosCharla.map((recurso, index) => (
+                              <div className="rec_elementos" key={index}>
+                                <span className="recurso_desc">{recurso.descripcion}</span>
+                                <i className="fa-solid fa-arrow-right icon"></i>
+                                <a className="recurso_link" href={recurso.url} target="_blank" rel="noopener noreferrer">{recurso.nombre}</a>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        <hr />
+                      </div>
+                    )}
+                    {/* Sección de comentarios */}
+                    <div className="comentarios">
+                      <div className="comentarios_title">
+                        <span className="comentarios_text">Comentarios</span>
+                        <input className="comentarios_input" ref={this.cajaContenido} type="text" placeholder="Agregar nuevo comentario..." />
+                        <button onClick={this.postComentario} className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario icon" ></i></button>
+                      </div>
+                      <div className="comentarios_content">
+                        {this.state.comentariosCharla.map((comentario, index) => {
+                          return (
+                            <div className="container_comentario" key={index}>
+                              <div className="comentario">
+                                <span className="comentario_text">{comentario.contenido}</span>
+                                <span className="comentario_user">-{comentario.usuario}-</span>
+                                {/* boton borrar */}
+                                <div className="btnAcciones">
+                                  <BtnDel className="btnDel--peq"/>
+                                  <BtnUpdate className="btnUpdate--peq" />
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </PopupCharla>
             </div>
           </div>
         </div>

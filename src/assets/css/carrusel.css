@@ -64,18 +64,15 @@
 
 .slick-prev,
 .slick-next {
-	background-color: red;
-	z-index: 1;
+	background: none;
 	border: none;
-	padding: 10px;
-	border-radius: 50%;
-	cursor: pointer;
+	font-size: 64px; /* Aumentar el tamaño de la fuente */
+	color: #000;
+	z-index: 1;
 }
 
-.slick-prev i,
-.slick-next i {
-	font-size: 30px;
-	color: white;
+.slick-prev::before, .slick-next::before {
+    color: #333;
 }
 
 .imgcharla {

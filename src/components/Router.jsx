@@ -13,6 +13,7 @@ import CreateCharla from './CreateCharla';
 import NotFound from './NotFound';
 import UpdateProfileWrapper from './UpdateProfileWrapper';
 import LoginWrapper from './LoginWrapper';
+import HeaderWrapper from './HeaderWrapper';
 
 export default class Router extends Component {
   render() {
@@ -27,7 +28,7 @@ export default class Router extends Component {
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
-              <Header />
+              <HeaderWrapper />
             </div>
           </div>
           <div className="row">

@@ -6,6 +6,7 @@ import TooltipHeader from "./TooltipHeader";
 class Header extends Component {
   state = {
     tokenAvailable: false,
+    token: this.props.useLocalStorage("token", null),
   };
 
   componentDidMount() {
@@ -14,16 +15,16 @@ class Header extends Component {
 
   // Función para verificar si el token está presente
   checkToken() {
-    const token = localStorage.getItem("token");
-    if (token) {
-      this.setState({ tokenAvailable: true }); 
+    const toke = localStorage.getItem("token");
+    if (toke) {
+      this.setState({ tokenAvailable: true, token: toke  }); 
     } else {
-      this.setState({ tokenAvailable: false });
+      this.setState({ tokenAvailable: false, token: null });
     }
   }
 
   render() {
-    const { tokenAvailable } = this.state;
+    const { tokenAvailable, token } = this.state;
     return (
       <div className="container container__header">
         <div className="header">
@@ -31,7 +32,7 @@ class Header extends Component {
             <img src={logo} alt="Logo" style={{ width: "200px" }} />
           </div>
           {/* Mostrar TooltipHeader solo si el token está presente */}
-          {tokenAvailable && <TooltipHeader />}
+          {tokenAvailable && token && <TooltipHeader />}
         </div>
       </div>
     );

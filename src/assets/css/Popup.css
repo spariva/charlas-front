@@ -319,9 +319,15 @@
   gap: 1rem;
 }
 
+
+.recursosBtn {
+  display: flex;
+  gap: 1rem;
+}
+
 .form-group {
   position: relative;
-  margin: 1.5rem;
+  margin: 1.5rem 0;
 }
 
 .floating-label {
@@ -365,4 +371,3 @@
   display: flex;
   gap: 1rem;
 }
-

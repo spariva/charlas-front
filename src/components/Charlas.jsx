@@ -6,6 +6,7 @@ import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
 
 class Charlas extends Component {
+	
 	state = {
 		charlas: [],
 		rondas: [],
@@ -248,12 +249,6 @@ class Charlas extends Component {
 		this.toggleRecursos();
 	}
 
-	toggleFormularioRecursos = () => {
-		this.setState((prevState) => ({
-			showFormularioRecursos: !prevState.showFormularioRecursos
-		}));
-	};
-
 	handleUpdateRecurso = (recurso) => {
 		this.setState({
 			recursoSeleccionado: recurso,
@@ -288,7 +283,7 @@ class Charlas extends Component {
 			.then((charlaData) => {
 				this.setState({
 					recursosCharla: charlaData.recursos,
-					recursoSeleccionado: null,  // Reseteamos el recurso seleccionado
+					recursoSeleccionado: null, 
 				});
 				this.toggleFormularioRecursos();
 			})
@@ -296,6 +291,8 @@ class Charlas extends Component {
 				console.error("Error al actualizar el recurso:", error);
 			});
 	};
+
+	
 
 	// deleteRecurso = (idRecurso) => {
 	// 	console.log(idRecurso);

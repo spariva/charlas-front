@@ -28,7 +28,7 @@ h4:hover {
     font-style: normal;
 }
 
-.poiret-one-regular--peq{
+.poiret-one-regular--peq {
     font-size: 30px;
 }
 
@@ -50,15 +50,19 @@ h4:hover {
 }
 
 .item:hover {
-    background-color: black; /* Fondo negro al pasar el ratón */
-    color: white; /* Texto blanco al pasar el ratón */
+    background-color: black;
+    /* Fondo negro al pasar el ratón */
+    color: white;
+    /* Texto blanco al pasar el ratón */
     border-radius: 20px;
     padding: 0.1rem 1rem;
 }
 
 .item:hover::after {
-    background-color: white; /* La línea se pone blanca al pasar el ratón */
+    background-color: white;
+    /* La línea se pone blanca al pasar el ratón */
 }
+
 .item {
     display: flex;
     border-radius: 20px;
@@ -67,14 +71,25 @@ h4:hover {
 
 
 .link:hover::after {
-    display: none; /* Oculta la línea al hacer hover */
+    display: none;
 }
 
 .link--home {
     padding: 0.4rem 1rem;
 }
 
-.menu_col{
+.menu_col {
     display: flex;
     align-items: center;
+}
+.link--home:hover {
+    padding: 0.4rem 1rem;
+}
+
+.house_icon{
+    color: #000000;
+}
+
+.house_icon:hover{
+    color: #ffffff !important;
 }

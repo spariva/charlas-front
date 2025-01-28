@@ -18,7 +18,6 @@ export default class Login extends Component {
   //isRegistroForm: es si el usuario está en el formulario de registro o no. El status es si el usuario está logueado o no.
   state = {
     isRegistroForm: false,
-    status: false,
     rol: "2",
     usuario: "",
   }
@@ -41,8 +40,7 @@ export default class Login extends Component {
       services.signUpAlumno(userRegister, this.cajaIdCursoSignup.current.value)
         .then(res => {
           this.setState({
-            isRegistroForm: false,
-            status: false
+            isRegistroForm: false
           });
           alert("Usuario registrado correctamente ahora inicie sesión");
         }).catch(err => {
@@ -54,8 +52,7 @@ export default class Login extends Component {
       services.signUpProfesor(userRegister, "yosoytuprofe")
         .then(res => {
           this.setState({
-            isRegistroForm: false,
-            status: false
+            isRegistroForm: false
           });
           alert("Usuario registrado correctamente ahora inicie sesión");
         }).catch(err => {
@@ -68,7 +65,6 @@ export default class Login extends Component {
     }
     // services.login(user)
     // .then(res => {
-    //   this.setState({ status: true });
     //   console.log("signup token: " + res);
     // }).catch(err => {
     //   console.log(err);
@@ -97,7 +93,6 @@ export default class Login extends Component {
         return this.getUsuario();
       })
       .then(profile => {
-        this.setState({ status: true });
         localStorage.setItem('userId', profile.idUsuario);
         console.log("idRole maki: " + profile.idRole);
         localStorage.setItem('idRole', profile.idRole);
@@ -125,9 +120,6 @@ export default class Login extends Component {
 
     return (
       <div className="login-parent-container">
-
-        {this.state.status && <Navigate to="/home" />}
-
         {mensaje && (
           <div className="alert alert-danger" role="alert">
             {mensaje}

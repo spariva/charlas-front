@@ -12,9 +12,9 @@ import UpdateProfileWrapper from './UpdateProfileWrapper';
 import LoginWrapper from './LoginWrapper';
 import VotarCharlas from './VotarCharlas';
 import UpdateCharlaWrapper from './UpdateCharlaWrapper';
+import CursosProfesor from './CursosProfesor';
+import CreateCurso from './CreateCurso';
 export default class Router extends Component {
-
-  //todo: SOLUCIONAR QUE NO APAREZCA NADA AL INICIAR SESION -> REEDIRIGE A /PROFILE
   constructor(props) {
     super(props);
     this.state = {
@@ -26,8 +26,6 @@ export default class Router extends Component {
     const token = localStorage.getItem('token');
     this.setState({ token });
   }
-
-
 
   handleLogout = () => {
     localStorage.removeItem("token");
@@ -77,14 +75,13 @@ export default class Router extends Component {
                   <Route path="/charlas/:id" element={<CharlasRonda />} />
                   <Route path="/updatecharla" element={<UpdateCharlaWrapper />} />
                   <Route path="/createronda" element={<CreateRonda />} />
+                  <Route path="/createronda" element={<CreateCurso />} />
                   <Route path="/createcharla" element={<CreateCharla />} />
                   <Route path="/votar" element={<VotarCharlas />} />
+                  <Route path="/cursos" element={<CursosProfesor />} />
                   <Route path="*" element={<NotFound />} />
                 </>
               </Routes>
-            </div>
-            <div className="col-2">
-
             </div>
           </div>
         </div>

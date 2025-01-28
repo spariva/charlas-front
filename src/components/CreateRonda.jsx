@@ -11,6 +11,7 @@ export default class CreateRonda extends Component {
 
 	state = {
 		usuario: null,
+		status: false
 	};
 
 	async getUsuario() {
@@ -49,7 +50,7 @@ export default class CreateRonda extends Component {
 	}
 
 	render() {
-		if (this.state.status == true) {
+		if (this.state.status) {
 			return (<Navigate to="/profile" />)
 		} else {
 			return (

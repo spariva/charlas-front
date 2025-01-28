@@ -309,7 +309,7 @@ export default class Profile extends Component {
                           value={this.state.rondaSeleccionada}
                           onChange={this.handleFilterChange}
                         >
-                          <option value="0">Todas las rondas</option>
+                          <option value="0">Ronda</option>
                           {this.state.rondas.map((ronda, index) => {
                             return (
                               <option key={index} value={ronda.idRonda}>
@@ -326,7 +326,7 @@ export default class Profile extends Component {
                           value={this.state.estadoSeleccionado}
                           onChange={this.handleFilterChange}
                         >
-                          <option value="0">Cualquier estado</option>
+                          <option value="0">Estado</option>
                           {estadosCharla.map((e, index) => {
                             return (
                               <option key={index} value={e.idEstadoCharla}>

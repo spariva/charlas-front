@@ -163,9 +163,10 @@ export default class UpdateCharla extends Component {
 
             {/* Botón Guardar */}
             <div className="text-center mt-3">
-              <button type="submit" className="btn btn-outline-dark">
+              <button type="submit" className="updateBtn btn btn-outline-dark">
                 Guardar
               </button>
+              <button className='btnCancelar' onClick={() => this.props.navigate(`/charla/${this.state.charla.idCharla}`, { state: { charla: this.state.charla } })}>Cancelar</button>
             </div>
           </form>
         </div>

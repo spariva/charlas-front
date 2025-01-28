@@ -23,5 +23,18 @@
 .updateBtn:hover {
   background-color: #007bff;
   color: white;
-  color: #b7eab0;
+}
+
+.btnCancelar{
+  background-color: transparent;
+  border: none;
+  color: #afafaf;
+  text-decoration: underline;
+}
+
+.editarButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }

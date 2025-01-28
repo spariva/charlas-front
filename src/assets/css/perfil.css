@@ -1,7 +1,10 @@
 .misCharlas {
+  cursor: pointer;
   display: flex;
-  align-items: flex-start;
-
+  align-items: baseline;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  gap: 10px;
 }
 
 .misCharlas_title{
@@ -9,5 +12,16 @@
   font-size: 25px;
   font-weight: 400;
   font-style: normal;
+  color: #007bff;
 }
 
+.updateBtn {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.updateBtn:hover {
+  background-color: #007bff;
+  color: white;
+  color: #b7eab0;
+}

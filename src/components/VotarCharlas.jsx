@@ -13,6 +13,13 @@ export default class VotarCharlas extends Component {
         ultimaRonda: ""
     }
 
+	getVoto = () => {
+		console.log("Votos del alumno:");
+		services.votosAlumno().then((votosResponse) => {
+			console.log("Votos del alumno:", votosResponse);
+		});
+	}
+
     getCharlasUltimaRonda = () => {
         services.getRondasCurso().then((rondasResponse) => {
             if (rondasResponse.length > 0) {
@@ -71,7 +78,7 @@ export default class VotarCharlas extends Component {
 					const res = await services.votarCharla(voto);
 					alert("SU VOTO HA SIDO REGISTRADO" + res);
 				} catch (error) {
-					alert("No se pueden votar dos charlas de la misma ronda");
+					alert("No puedes votar dos charlas de la misma ronda");
 				}
 			}else{
 				alert("Solo pueden votar los alumnos");
@@ -93,6 +100,8 @@ export default class VotarCharlas extends Component {
     }
 
     componentDidMount = () => {
+		console.log("Ejecutando componentDidMount");
+		this.getVoto();
         services.getToken();
         this.getCharlasUltimaRonda();
     }

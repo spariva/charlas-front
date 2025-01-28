@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams, Navigate } from 'react-router-dom';
 import Home from './Home';
 import Menu from './Menu';
 import ProfileWrapper from './ProfileWrapper';
@@ -7,7 +7,7 @@ import Charlas from './Charlas';
 import Header from './Header';
 import CreateRonda from './CreateRonda';
 import CreateCharla from './CreateCharla';
-// import NotFound from './NotFound';
+import NotFound from './NotFound';
 import UpdateProfileWrapper from './UpdateProfileWrapper';
 import LoginWrapper from './LoginWrapper';
 import VotarCharlas from './VotarCharlas';
@@ -38,6 +38,10 @@ export default class Router extends Component {
   };
 
   render() {
+    const LoginElement = () => {
+      return (<LoginWrapper onLogin={this.onLogin} />)
+    }
+
     const { token } = this.state;
 
     function CharlasRonda() {
@@ -47,7 +51,8 @@ export default class Router extends Component {
 
     return (
       <BrowserRouter>
-        {!token && <LoginWrapper onLogin={this.onLogin} />}
+        {!token && <Navigate to="/" />}
+
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
@@ -58,10 +63,11 @@ export default class Router extends Component {
             <div className="col-md-2 p-0">
               {token && <Menu />}
             </div>
+
             <div className="col-8">
               <Routes>
                 <>
-                  {/* <Route path="/" element={<LoginWrapper />} /> */}
+                  <Route path="/" element={<LoginElement />} />
                   <Route path="/home" element={<Home />} />
                   <Route path="/profile" element={<ProfileWrapper />} />
                   <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
@@ -73,7 +79,7 @@ export default class Router extends Component {
                   <Route path="/createcharla" element={<CreateCharla />} />
                   <Route path="/votar" element={<VotarCharlas />} />
                   <Route path="/cursos" element={<CursosProfesor />} />
-                  {/* <Route path="*" element={<NotFound />} /> */}
+                  <Route path="*" element={<NotFound />} />
                 </>
               </Routes>
             </div>

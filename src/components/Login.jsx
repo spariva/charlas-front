@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import '../assets/css/login.css';
-import { Navigate } from 'react-router-dom';
 import services from "../services/services";
 
 export default class Login extends Component {

@@ -3,5 +3,5 @@ var Global = {
     rol: 2,
     idUsuario: 0,
 }
- 
+
 export default Global;

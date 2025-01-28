@@ -12,9 +12,9 @@ import UpdateProfileWrapper from './UpdateProfileWrapper';
 import LoginWrapper from './LoginWrapper';
 import VotarCharlas from './VotarCharlas';
 import UpdateCharlaWrapper from './UpdateCharlaWrapper';
+import CursosProfesor from './CursosProfesor';
+import CreateCurso from './CreateCurso';
 export default class Router extends Component {
-
-  //todo: SOLUCIONAR QUE NO APAREZCA NADA AL INICIAR SESION -> REEDIRIGE A /PROFILE
   constructor(props) {
     super(props);
     this.state = {
@@ -27,8 +27,6 @@ export default class Router extends Component {
     this.setState({ token });
   }
 
-
-
   handleLogout = () => {
     localStorage.removeItem("token");
     this.setState({ token: null });
@@ -40,6 +38,10 @@ export default class Router extends Component {
   };
 
   render() {
+    const LoginElement = () => {
+      return (<LoginWrapper onLogin={this.onLogin} />)
+    }
+
     const { token } = this.state;
 
     function CharlasRonda() {
@@ -47,40 +49,39 @@ export default class Router extends Component {
       return (<Charlas id={id} />)
     }
 
-        return (
-            <BrowserRouter>
-            {!token && <LoginWrapper onLogin={this.onLogin}/>}
+    return (
+      <BrowserRouter>
+        {!token && <Navigate to="/" />}
 
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-12">
-						{token && <Header onLogout={this.handleLogout} />}   
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-2 p-0">
-						{token && <Menu />}
-                        </div>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              {token && <Header onLogout={this.handleLogout} />}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-2 p-0">
+              {token && <Menu />}
+            </div>
 
             <div className="col-8">
               <Routes>
-                  <>
-                    {/* <Route path="/" element={<LoginWrapper />} /> */}
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/profile" element={<ProfileWrapper />} />
-                    <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
-                    <Route path="/charlas" element={<Charlas />} />
-                    <Route path="/charlas/:id" element={<CharlasRonda />} />
-                    <Route path="/updatecharla" element={<UpdateCharlaWrapper />} />
-                    <Route path="/createronda" element={<CreateRonda />} />
-                    <Route path="/createcharla" element={<CreateCharla />} />
-                    <Route path="/votar" element={<VotarCharlas />} />
-                    {/* <Route path="*" element={<NotFound />} /> */}
-                  </>
+                <>
+                  <Route path="/" element={<LoginElement />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/profile" element={<ProfileWrapper />} />
+                  <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
+                  <Route path="/charlas" element={<Charlas />} />
+                  <Route path="/charlas/:id" element={<CharlasRonda />} />
+                  <Route path="/updatecharla" element={<UpdateCharlaWrapper />} />
+                  <Route path="/createronda" element={<CreateRonda />} />
+                  <Route path="/createronda" element={<CreateCurso />} />
+                  <Route path="/createcharla" element={<CreateCharla />} />
+                  <Route path="/votar" element={<VotarCharlas />} />
+                  <Route path="/cursos" element={<CursosProfesor />} />
+                  <Route path="*" element={<NotFound />} />
+                </>
               </Routes>
-            </div>
-            <div className="col-2">
-
             </div>
           </div>
         </div>

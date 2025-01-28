@@ -143,9 +143,9 @@ export default class CreateCharla extends Component {
 								/>
 								<label htmlFor="inputImagen" className="floating-label">Imagen</label>
 							</div>
-
 							<div className="text-center">
-								<button className="btn btn-info mt-3" onClick={this.insertCharla}>Insertar</button>
+								<button className="updateBtn btn btn-outline-dark" onClick={this.insertCharla}>Crear</button>
+									<button className='btnCancelar' onClick={<Navigate to={'/charlas'} />}>Cancelar</button>
 							</div>
 						</form>
 					</div>

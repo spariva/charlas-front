@@ -91,19 +91,21 @@ export default class Login extends Component {
     }
 
     services.login(user)
-            .then(res => {
-                this.props.onLogin(res); //Esto le pasa el token al padre, que es el Router
-                return this.getUsuario();
-            })
-            .then(profile => {
-                this.setState({ status: true });
-				localStorage.setItem('userId', profile.idUsuario);
-				localStorage.setItem('idRole', profile.idRole);
-            })
-            .catch(err => {
-                console.log(err);
-                alert("Error de credenciales");
-            });
+      .then(res => {
+        this.props.navigate("/home");
+        this.props.onLogin(res); //Esto le pasa el token al padre, que es el Router
+        return this.getUsuario();
+      })
+      .then(profile => {
+        this.setState({ status: true });
+        localStorage.setItem('userId', profile.idUsuario);
+        console.log("idRole maki: " + profile.idRole);
+        localStorage.setItem('idRole', profile.idRole);
+      })
+      .catch(err => {
+        console.log(err);
+        alert("Error de credenciales");
+      });
   }
 
   swap = () => {
@@ -124,7 +126,7 @@ export default class Login extends Component {
     return (
       <div className="login-parent-container">
 
-        {/* {this.state.status && <Navigate to="/home" />} */}
+        {this.state.status && <Navigate to="/home" />}
 
         {mensaje && (
           <div className="alert alert-danger" role="alert">

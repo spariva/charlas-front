@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/stylemenualumno.css';  
+// import '../css/stylemenualumno.css';  
 
 export default class MenuPerfilAdmin extends Component {
 

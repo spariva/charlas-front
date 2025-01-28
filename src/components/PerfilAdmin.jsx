@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Global from './Global';
+import Global from '../Global';
 import MenuPerfilAdmin from './MenuPerfilAdmin';
 import axios from 'axios';
 

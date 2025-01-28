@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams, Navigate } from 'react-router-dom';
 import Home from './Home';
 import Menu from './Menu';
 import ProfileWrapper from './ProfileWrapper';
@@ -24,27 +23,34 @@ export default class Router extends Component {
   }
 
   async componentDidMount() {
-    const token = localStorage.getItem('token'); 
+    const token = localStorage.getItem('token');
     this.setState({ token });
   }
 
-  
+
 
   handleLogout = () => {
     localStorage.removeItem("token");
     this.setState({ token: null });
   };
 
+  onLogin = (token) => {
+    //No lo guardo en el localStorage porque ya lo hace el servicio
+    this.setState({ token: token });
+  };
+
   render() {
     const { token } = this.state;
 
-        function CharlasRonda() {
-            let {id} = useParams();
-            return  (<Charlas id={id} />)
-        }
+    function CharlasRonda() {
+      let { id } = useParams();
+      return (<Charlas id={id} />)
+    }
 
         return (
             <BrowserRouter>
+            {!token && <LoginWrapper onLogin={this.onLogin}/>}
+
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12">
@@ -59,7 +65,7 @@ export default class Router extends Component {
             <div className="col-8">
               <Routes>
                   <>
-                    <Route path="/" element={<LoginWrapper />} />
+                    {/* <Route path="/" element={<LoginWrapper />} /> */}
                     <Route path="/home" element={<Home />} />
                     <Route path="/profile" element={<ProfileWrapper />} />
                     <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
@@ -69,7 +75,7 @@ export default class Router extends Component {
                     <Route path="/createronda" element={<CreateRonda />} />
                     <Route path="/createcharla" element={<CreateCharla />} />
                     <Route path="/votar" element={<VotarCharlas />} />
-                    <Route path="*" element={<NotFound />} />
+                    {/* <Route path="*" element={<NotFound />} /> */}
                   </>
               </Routes>
             </div>

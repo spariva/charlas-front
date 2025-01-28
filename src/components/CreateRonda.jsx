@@ -52,24 +52,82 @@ export default class CreateRonda extends Component {
 		if (this.state.status == true) {
 			return (<Navigate to="/profile" />)
 		} else {
-		return (
-			<div>
-				<h1>CreateRonda</h1>
-				<form>
-					<label>Fecha de presentacion</label>
-					<input type='date' ref={this.cajaFechaPresentacion} className='form-control'></input>
-					<label className='form-label'>Fecha de cierre</label>
-					<input type='date' ref={this.cajaFechaCierre} className='form-control'></input>
-					<label>Duración</label>
-					<input type='number' ref={this.cajaDuracion} className='form-control'></input>
-					<label>Descripcion Modulo</label>
-					<input type='text' ref={this.cajaDescripcion} className='form-control'></input>
-					<label>Fecha de limite de votacion</label>
-					<input type='date' ref={this.cajaLimiteVotacion} className='form-control'></input>
-					<button className='btn btn-info' onClick={this.insertRonda}>insertar</button>
-				</form>
-			</div>
-		)
+			return (
+				<div>
+					{/* Contenedor principal con estilo de tarjeta */}
+					<div
+						className="container-fluid"
+						style={{
+							maxWidth: "90%",
+							margin: "30px auto",
+							padding: "30px",  // Un poco más de padding para espacio alrededor
+							borderRadius: "10px",
+							backgroundColor: "#fff",  // Fondo blanco
+							boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",  // Sombra sutil
+							position: "relative",
+						}}
+					>
+						<div className="title">
+							<h1 className='poiret-one-regular'>Crear ronda</h1>
+							<div className="underline"></div>
+						</div>							<form>
+							<div className="form-group">
+								<input
+									type="date"
+									ref={this.cajaFechaPresentacion}
+									className="form-control"
+									placeholder=" "
+								/>
+								<label htmlFor="inputFechaPresentacion" className="floating-label">Fecha de presentación</label>
+							</div>
+
+							<div className="form-group">
+								<input
+									type="date"
+									ref={this.cajaFechaCierre}
+									className="form-control"
+									placeholder=" "
+								/>
+								<label htmlFor="inputFechaCierre" className="floating-label">Fecha de cierre</label>
+							</div>
+
+							<div className="form-group">
+								<input
+									type="number"
+									ref={this.cajaDuracion}
+									className="form-control"
+									placeholder=" "
+								/>
+								<label htmlFor="inputDuracion" className="floating-label">Duración</label>
+							</div>
+
+							<div className="form-group">
+								<input
+									type="text"
+									ref={this.cajaDescripcion}
+									className="form-control"
+									placeholder=" "
+								/>
+								<label htmlFor="inputDescripcion" className="floating-label">Descripción del Módulo</label>
+							</div>
+
+							<div className="form-group">
+								<input
+									type="date"
+									ref={this.cajaLimiteVotacion}
+									className="form-control"
+									placeholder=" "
+								/>
+								<label htmlFor="inputLimiteVotacion" className="floating-label">Fecha de límite de votación</label>
+							</div>
+
+							<div className="text-center">
+								<button className="btn btn-info mt-3" onClick={this.insertRonda}>Insertar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			);
 		}
 	}
 }

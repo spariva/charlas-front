@@ -74,3 +74,16 @@
     bottom: 8px;
     left: -5px;
 }
+
+.btnUpdate--recurso {
+  width: 35px;
+  height: 35px;
+  border-radius: 15px !important;
+}
+
+.btnUpdate--recurso::after {
+    width: 11px;
+    bottom: 6px;
+    left: -5px;
+}
+

@@ -41,3 +41,16 @@
 .btnDel--peq .bin-top {
   width: 14px;
 }
+
+.btnDel--recurso {
+  width: 35px;
+  height: 35px;
+}
+
+.btnDel--recurso .bin-bottom {
+  width: 8px;
+}
+
+.btnDel--recurso .bin-top {
+  width: 9px;
+}

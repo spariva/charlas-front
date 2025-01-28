@@ -329,7 +329,53 @@ class serviceProfile {
 			console.log("comentario eliminado correctamente");
 		})
 	}
+
+	updateComentario = (comentario) => {
+		const request = "api/comentarios";
+		const url = Global.api + request;
+		return axios.put(url , comentario, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
+
+	//añadir recursos a tu charla
+	postRecurso = (recurso) => {
+		const request = "api/recursos";
+		const url = Global.api + request;
+		return axios.post(url, recurso, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
+
+	updateRecurso = (recurso) => {
+		const request = "api/recursos";
+		const url = Global.api + request;
+		return axios.put(url, recurso, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
+
+	deleteRecurso = (idRecurso) => {
+		const request = "api/recursos/" + idRecurso;
+		const url = Global.api + request;
+		return axios.delete(url,
+			{
+				headers: {
+					'Authorization': 'Bearer ' + this.token
+				}
+			}
+		).then(()=> {
+			console.log("Recurso eliminado correctamente");
+		})
+	}
 }
+
 
 const services = new serviceProfile();
 

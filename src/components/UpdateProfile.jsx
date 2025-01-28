@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import services from '../services/services'
+import './../assets/css/updateProfile.css'
 
 export default class UpdateProfile extends Component {
   cajaNombre = React.createRef();
@@ -61,50 +62,55 @@ export default class UpdateProfile extends Component {
       <div>
         {/* Contenedor principal */}
         <div
-          className="container-fluid"
+          className="container-fluid container_updateProfile"
           style={{
             maxWidth: "90%",
             margin: "30px auto",
-            padding: "20px",
-            border: "1px solid #ddd",
+            padding: "30px", 
             borderRadius: "10px",
-            backgroundColor: "#f9f9f9",
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", 
             position: "relative",
           }}
         >
           {/* Perfil */}
+          <div className="title">
+            <h1 className='poiret-one-regular'>Editar Perfil</h1>
+            <div className="underline"></div>
+          </div>
           <div>
             <form className="row g-3" onSubmit={this.guardarCambios}>
-              <div className="col-md-6">
-                <label htmlFor="inputName" className="form-label">Nombre</label>
+              <div className="form-group col-md-6">
                 <input type="text" className="form-control" id="inputName"
-                  defaultValue={usuario?.nombre} ref={this.cajaNombre} />
+                  defaultValue={usuario?.nombre} ref={this.cajaNombre} placeholder=" " />
+                <label htmlFor="inputName" className="floating-label">Nombre</label>
               </div>
-              <div className="col-md-6">
-                <label htmlFor="inputApellido" className="form-label">Apellidos</label>
+              <div className="form-group col-md-6">
                 <input type="text" className="form-control" id="inputApellido"
-                  defaultValue={usuario?.apellidos} ref={this.cajaApellidos} />
+                  defaultValue={usuario?.apellidos} ref={this.cajaApellidos} placeholder=" " />
+                <label htmlFor="inputApellido" className="floating-label">Apellidos</label>
               </div>
-              <div className="col-md-6">
-                <label htmlFor="inputEmail" className="form-label">Email</label>
+              <div className="form-group col-md-6">
                 <input type="email" className="form-control" id="inputEmail"
-                  defaultValue={usuario?.email} ref={this.cajaEmail} />
+                  defaultValue={usuario?.email} ref={this.cajaEmail} placeholder=" " />
+                <label htmlFor="inputEmail" className="floating-label">Email</label>
               </div>
-              <div className="col-md-6">
-                <label htmlFor="inputPassword" className="form-label">Password</label>
+              <div className="form-group col-md-6">
                 <input type="text" className="form-control" id="inputPassword"
-                  defaultValue={usuario?.password} ref={this.cajaPassword} />
+                  defaultValue={usuario?.password} ref={this.cajaPassword} placeholder=" " />
+                <label htmlFor="inputPassword" className="floating-label">Password</label>
               </div>
-              <div className="col-md-12">
-                <label htmlFor="inputImagen" className="form-label">Imagen de perfil</label>
+              <div className="form-group col-md-12">
                 <input type="text" className="form-control" id="inputImagen"
-                  defaultValue={usuario?.imagen} ref={this.cajaImagen} />
+                  defaultValue={usuario?.imagen} ref={this.cajaImagen} placeholder=" " />
+                <label htmlFor="inputImagen" className="floating-label">Imagen de perfil</label>
               </div>
             </form>
-            <div className='text-center'>
+            <div className="text-center">
               <button className="btn btn-outline-dark mt-3" onClick={this.guardarCambios}>Guardar</button>
             </div>
           </div>
+
         </div>
       </div>
     );

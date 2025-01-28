@@ -1,66 +1,92 @@
-.menu__side {
-    position: fixed;
-    /* Fija el menú en la izquierda */
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 250px;
-    background-color: white;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+.icon {
+    width: 2rem;
+}
+
+.menu_container {
+    padding: .5rem;
+}
+
+.menu_items {
     display: flex;
     flex-direction: column;
-    padding: 20px 10px;
-    z-index: 1000;
-}
-
-.name__page {
-    display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
+    gap: 1.5rem;
+}
+
+h4 {
     color: black;
-    font-weight: bold;
 }
 
-.name__page i {
-    font-size: 1.5rem;
-    color: black;
-    margin-right: 10px;
+h4:hover {
+    color: white;
 }
 
-.options__menu {
-    display: flex;
-    flex-direction: column;
-    /* Opciones en columna */
-    gap: 10px;
-    /* Espacio entre las opciones */
-}
-
-.option {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    color: black;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    /* Transición suave */
-}
-
-.option:hover {
-    background-color: #f0f0f0;
-    color: #007bff;
-}
-
-.option i {
-    font-size: 1.2rem;
-    margin-right: 10px;
-}
-
-/* TIPO DE LETRAS PARA LAS CARDS Y DEMÁS*/
 .poiret-one-regular {
     font-family: "Poiret One", serif;
     font-size: 50px;
     font-weight: 400;
     font-style: normal;
+}
+
+.poiret-one-regular--peq {
+    font-size: 30px;
+}
+
+.link {
+    text-decoration: none;
+    position: relative;
+}
+
+.link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 0.8px;
+    background-color: black;
+    border-radius: 12px;
+}
+
+.item:hover {
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    padding: 0.1rem 1rem;
+}
+
+.item:hover::after {
+    background-color: white;
+}
+
+.item {
+    display: flex;
+    border-radius: 20px;
+    padding: 0.1rem 1rem;
+}
+
+
+.link:hover::after {
+    display: none;
+}
+
+.link--home {
+    padding: 0.4rem 1rem;
+}
+
+.menu_col {
+    display: flex;
+    align-items: center;
+}
+.link--home:hover {
+    padding: 0.4rem 1rem;
+}
+
+.house_icon{
+    color: #000000;
+}
+
+.house_icon:hover{
+    color: #ffffff !important;
 }

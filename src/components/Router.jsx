@@ -40,6 +40,10 @@ export default class Router extends Component {
   };
 
   render() {
+    const LoginElement = () => {
+      return (<LoginWrapper onLogin={this.onLogin} />)
+    }
+
     const { token } = this.state;
 
     function CharlasRonda() {
@@ -47,36 +51,36 @@ export default class Router extends Component {
       return (<Charlas id={id} />)
     }
 
-        return (
-            <BrowserRouter>
-            {!token && <LoginWrapper onLogin={this.onLogin}/>}
+    return (
+      <BrowserRouter>
+        {!token && <Navigate to="/" />}
 
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-12">
-						{token && <Header onLogout={this.handleLogout} />}   
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-2 p-0">
-						{token && <Menu />}
-                        </div>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              {token && <Header onLogout={this.handleLogout} />}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-2 p-0">
+              {token && <Menu />}
+            </div>
 
             <div className="col-8">
               <Routes>
-                  <>
-                    {/* <Route path="/" element={<LoginWrapper />} /> */}
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/profile" element={<ProfileWrapper />} />
-                    <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
-                    <Route path="/charlas" element={<Charlas />} />
-                    <Route path="/charlas/:id" element={<CharlasRonda />} />
-                    <Route path="/updatecharla" element={<UpdateCharlaWrapper />} />
-                    <Route path="/createronda" element={<CreateRonda />} />
-                    <Route path="/createcharla" element={<CreateCharla />} />
-                    <Route path="/votar" element={<VotarCharlas />} />
-                    {/* <Route path="*" element={<NotFound />} /> */}
-                  </>
+                <>
+                  <Route path="/" element={<LoginElement />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/profile" element={<ProfileWrapper />} />
+                  <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
+                  <Route path="/charlas" element={<Charlas />} />
+                  <Route path="/charlas/:id" element={<CharlasRonda />} />
+                  <Route path="/updatecharla" element={<UpdateCharlaWrapper />} />
+                  <Route path="/createronda" element={<CreateRonda />} />
+                  <Route path="/createcharla" element={<CreateCharla />} />
+                  <Route path="/votar" element={<VotarCharlas />} />
+                  <Route path="*" element={<NotFound />} />
+                </>
               </Routes>
             </div>
             <div className="col-2">

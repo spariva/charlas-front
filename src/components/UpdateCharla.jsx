@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import services from '../services/services'
+import './../assets/css/updateProfile.css'
 
 export default class UpdateCharla extends Component {
   cajaTitulo = React.createRef();
@@ -39,7 +40,7 @@ export default class UpdateCharla extends Component {
       "imagenCharla": this.cajaImagen.current.value
     };
     const charlaCombined = { ...this.state.charla, ...charlaUpdated };
-   
+
     services.updateCharla(charlaUpdated).then(res => {
       console.log(res);
     }).catch(err => {
@@ -57,56 +58,116 @@ export default class UpdateCharla extends Component {
       <div>
         {/* Contenedor principal */}
         <div
-          className="container-fluid"
+          className="container-fluid container_updateCharla"
           style={{
             maxWidth: "90%",
             margin: "30px auto",
-            padding: "20px",
-            border: "1px solid #ddd",
+            padding: "30px",
             borderRadius: "10px",
-            backgroundColor: "#f9f9f9",
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             position: "relative",
           }}
         >
-          {/* UpdateCharla */}
-          <div>
-            <h1 className='text-center mb-4'>Editar charla:</h1>
-            <form className="row g-3" onSubmit={this.guardarCambios}>
-              <div className="col-md-6">
-                <label htmlFor="inputName" className="form-label">Título</label>
-                <input type="text" className="form-control" id="inputName"
-                  defaultValue={charla?.titulo} ref={this.cajaTitulo} />
-              </div>
-              <div className="col-md-6">
-                <label htmlFor="inputDescripcion" className="form-label">Descripcion</label>
-                <input type="text" className="form-control" id="inputDescripcion"
-                  defaultValue={charla?.descripcion} ref={this.cajaDescripcion} />
-              </div>
-              <div className="col-md-6">
-                <label htmlFor="inputEmail" className="form-label">Tiempo</label>
-                <input type="number" className="form-control" id="inputEmail"
-                  defaultValue={charla?.tiempo} ref={this.cajaTiempo} />
-              </div>
-              <div className="col-md-6">
-                <label htmlFor="inputPassword" className="form-label">Fecha</label>
-                <input type="datetime-local" className="form-control" id="inputPassword"
-                  defaultValue={charla?.fechaPropuesta} ref={this.cajaFecha} />
-              </div>
-              <div className="col-md-12">
-                <label htmlFor="inputImagen" className="form-label">Ronda</label>
-                <input type="text" className="form-control" id="inputImagen"
-                  defaultValue={charla?.idRonda} ref={this.cajaRonda} />
-              </div>
-              <div className="col-md-12">
-                <label htmlFor="inputImagen" className="form-label">Imagen de perfil</label>
-                <input type="text" className="form-control" id="inputImagen"
-                  defaultValue={charla?.imagenCharla} ref={this.cajaImagen} />
-              </div>
-            </form>
-            <div className='text-center'>
-              <button className="btn btn-outline-dark mt-4" onClick={this.guardarCambios}>Guardar</button>
-            </div>
+          {/* Título */}
+          <div className="title">
+            <h1 className="poiret-one-regular">Editar charla</h1>
+            <div className="underline"></div>
           </div>
+
+          {/* Formulario */}
+          <form className="row g-3" onSubmit={this.guardarCambios}>
+            {/* Campo Título */}
+            <div className="form-group col-md-6">                <input
+                  type="text"
+                  className="form-control"
+                  id="inputTitulo"
+                  defaultValue={charla?.titulo}
+                  ref={this.cajaTitulo}
+                  placeholder=" "
+                />
+                <label htmlFor="inputTitulo" className="floating-label">
+                  Título
+                </label>
+            </div>
+
+            {/* Campo Descripción */}
+            <div className="form-group col-md-6">                <input
+                  type="text"
+                  className="form-control"
+                  id="inputDescripcion"
+                  defaultValue={charla?.descripcion}
+                  ref={this.cajaDescripcion}
+                  placeholder=" "
+                />
+                <label htmlFor="inputDescripcion" className="floating-label">
+                  Descripción
+                </label>
+            </div>
+
+            {/* Campo Tiempo */}
+            <div className="form-group col-md-6">                <input
+                  type="number"
+                  className="form-control"
+                  id="inputTiempo"
+                  defaultValue={charla?.tiempo}
+                  ref={this.cajaTiempo}
+                  placeholder=" "
+                />
+                <label htmlFor="inputTiempo" className="floating-label">
+                  Tiempo
+                </label>
+            </div>
+
+            {/* Campo Fecha */}
+            <div className="form-group col-md-6">                <input
+                  type="datetime-local"
+                  className="form-control"
+                  id="inputFecha"
+                  defaultValue={charla?.fechaPropuesta}
+                  ref={this.cajaFecha}
+                  placeholder=" "
+                />
+                <label htmlFor="inputFecha" className="floating-label">
+                  Fecha
+                </label>
+            </div>
+
+            {/* Campo Ronda */}
+            <div className="form-group col-md-12">                <input
+                  type="text"
+                  className="form-control"
+                  id="inputRonda"
+                  defaultValue={charla?.idRonda}
+                  ref={this.cajaRonda}
+                  placeholder=" "
+                />
+                <label htmlFor="inputRonda" className="floating-label">
+                  Ronda
+                </label>
+            </div>
+
+            {/* Campo Imagen */}
+            <div className="form-group col-md-12">                <input
+                  type="text"
+                  className="form-control"
+                  id="inputImagen"
+                  defaultValue={charla?.imagenCharla}
+                  ref={this.cajaImagen}
+                  placeholder=" "
+                />
+                <label htmlFor="inputImagen" className="floating-label">
+                  Imagen de perfil
+                </label>
+            </div>
+
+            {/* Botón Guardar */}
+            <div className="text-center mt-3">
+              <button type="submit" className="btn btn-outline-dark">
+                Guardar
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     );

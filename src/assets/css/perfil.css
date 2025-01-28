@@ -1,0 +1,13 @@
+.misCharlas {
+  display: flex;
+  align-items: flex-start;
+
+}
+
+.misCharlas_title{
+  font-family: "Poiret One", serif;
+  font-size: 25px;
+  font-weight: 400;
+  font-style: normal;
+}
+

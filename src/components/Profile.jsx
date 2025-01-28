@@ -5,6 +5,7 @@ import Card from "./CardCharla";
 import PopupCharla from "./PopupCharla";
 import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
+import './../assets/css/perfil.css';
 
 export default class Profile extends Component {
   state = {
@@ -31,7 +32,7 @@ export default class Profile extends Component {
     this.setState({ usuario: data.usuario });
     console.log("usuario ", data.usuario);
   }
-    getCharlasUser = () => {
+  getCharlasUser = () => {
     services.getCharlasUsuario().then((res) => {
       console.log("charlas user: ", res);
       const { charlaUpdated } = this.props.location.state || {};
@@ -186,10 +187,10 @@ export default class Profile extends Component {
           style={{
             maxWidth: "90%",
             margin: "30px auto",
-            padding: "20px",
-            border: "1px solid #ddd",
+            padding: "30px",
             borderRadius: "10px",
-            backgroundColor: "#f9f9f9",
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             position: "relative",
           }}
         >
@@ -200,7 +201,7 @@ export default class Profile extends Component {
               top: "20px",
               right: "20px",
               display: "flex",
-              gap: "15px",
+              gap: "10px",
             }}
           >
             <div
@@ -271,20 +272,23 @@ export default class Profile extends Component {
             </div>
             <button className="btn btn-outline-dark m-2 mb-3" onClick={this.navigateUpdateProfile}>Editar perfil</button>
 
-            <div
+            {/* <div
               className="divider"
               style={{
-                borderTop: "2px solid black",
-                width: "50%",
+                borderTop: "0.8px solid #a0a0a0",
+                width: "100%",
                 margin: "10px auto",
+                borderRadius: "12px"
               }}
-            ></div>
+            ></div> */}
 
             <div>
 
               {/* Filtro charlas */}
               <div className="row d-flex justify-content-end mt-2">
-                <h2 className="my-4 text-center">Mis charlas:</h2>
+                <div className="title misCharlas">
+                  <h3 className='misCharlas_title'>Mis charlas</h3>
+                </div>
                 <div className="col-6 col-md-3">
                   <select
                     className="form-select"
@@ -353,8 +357,8 @@ export default class Profile extends Component {
                       </div>
                       <div className="icon_tiempo gap-1">
                         <div className="btnAcciones gap-3">
-                          <BtnUpdate onClick={this.updateCharla}/>
-                          <BtnDel onClick={this.deleteCharla}/>
+                          <BtnUpdate onClick={this.updateCharla} />
+                          <BtnDel onClick={this.deleteCharla} />
                         </div>
                         <i className="fa-regular fa-clock icon ms-2"></i>
                         <span className="charla_tiempo">{this.state.seleccionadaCharla.tiempo} min.</span>
@@ -414,7 +418,7 @@ export default class Profile extends Component {
                                 <span className="comentario_user">-{comentario.usuario}-</span>
                                 {/* boton borrar */}
                                 <div className="btnAcciones">
-                                  <BtnDel className="btnDel--peq"/>
+                                  <BtnDel className="btnDel--peq" />
                                   <BtnUpdate className="btnUpdate--peq" />
                                 </div>
                               </div>

@@ -12,6 +12,8 @@ import UpdateProfileWrapper from './UpdateProfileWrapper';
 import LoginWrapper from './LoginWrapper';
 import VotarCharlas from './VotarCharlas';
 import UpdateCharlaWrapper from './UpdateCharlaWrapper';
+import CursosProfesor from './CursosProfesor';
+import CreateCurso from './CreateCurso';
 export default class Router extends Component {
   constructor(props) {
     super(props);
@@ -67,8 +69,10 @@ export default class Router extends Component {
                   <Route path="/charlas/:id" element={<CharlasRonda />} />
                   <Route path="/updatecharla" element={<UpdateCharlaWrapper />} />
                   <Route path="/createronda" element={<CreateRonda />} />
+                  <Route path="/createronda" element={<CreateCurso />} />
                   <Route path="/createcharla" element={<CreateCharla />} />
                   <Route path="/votar" element={<VotarCharlas />} />
+                  <Route path="/cursos" element={<CursosProfesor />} />
                   {/* <Route path="*" element={<NotFound />} /> */}
                 </>
               </Routes>

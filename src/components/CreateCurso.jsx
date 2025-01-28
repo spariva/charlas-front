@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import services from '../services/services';
 import { Navigate } from 'react-router-dom';
 
-export default class CreateRonda extends Component {
+export default class CreateCurso extends Component {
 	cajaFechaPresentacion = React.createRef();
 	cajaFechaCierre = React.createRef();
 	cajaDuracion = React.createRef();
@@ -55,7 +55,7 @@ export default class CreateRonda extends Component {
 		} else {
 		return (
 			<div>
-				<h1>CreateRonda</h1>
+				<h1>Create Curso hay que cambiarlo</h1>
 				<form>
 					<label>Fecha de presentacion</label>
 					<input type='date' ref={this.cajaFechaPresentacion} className='form-control'></input>

@@ -51,16 +51,13 @@ h4:hover {
 
 .item:hover {
     background-color: black;
-    /* Fondo negro al pasar el ratón */
     color: white;
-    /* Texto blanco al pasar el ratón */
     border-radius: 20px;
     padding: 0.1rem 1rem;
 }
 
 .item:hover::after {
     background-color: white;
-    /* La línea se pone blanca al pasar el ratón */
 }
 
 .item {

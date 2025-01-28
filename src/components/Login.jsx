@@ -92,6 +92,7 @@ export default class Login extends Component {
 
     services.login(user)
             .then(res => {
+                this.props.onLogin(res); //Esto le pasa el token al padre, que es el Router
                 return this.getUsuario();
             })
             .then(profile => {
@@ -123,7 +124,7 @@ export default class Login extends Component {
     return (
       <div className="login-parent-container">
 
-        {this.state.status && <Navigate to="/home" />}
+        {/* {this.state.status && <Navigate to="/home" />} */}
 
         {mensaje && (
           <div className="alert alert-danger" role="alert">

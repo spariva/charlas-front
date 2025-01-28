@@ -70,34 +70,87 @@ export default class CreateCharla extends Component {
 		} else {
 			return (
 				<div>
-					<h1>Create charla</h1>
-					<form>
-						<label>Titulo</label>
-						<input type='text' ref={this.cajaTitulo} className='form-control'></input>
-						<label className='form-label'>Descripción</label>
-						<input type='text' ref={this.cajaDescripcion} className='form-control'></input>
-						<label className='form-label'>Duración</label>
-						<input type='number' ref={this.cajaDuracion} className='form-control'></input>
-						<label className='form-label'>Ronda en la que presentarlo</label>
-						<select name="" id="" ref={this.selectRonda} className='form-control'>
-							<option value="">--seleccione una ronda--</option>
-							{
-								this.state.rondas.map((ronda, index) => {
-									return (
+					{/* Contenedor principal con estilo de tarjeta */}
+					<div
+						className="container-fluid"
+						style={{
+							maxWidth: "90%",
+							margin: "30px auto",
+							padding: "30px",
+							borderRadius: "10px",
+							backgroundColor: "#fff",
+							boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+							position: "relative",
+						}}
+					>
+						<div className="title">
+							<h1 className='poiret-one-regular'>Crear charla</h1>
+							<div className="underline"></div>
+						</div>						
+						<form>
+							<div className="form-group">
+								<input
+									type="text"
+									ref={this.cajaTitulo}
+									className="form-control"
+									placeholder=" "
+								/>
+								<label htmlFor="inputTitulo" className="floating-label">Título</label>
+							</div>
+
+							<div className="form-group">
+								<input
+									type="text"
+									ref={this.cajaDescripcion}
+									className="form-control"
+									placeholder=" "
+								/>
+								<label htmlFor="inputDescripcion" className="floating-label">Descripción</label>
+							</div>
+
+							<div className="form-group">
+								<input
+									type="number"
+									ref={this.cajaDuracion}
+									className="form-control"
+									placeholder=" "
+								/>
+								<label htmlFor="inputDuracion" className="floating-label">Duración</label>
+							</div>
+
+							<div className="form-group">
+								<select
+									ref={this.selectRonda}
+									className="form-control"
+									placeholder=" "
+								>
+									<option value="">--seleccione una ronda--</option>
+									{this.state.rondas.map((ronda, index) => (
 										<option value={ronda.idRonda} key={index}>
 											{ronda.descripcionModulo}
 										</option>
-									)
-								})
-							}
-						</select>
-						<label className='form-label'>Imagen</label>
-						<input type='text' ref={this.cajaImagen} className='form-control'></input>
-						<br />
-						<button className='btn btn-info' onClick={this.insertCharla}>Insertar</button>
-					</form>
+									))}
+								</select>
+								<label htmlFor="selectRonda" className="floating-label">Ronda en la que presentarlo</label>
+							</div>
+
+							<div className="form-group">
+								<input
+									type="text"
+									ref={this.cajaImagen}
+									className="form-control"
+									placeholder=" "
+								/>
+								<label htmlFor="inputImagen" className="floating-label">Imagen</label>
+							</div>
+
+							<div className="text-center">
+								<button className="btn btn-info mt-3" onClick={this.insertCharla}>Insertar</button>
+							</div>
+						</form>
+					</div>
 				</div>
-			)
+			);
 		}
 	}
 }

@@ -66,10 +66,10 @@ export default class UpdateProfile extends Component {
           style={{
             maxWidth: "90%",
             margin: "30px auto",
-            padding: "30px",  // Un poco más de padding para espacio alrededor
+            padding: "30px", 
             borderRadius: "10px",
-            backgroundColor: "#fff",  // Fondo blanco
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",  // Sombra sutil
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", 
             position: "relative",
           }}
         >

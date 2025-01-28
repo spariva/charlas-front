@@ -50,7 +50,7 @@ export default class CreateCurso extends Component {
 	}
 
 	render() {
-		if (this.state.status == true) {
+		if (this.state.status) {
 			return (<Navigate to="/profile" />)
 		} else {
 		return (

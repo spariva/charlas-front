@@ -64,7 +64,6 @@ export default class CursosProfesor extends Component {
                             </Link>
                         </div>
                     ))}
-					//hsksknd
                 </div>
             </div>
         );

@@ -12,16 +12,16 @@
   font-size: 25px;
   font-weight: 400;
   font-style: normal;
-  color: #007bff;
+  color: #007bffe2;
 }
 
 .updateBtn {
-  border-color: #007bff;
-  color: #007bff;
+  border-color: #007bffe2;
+  color: #007bffe2;
 }
 
 .updateBtn:hover {
-  background-color: #007bff;
+  background-color: #4082c9;
   color: white;
 }
 

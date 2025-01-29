@@ -6,9 +6,9 @@ const CreateBtnCharla = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  if (location.pathname !== "/charlas") {
+  if (location.pathname !== "/charlas" && location.pathname !== "/profile") {
     return null;
-  }
+  }  
 
   return (
     <button

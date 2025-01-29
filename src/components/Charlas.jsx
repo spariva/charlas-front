@@ -320,9 +320,23 @@ class Charlas extends Component {
 
 	render() {
 		return (
-			<>
+			<div
+          className="container-fluid container_updateProfile"
+          style={{
+            maxWidth: "90%",
+            margin: "30px auto",
+            padding: "30px",
+            borderRadius: "10px",
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            position: "relative",
+          }}
+        >
 				<div className="charlasFilters">
-					<h1 className="my-4 text-center">Charlas</h1>
+					<div className="title">
+						<h1 className='poiret-one-regular'>Charlas</h1>
+						<div className="underline"></div>
+					</div>
 					<FiltrosCharlas
 						rondas={this.state.rondas}
 						estadoCharla={this.state.estadoCharla}
@@ -502,16 +516,7 @@ class Charlas extends Component {
 						</>
 					)}
 				</PopupCharla>
-				{/* <div className="col-2">
-					<FiltrosCharlas
-						rondas={this.state.rondas}
-						estadoCharla={this.state.estadoCharla}
-						rondaSeleccionada={this.state.rondaSeleccionada}
-						onRondaChange={this.handleRondaChange}
-						onEstadoChange={this.handleEstadoChange}
-					/>
-				</div> */}
-			</>
+			</div>
 		);
 	}
 }

@@ -193,19 +193,6 @@ class serviceProfile {
 		}
 	}
 
-	//PARA CREAR UNA RONDA TIENES QUE TENER UN TOKEN DE PROFESOR
-	createRonda = (ronda) => {
-		const request = "api/profesor/createronda";
-		const url = Global.api + request;
-		return axios.post(url, ronda, {
-			headers: {
-				'Authorization': `Bearer ${this.token}`,
-			},
-		}).then((response) => {
-			console.log(response);
-		})
-	};
-
 	createCharla = (charla) => {
 		const request = "/api/charlas";
 		const url = Global.api + request;
@@ -294,16 +281,6 @@ class serviceProfile {
 			}
 		})
 	}
-	
-	getAlumnosProfesor = () => {
-		const request = "/api/Profesor/AlumnosCursoProfesor"
-		const url = Global.api + request;
-		return axios.get(url, {
-			headers: {
-				'Authorization': 'Bearer ' + this.token
-			}
-		})
-	}
 
 	//comentarios
 	postComentario = (comentario) => {
@@ -374,6 +351,209 @@ class serviceProfile {
 			console.log("Recurso eliminado correctamente");
 		})
 	}
+
+	//* Profesor (métodos que se necesita el token de profe para que funcionen):
+	getAlumnosProfesor = () => {
+		const request = "/api/Profesor/AlumnosCursoProfesor"
+		const url = Global.api + request;
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
+
+	//Devuelve todo pero solo de los alumnos que estén en su curso activo
+	async getCursoActivoProfesor() {
+		this.getToken();
+		let request = "api/profesor/alumnoscursoactivoprofesor";
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.get(Global.api + request, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+	//Devuelve todo pero solo de los alumnos que estén en sus cursos inactivos
+	async getAlumnosCursosInactivosProfesor() {
+		this.getToken();
+		let request = "api/profesor/alumnoscursohistorialprofesor";
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.get(Global.api + request, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+
+	async getCursosActivosProfesor() {
+		this.getToken();
+		let request = "api/profesor/cursosactivosprofesor";
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.get(Global.api + request, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+	//Devuelve todos los cursos del profesor, activos o inactivos
+	async getAllCursosProfesor() {
+		this.getToken();
+		let request = "api/profesor/cursosprofesor";
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.get(Global.api + request, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+	async updateEstadoCharla(idCharla, idEstado) {
+		this.getToken();
+		let request = "api/profesor/updateestadocharla/" + idCharla + "/" + idEstado;
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.put(Global.api + request, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+	createRonda = (ronda) => {
+		const request = "api/profesor/createronda";
+		const url = Global.api + request;
+		return axios.post(url, ronda, {
+			headers: {
+				'Authorization': `Bearer ${this.token}`,
+			},
+		}).then((response) => {
+			console.log(response);
+		})
+	};
+
+	async updateRonda(ronda) {
+		this.getToken();
+		let request = "api/profesor/updateronda";
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.put(Global.api + request, ronda, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+	async deleteRonda(idRonda) {
+		this.getToken();
+		let request = "api/profesor/deleteronda/" + idRonda;
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.delete(Global.api + request, { headers });
+			return response;
+		}
+		catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+	//el estado solo puede ser true o false
+	async updateEstadoAlumno(idUsuario, estado) {
+		this.getToken();
+		let request = "api/profesor/updateestadoalumno/" + idUsuario + "/" + estado;
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.put(Global.api + request, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+	async createCurso(curso) {
+		this.getToken();
+		let request = "api/profesor/createcurso/";
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.post(Global.api + request, curso, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+	//* Este en teoría es de admin ??
+	// async getDatosAlumno(idAlumno) {
+	// 	this.getToken();
+	// 	let request = "api/profesor/datosalumno/" + idAlumno;
+	// 	let headers = {
+	// 		'Authorization': 'Bearer ' + this.token,
+	// 		'Content-Type': 'application/json'
+	// 	}
+
+	// 	try {
+	// 		const response = await axios.get(Global.api + request, { headers });
+	// 		return response;
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 		throw error;
+	// 	}
+	// }
+
+
+
 }
 
 

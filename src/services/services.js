@@ -552,7 +552,45 @@ class serviceProfile {
 	// 	}
 	// }
 
-
+	getCursosActivosProfesor = () => {
+		const request = "/api/Profesor/AlumnosCursoActivoProfesor";
+		const url = Global.api + request;
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		}).then((response) => {
+			console.log("Respuesta completa de cursos:", response);
+			return response.data;
+		}).catch((error) => {
+			console.error("Error al obtener los cursos:", error);
+			throw error;  // Lanzar el error para que el componente lo maneje
+		});
+	}
+	formatFecha = (fecha) => {
+			if (!fecha) return "";
+			const date = new Date(fecha);
+			return new Intl.DateTimeFormat("es-ES", {
+				day: "2-digit",
+				month: "2-digit",
+				year: "numeric",
+			}).format(date);
+		};
+	getAlumnosActivosProfesor = () => {
+		const request = "/api/Profesor/AlumnosCursoActivoProfesor";
+		const url = Global.api + request;
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		}).then((response) => {
+			console.log("Respuesta completa de alumnos:", response);
+			return response.data;
+		}).catch((error) => {
+			console.error("Error al obtener los alumnos:", error);
+			throw error;
+		});
+	}
 
 }
 

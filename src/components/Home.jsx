@@ -34,6 +34,15 @@ class Home extends Component {
 		idComentarioEditar: null,
 	};
 
+	getPerfil = () => {
+		services.getPerfilUsuario().then((response) => {
+			this.setState({
+				idUsuarioPerfil: response.usuario.idUsuario
+			})
+			console.log("Id usuario " + response.usuario.idUsuario)
+		})
+	}
+
 	getCharlas = () => {
 		services.getCharlasCurso().then((response) => {
 			console.log(response);
@@ -42,6 +51,23 @@ class Home extends Component {
 			});
 		});
 	};
+
+	getRondas = () => {
+		services.getRondasCurso().then((response) => {
+			this.setState({
+				rondas: response
+			});
+		});
+	}
+
+	getPerfil = () => {
+		services.getPerfilUsuario().then((response) => {
+			this.setState({
+				idUsuarioPerfil: response.usuario.idUsuario
+			})
+			console.log("Id usuario " + response.usuario.idUsuario)
+		})
+	}
 
 	handleCardClick = (charla) => {
 		console.log(charla.idCharla);
@@ -268,6 +294,7 @@ class Home extends Component {
 
 	componentDidMount = () => {
 		this.getCharlas();
+		this.getPerfil();
 	};
 
 	render() {

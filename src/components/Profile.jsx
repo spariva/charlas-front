@@ -221,7 +221,7 @@ export default class Profile extends Component {
                   return c.charla.idEstadoCharla === 1;
                 }).length}
               </h3>
-              <p style={{ margin: "0", fontSize: "14px"}}>
+              <p style={{ margin: "0", fontSize: "14px" }}>
                 Propuestas
               </p>
             </div>
@@ -242,7 +242,7 @@ export default class Profile extends Component {
                   return c.charla.idEstadoCharla === 2;
                 }).length}
               </h3>
-              <p style={{ margin: "0", fontSize: "14px"}}>
+              <p style={{ margin: "0", fontSize: "14px" }}>
                 Aceptadas
               </p>
             </div>
@@ -289,7 +289,7 @@ export default class Profile extends Component {
             <div>
               {/* Filtro charlas con encabezado desplegable */}
               <div className="row d-flex justify-content-end mt-2">
-                <div className="misCharlas" onClick={() =>this.setState((prevState) => ({showCharlas: !prevState.showCharlas}))}>
+                <div className="misCharlas" onClick={() => this.setState((prevState) => ({ showCharlas: !prevState.showCharlas }))}>
                   <h3 className="misCharlas_title">Mis Charlas</h3>
                   <i
                     className={`fa-solid ${this.state.showCharlas ? "fa-chevron-up" : "fa-chevron-down"
@@ -361,99 +361,99 @@ export default class Profile extends Component {
                 )}
               </div>
 
-            {/* Popup para charla seleccionada */}
-            <PopupCharla show={this.state.showPopup} onClose={this.handleClosePopup}>
-              {this.state.seleccionadaCharla && (
-                <>
-                  {/* <div className="charla_estado">
+              {/* Popup para charla seleccionada */}
+              <PopupCharla show={this.state.showPopup} onClose={this.handleClosePopup}>
+                {this.state.seleccionadaCharla && (
+                  <>
+                    {/* <div className="charla_estado">
                       <span className="estado" style={{
                         backgroundColor: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#b7eab0' : '#e5a879',
                         color: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#29721f' : '#d57018',
                       }}>{this.state.seleccionadaCharla.estadoCharla}</span>
                     </div> */}
-                  <div className="charla_title">
-                    <div className="title">
-                      <h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
-                      <hr className="card_divisor"></hr>
-                    </div>
-                    <div className="icon_tiempo gap-1">
-                      <div className="btnAcciones gap-3">
-                        <BtnUpdate onClick={this.updateCharla} />
-                        <BtnDel onClick={this.deleteCharla} />
+                    <div className="charla_title">
+                      <div className="title">
+                        <h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
+                        <hr className="card_divisor"></hr>
                       </div>
-                      <i className="fa-regular fa-clock icon ms-2"></i>
-                      <span className="charla_tiempo">{this.state.seleccionadaCharla.tiempo} min.</span>
+                      <div className="icon_tiempo gap-1">
+                        <div className="btnAcciones gap-3">
+                          <BtnUpdate onClick={this.updateCharla} />
+                          <BtnDel onClick={this.deleteCharla} />
+                        </div>
+                        <i className="fa-regular fa-clock icon ms-2"></i>
+                        <span className="charla_tiempo">{this.state.seleccionadaCharla.tiempo} min.</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="charla_image">
-                    <img
-                      src={this.state.seleccionadaCharla.imagenCharla}
-                      alt={this.state.seleccionadaCharla.titulo}
-                    />
-                    <div className="charla_descripcion">
-                      <span className="descripcion">{this.state.seleccionadaCharla.descripcion}</span>
+                    <div className="charla_image">
+                      <img
+                        src={this.state.seleccionadaCharla.imagenCharla}
+                        alt={this.state.seleccionadaCharla.titulo}
+                      />
+                      <div className="charla_descripcion">
+                        <span className="descripcion">{this.state.seleccionadaCharla.descripcion}</span>
+                      </div>
                     </div>
-                  </div>
-                  <hr />
-                  {/* Sección de recursos */}
-                  {this.state.recursosCharla.length > 0 && (
-                    <div className="recursos">
-                      <h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
-                        {this.state.showRecursos ? (
-                          <div className="rec_title">
-                            <i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
-                          </div>
-                        ) : (
-                          <div className="rec_title">
-                            <i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
+                    <hr />
+                    {/* Sección de recursos */}
+                    {this.state.recursosCharla.length > 0 && (
+                      <div className="recursos">
+                        <h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
+                          {this.state.showRecursos ? (
+                            <div className="rec_title">
+                              <i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
+                            </div>
+                          ) : (
+                            <div className="rec_title">
+                              <i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
+                            </div>
+                          )}
+                        </h3>
+                        {this.state.showRecursos && (
+                          <div className="recursos_content">
+                            {this.state.recursosCharla.map((recurso, index) => (
+                              <div className="rec_elementos" key={index}>
+                                <span className="recurso_desc">{recurso.descripcion}</span>
+                                <i className="fa-solid fa-arrow-right icon"></i>
+                                <a className="recurso_link" href={recurso.url} target="_blank" rel="noopener noreferrer">{recurso.nombre}</a>
+                              </div>
+                            ))}
                           </div>
                         )}
-                      </h3>
-                      {this.state.showRecursos && (
-                        <div className="recursos_content">
-                          {this.state.recursosCharla.map((recurso, index) => (
-                            <div className="rec_elementos" key={index}>
-                              <span className="recurso_desc">{recurso.descripcion}</span>
-                              <i className="fa-solid fa-arrow-right icon"></i>
-                              <a className="recurso_link" href={recurso.url} target="_blank" rel="noopener noreferrer">{recurso.nombre}</a>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      <hr />
-                    </div>
-                  )}
-                  {/* Sección de comentarios */}
-                  <div className="comentarios">
-                    <div className="comentarios_title">
-                      <span className="comentarios_text">Comentarios</span>
-                      <input className="comentarios_input" ref={this.cajaContenido} type="text" placeholder="Agregar nuevo comentario..." />
-                      <button onClick={this.postComentario} className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario icon" ></i></button>
-                    </div>
-                    <div className="comentarios_content">
-                      {this.state.comentariosCharla.map((comentario, index) => {
-                        return (
-                          <div className="container_comentario" key={index}>
-                            <div className="comentario">
-                              <span className="comentario_text">{comentario.contenido}</span>
-                              <span className="comentario_user">-{comentario.usuario}-</span>
-                              {/* boton borrar */}
-                              <div className="btnAcciones">
-                                <BtnDel className="btnDel--peq" />
-                                <BtnUpdate className="btnUpdate--peq" />
+                        <hr />
+                      </div>
+                    )}
+                    {/* Sección de comentarios */}
+                    <div className="comentarios">
+                      <div className="comentarios_title">
+                        <span className="comentarios_text">Comentarios</span>
+                        <input className="comentarios_input" ref={this.cajaContenido} type="text" placeholder="Agregar nuevo comentario..." />
+                        <button onClick={this.postComentario} className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario icon" ></i></button>
+                      </div>
+                      <div className="comentarios_content">
+                        {this.state.comentariosCharla.map((comentario, index) => {
+                          return (
+                            <div className="container_comentario" key={index}>
+                              <div className="comentario">
+                                <span className="comentario_text">{comentario.contenido}</span>
+                                <span className="comentario_user">-{comentario.usuario}-</span>
+                                {/* boton borrar */}
+                                <div className="btnAcciones">
+                                  <BtnDel className="btnDel--peq" />
+                                  <BtnUpdate className="btnUpdate--peq" />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                </>
-              )}
-            </PopupCharla>
+                  </>
+                )}
+              </PopupCharla>
+            </div>
           </div>
         </div>
-      </div>
       </div >
     );
   }

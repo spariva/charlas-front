@@ -66,10 +66,10 @@ export default class UpdateProfile extends Component {
           style={{
             maxWidth: "90%",
             margin: "30px auto",
-            padding: "30px", 
+            padding: "30px",
             borderRadius: "10px",
             backgroundColor: "#fff",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", 
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             position: "relative",
           }}
         >
@@ -106,8 +106,9 @@ export default class UpdateProfile extends Component {
                 <label htmlFor="inputImagen" className="floating-label">Imagen de perfil</label>
               </div>
             </form>
-            <div className="text-center">
-              <button className="btn btn-outline-dark mt-3" onClick={this.guardarCambios}>Guardar</button>
+            <div className="editarButtons text-center">
+              <button className="updateBtn btn btn-outline-dark" onClick={this.guardarCambios}>Guardar</button>
+              <button className='btnCancelar' onClick={() => this.props.navigate('/profile', { state: { usuario: this.state.usuario } })}>Cancelar</button>
             </div>
           </div>
 

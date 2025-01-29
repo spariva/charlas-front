@@ -4,6 +4,7 @@ import Card from "./CardCharla";
 import PopupCharla from "./PopupCharla";
 import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
+import FiltrosCharlas from "./FiltrosCharlas";
 
 class Charlas extends Component {
 
@@ -312,51 +313,45 @@ class Charlas extends Component {
 
 	render() {
 		return (
-			<div className="container">
-				<div className="row d-flex justify-content-end mt-4">
-					<div className="col-6 col-md-3">
-						<select
-							className="form-select"
-							value={this.state.rondaSeleccionada}
-							onChange={this.handleRondaChange}
-						>
-							<option value="">Ronda</option>
-							{this.state.rondas.map((ronda, index) => {
-								return (
-									<option key={index} value={ronda.idRonda}>
-										Ronda {ronda.idRonda}
-									</option>
-								);
-							})}
-						</select>
+			<div
+				className="container-fluid container_updateProfile"
+				style={{
+					maxWidth: "90%",
+					margin: "30px auto",
+					padding: "30px",
+					borderRadius: "10px",
+					backgroundColor: "#fff",
+					boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+					position: "relative",
+				}}
+			>
+				<div className="charlasFilters">
+					<div className="title">
+						<h1 className='poiret-one-regular'>Charlas</h1>
+						<div className="underline"></div>
 					</div>
-					<div className="col-6 col-md-3">
-						<select className="form-select">
-							<option value="">Estado</option>
-							{this.state.estadoCharla.map((estado, index) => {
-								return (
-									<option key={index} value={estado.idEstadoRonda}>
-										{estado.estado}
-									</option>
-								);
-							})}
-						</select>
-					</div>
+					<FiltrosCharlas
+						rondas={this.state.rondas}
+						estadoCharla={this.state.estadoCharla}
+						rondaSeleccionada={this.state.rondaSeleccionada}
+						onRondaChange={this.handleRondaChange}
+						onEstadoChange={this.handleEstadoChange}
+					/>
 				</div>
-
-				<h1 className="my-4 text-center">Charlas</h1>
 
 				{/* Fila de charlas */}
 				<div className="row d-flex flex-wrap justify-content-start">
 					{this.state.charlas.map((charla, index) => {
 						return (
-							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>
-								<Card
-									imagen={charla.imagenCharla}
-									titulo={charla.titulo}
-									descripcion={charla.descripcion}
-								/>
-							</div>
+							<>
+								<div key={index} className="col-8 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>
+									<Card
+										imagen={charla.imagenCharla}
+										titulo={charla.titulo}
+										descripcion={charla.descripcion}
+									/>
+								</div>
+							</>
 						);
 					})}
 				</div>
@@ -450,139 +445,139 @@ class Charlas extends Component {
 													<label htmlFor="descripcion" className="floating-label">Descripción</label>
 												</div>
 												<div className="recursosBtn">
-													<button type="submit" className="btn btn-primary">"Añadir Recurso"</button>
+													<button type="submit" className="btn btn-primary">Añadir Recurso</button>
 													<button type="button" className="btn btn-secondary" onClick={this.cancelFormRecursos}>Cancelar</button>
 												</div>
 											</form>
-										</div>									
-									)}											
-								</div>
-							</div>)}						
-									{/* Sección de recursos */}
-									{this.state.recursosCharla.length > 0 && (
-										<div className="recursos">
-											<div className="recu_title">
-												<div className="recursosElements">
-													<h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
-														{this.state.showRecursos ? (
-															<div className="rec_title">
-																<i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
-															</div>
-														) : (
-															<div className="rec_title">
-																<i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
-															</div>
-														)}
-													</h3>
-													{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
-														<button className="comentarios_btn add_recurso" onClick={this.toggleFormularioRecursos}>
-															<i className="fa-solid fa-plus icon--white"></i>
-														</button>
-													)}
-												</div>
-												{this.state.showFormularioRecursos && (
-													<div className="formulario-recurso">
-														<form onSubmit={(e) => this.state.recursoSeleccionado ? this.updateRecurso(e, this.state.recursoSeleccionado.idRecurso) : this.postRecurso(e, this.state.idCharlaSeleccionada)}>
-															<div className="form-group">
-																<input
-																	ref={this.cajaUrl}
-																	type="url"
-																	className="form-control"
-																	id="url"
-																	placeholder=" "
-																	required
-																	defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.url : ""}
-																/>
-																<label htmlFor="url" className="floating-label">URL</label>
-															</div>
-															<div className="form-group">
-																<input
-																	ref={this.cajaNombreRecurso}
-																	type="text"
-																	className="form-control"
-																	id="nombre"
-																	placeholder=" "
-																	required
-																	defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.nombre : ""}
-																/>
-																<label htmlFor="nombre" className="floating-label">Nombre</label>
-															</div>
-															<div className="form-group">
-																<input
-																	ref={this.cajaDescripcionRecurso}
-																	type="text"
-																	className="form-control"
-																	id="descripcion"
-																	placeholder=" "
-																	required
-																	defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.descripcion : ""}
-																/>
-																<label htmlFor="descripcion" className="floating-label">Descripción</label>
-															</div>
-															<div className="recursosBtn">
-																<button type="submit" className="btn btn-primary">{this.state.recursoSeleccionado ? "Actualizar Recurso" : "Añadir Recurso"}</button>
-																<button type="button" className="btn btn-secondary" onClick={this.cancelFormRecursos}>Cancelar</button>
-															</div>
-														</form>
-													</div>
-												)}
-											</div>
-											{this.state.showRecursos && (
-												<div className="recursos_content">
-													{this.state.recursosCharla.map((recurso, index) => (
-														<div className="rec_elementos" key={index}>
-															<a className="recurso_link" href={recurso.url} target="_blank" rel="noreferrer">{recurso.nombre}</a>
-															<i className="fa-solid fa-arrow-right icon"></i>
-															<span className="recurso_desc">{recurso.descripcion}</span>
-															{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
-																<div className="btnAcciones">
-																	{/* <BtnDel className="btnDel--recurso"  onClick={() => this.deleteRecurso(recurso.idRecurso)}/> */}
-																	<BtnUpdate className="btnUpdate--recurso" onClick={() => this.handleUpdateRecurso(recurso)} />
-																</div>
-															)}
-														</div>
-													))}
-												</div>
-											)}
-											<hr />
 										</div>
 									)}
-									{/* Sección de comentarios */}
-									<div className="comentarios">
-										<div className="comentarios_title">
-											<span className="comentarios_text">Comentarios</span>
-											<input className="comentarios_input" ref={this.cajaContenido} type="text" placeholder="Agregar nuevo comentario..." value={this.state.comentarioEditar || ""} // Vinculamos el valor del input al estado comentarioEditar
-												onChange={(e) => this.setState({ comentarioEditar: e.target.value })} />
-											<button onClick={(e) => this.handleComentarioAction(e)} className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario icon" ></i></button>
-										</div>
-										<div className="comentarios_content">
-											{this.state.comentariosCharla.map((comentario, index) => {
-												return (
-													<div key={index} className="container_comentario">
-														<div className="comentario">
-															<span className="comentario_text">{comentario.contenido}</span>
-															<span className="comentario_user">-{comentario.usuario}-</span>
-															{comentario.idUsuario === this.state.idUsuarioPerfil && (
-																<div className="btnAcciones">
-																	<BtnDel
-																		className="btnDel--peq"
-																		onClick={() => this.deleteComentario(comentario.idComentario)}
-																	/>
-																	<BtnUpdate className="btnUpdate--peq" onClick={() => this.handleEditComentario(comentario)} />
-																</div>
-															)}
-														</div>
+								</div>
+							</div>)}
+							{/* Sección de recursos */}
+							{this.state.recursosCharla.length > 0 && (
+								<div className="recursos">
+									<div className="recu_title">
+										<div className="recursosElements">
+											<h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
+												{this.state.showRecursos ? (
+													<div className="rec_title">
+														<i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
 													</div>
-												);
-											})}
+												) : (
+													<div className="rec_title">
+														<i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
+													</div>
+												)}
+											</h3>
+											{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
+												<button className="comentarios_btn add_recurso" onClick={this.toggleFormularioRecursos}>
+													<i className="fa-solid fa-plus icon--white"></i>
+												</button>
+											)}
 										</div>
+										{this.state.showFormularioRecursos && (
+											<div className="formulario-recurso">
+												<form onSubmit={(e) => this.state.recursoSeleccionado ? this.updateRecurso(e, this.state.recursoSeleccionado.idRecurso) : this.postRecurso(e, this.state.idCharlaSeleccionada)}>
+													<div className="form-group">
+														<input
+															ref={this.cajaUrl}
+															type="url"
+															className="form-control"
+															id="url"
+															placeholder=" "
+															required
+															defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.url : ""}
+														/>
+														<label htmlFor="url" className="floating-label">URL</label>
+													</div>
+													<div className="form-group">
+														<input
+															ref={this.cajaNombreRecurso}
+															type="text"
+															className="form-control"
+															id="nombre"
+															placeholder=" "
+															required
+															defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.nombre : ""}
+														/>
+														<label htmlFor="nombre" className="floating-label">Nombre</label>
+													</div>
+													<div className="form-group">
+														<input
+															ref={this.cajaDescripcionRecurso}
+															type="text"
+															className="form-control"
+															id="descripcion"
+															placeholder=" "
+															required
+															defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.descripcion : ""}
+														/>
+														<label htmlFor="descripcion" className="floating-label">Descripción</label>
+													</div>
+													<div className="recursosBtn">
+														<button type="submit" className="btn btn-primary">{this.state.recursoSeleccionado ? "Actualizar Recurso" : "Añadir Recurso"}</button>
+														<button type="button" className="btn btn-secondary" onClick={this.cancelFormRecursos}>Cancelar</button>
+													</div>
+												</form>
+											</div>
+										)}
 									</div>
-								</>
+									{this.state.showRecursos && (
+										<div className="recursos_content">
+											{this.state.recursosCharla.map((recurso, index) => (
+												<div className="rec_elementos" key={index}>
+													<a className="recurso_link" href={recurso.url} target="_blank" rel="noreferrer">{recurso.nombre}</a>
+													<i className="fa-solid fa-arrow-right icon"></i>
+													<span className="recurso_desc">{recurso.descripcion}</span>
+													{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
+														<div className="btnAcciones">
+															{/* <BtnDel className="btnDel--recurso"  onClick={() => this.deleteRecurso(recurso.idRecurso)}/> */}
+															<BtnUpdate className="btnUpdate--recurso" onClick={() => this.handleUpdateRecurso(recurso)} />
+														</div>
+													)}
+												</div>
+											))}
+										</div>
+									)}
+									<hr />
+								</div>
+							)}
+							{/* Sección de comentarios */}
+							<div className="comentarios">
+								<div className="comentarios_title">
+									<span className="comentarios_text">Comentarios</span>
+									<input className="comentarios_input" ref={this.cajaContenido} type="text" placeholder="Agregar nuevo comentario..." value={this.state.comentarioEditar || ""} // Vinculamos el valor del input al estado comentarioEditar
+										onChange={(e) => this.setState({ comentarioEditar: e.target.value })} />
+									<button onClick={(e) => this.handleComentarioAction(e)} className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario icon" ></i></button>
+								</div>
+								<div className="comentarios_content">
+									{this.state.comentariosCharla.map((comentario, index) => {
+										return (
+											<div key={index} className="container_comentario">
+												<div className="comentario">
+													<span className="comentario_text">{comentario.contenido}</span>
+													<span className="comentario_user">-{comentario.usuario}-</span>
+													{comentario.idUsuario === this.state.idUsuarioPerfil && (
+														<div className="btnAcciones">
+															<BtnDel
+																className="btnDel--peq"
+																onClick={() => this.deleteComentario(comentario.idComentario)}
+															/>
+															<BtnUpdate className="btnUpdate--peq" onClick={() => this.handleEditComentario(comentario)} />
+														</div>
+													)}
+												</div>
+											</div>
+										);
+									})}
+								</div>
+							</div>
+						</>
 					)}
-							</PopupCharla>
+				</PopupCharla>
 			</div>
-					);
+		);
 	}
 }
 
-					export default Charlas;
+export default Charlas;

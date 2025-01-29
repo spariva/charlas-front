@@ -5,6 +5,7 @@ import Card from "./CardCharla";
 import PopupCharla from "./PopupCharla";
 import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
+import './../assets/css/perfil.css';
 
 export default class Profile extends Component {
   state = {
@@ -31,7 +32,7 @@ export default class Profile extends Component {
     this.setState({ usuario: data.usuario });
     console.log("usuario ", data.usuario);
   }
-    getCharlasUser = () => {
+  getCharlasUser = () => {
     services.getCharlasUsuario().then((res) => {
       console.log("charlas user: ", res);
       const { charlaUpdated } = this.props.location.state || {};
@@ -186,10 +187,10 @@ export default class Profile extends Component {
           style={{
             maxWidth: "90%",
             margin: "30px auto",
-            padding: "20px",
-            border: "1px solid #ddd",
+            padding: "30px",
             borderRadius: "10px",
-            backgroundColor: "#f9f9f9",
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             position: "relative",
           }}
         >
@@ -200,7 +201,7 @@ export default class Profile extends Component {
               top: "20px",
               right: "20px",
               display: "flex",
-              gap: "15px",
+              gap: "10px",
             }}
           >
             <div
@@ -208,9 +209,11 @@ export default class Profile extends Component {
               style={{
                 textAlign: "center",
                 padding: "10px",
-                border: "1px solid #ddd",
+                border: "2px solid rgb(226, 132, 60)",
                 borderRadius: "5px",
                 width: "100px",
+                backgroundColor: "#e5a879",
+                color: "white"
               }}
             >
               <h3 style={{ margin: "0", fontSize: "24px" }}>
@@ -218,7 +221,7 @@ export default class Profile extends Component {
                   return c.charla.idEstadoCharla === 1;
                 }).length}
               </h3>
-              <p style={{ margin: "0", fontSize: "14px", color: "gray" }}>
+              <p style={{ margin: "0", fontSize: "14px"}}>
                 Propuestas
               </p>
             </div>
@@ -227,9 +230,11 @@ export default class Profile extends Component {
               style={{
                 textAlign: "center",
                 padding: "10px",
-                border: "1px solid #ddd",
+                border: "2px solid rgb(123, 206, 112)",
                 borderRadius: "5px",
                 width: "100px",
+                backgroundColor: "#b7eab0",
+                color: "white"
               }}
             >
               <h3 style={{ margin: "0", fontSize: "24px" }}>
@@ -237,14 +242,14 @@ export default class Profile extends Component {
                   return c.charla.idEstadoCharla === 2;
                 }).length}
               </h3>
-              <p style={{ margin: "0", fontSize: "14px", color: "gray" }}>
+              <p style={{ margin: "0", fontSize: "14px"}}>
                 Aceptadas
               </p>
             </div>
           </div>
 
           {/* Perfil */}
-          <div style={{ textAlign: "center" }}>
+          <div className="user-profile" style={{ textAlign: "center" }}>
             {/* Imagen de perfil */}
             <img
               src={usuario?.imagen || "https://th.bing.com/th?id=OIP.awAiMS1BCAQ2xS2lcdXGlwHaHH&w=255&h=245&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"}
@@ -269,167 +274,187 @@ export default class Profile extends Component {
                 <strong>Curso:</strong> {usuario?.curso || "Cargando..."}
               </p>
             </div>
-            <button className="btn btn-outline-dark m-2 mb-3" onClick={this.navigateUpdateProfile}>Editar perfil</button>
+            <button className="updateBtn btn btn-outline-dark m-2 mb-3" onClick={this.navigateUpdateProfile}>Editar perfil</button>
 
-            <div
+            {/* <div
               className="divider"
               style={{
-                borderTop: "2px solid black",
-                width: "50%",
+                borderTop: "0.8px solid #a0a0a0",
+                width: "100%",
                 margin: "10px auto",
+                borderRadius: "12px"
               }}
-            ></div>
+            ></div> */}
 
             <div>
-
-              {/* Filtro charlas */}
+              {/* Filtro charlas con encabezado desplegable */}
               <div className="row d-flex justify-content-end mt-2">
-                <h2 className="my-4 text-center">Mis charlas:</h2>
-                <div className="col-6 col-md-3">
-                  <select
-                    className="form-select"
-                    name="rondaSeleccionada"
-                    value={this.state.rondaSeleccionada}
-                    onChange={this.handleFilterChange}
-                  >
-                    <option value="0">Todas las rondas</option>
-                    {this.state.rondas.map((ronda, index) => {
-                      return (
-                        <option key={index} value={ronda.idRonda}>
-                          Ronda {ronda.descripcionModulo}
-                        </option>
-                      );
-                    })}
-                  </select>
+                <div className="misCharlas" onClick={() =>this.setState((prevState) => ({showCharlas: !prevState.showCharlas}))}>
+                  <h3 className="misCharlas_title">Mis Charlas</h3>
+                  <i
+                    className={`fa-solid ${this.state.showCharlas ? "fa-chevron-up" : "fa-chevron-down"
+                      }`}
+                    style={{ fontSize: "1.2rem", color: "#bdbdbd" }}
+                  ></i>
                 </div>
-                <div className="col-6 col-md-3">
-                  <select
-                    className="form-select"
-                    name="estadoSeleccionado"
-                    value={this.state.estadoSeleccionado}
-                    onChange={this.handleFilterChange}
-                  >
-                    <option value="0">Cualquier estado</option>
-                    {estadosCharla.map((e, index) => {
-                      return (
-                        <option key={index} value={e.idEstadoCharla}>
-                          {e.estado}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
 
-              {/* Fila de charlas */}
-
-              <div className="row d-flex flex-wrap justify-content-start">
-                {this.state.charlas.map((c, index) => {
-                  return (
-                    <div key={index} className="col-12 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(c.charla)} style={{ cursor: "pointer" }}>
-                      <Card
-                        imagen={c.charla.imagenCharla}
-                        titulo={c.charla.titulo}
-                        descripcion={c.charla.descripcion}
-                      />
+                {this.state.showCharlas && (
+                  <div>
+                    {/* Controles de filtro */}
+                    <div className="row d-flex justify-content-end mt-2">
+                      <div className="col-6 col-md-3">
+                        <select
+                          className="form-select"
+                          name="rondaSeleccionada"
+                          value={this.state.rondaSeleccionada}
+                          onChange={this.handleFilterChange}
+                        >
+                          <option value="0">Ronda</option>
+                          {this.state.rondas.map((ronda, index) => {
+                            return (
+                              <option key={index} value={ronda.idRonda}>
+                                Ronda {ronda.descripcionModulo}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                      <div className="col-6 col-md-3">
+                        <select
+                          className="form-select"
+                          name="estadoSeleccionado"
+                          value={this.state.estadoSeleccionado}
+                          onChange={this.handleFilterChange}
+                        >
+                          <option value="0">Estado</option>
+                          {estadosCharla.map((e, index) => {
+                            return (
+                              <option key={index} value={e.idEstadoCharla}>
+                                {e.estado}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
                     </div>
-                  );
-                })}
+
+                    {/* Contenido de las tarjetas */}
+                    <div className="row d-flex flex-wrap justify-content-start">
+                      {this.state.charlas.map((c, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="col-12 col-sm-6 col-md-4 mb-4"
+                            onClick={() => this.handleCardClick(c.charla)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <Card
+                              imagen={c.charla.imagenCharla}
+                              titulo={c.charla.titulo}
+                              descripcion={c.charla.descripcion}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
-              {/* Popup para charla seleccionada */}
-              <PopupCharla show={this.state.showPopup} onClose={this.handleClosePopup}>
-                {this.state.seleccionadaCharla && (
-                  <>
-                    {/* <div className="charla_estado">
+
+            {/* Popup para charla seleccionada */}
+            <PopupCharla show={this.state.showPopup} onClose={this.handleClosePopup}>
+              {this.state.seleccionadaCharla && (
+                <>
+                  {/* <div className="charla_estado">
                       <span className="estado" style={{
                         backgroundColor: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#b7eab0' : '#e5a879',
                         color: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#29721f' : '#d57018',
                       }}>{this.state.seleccionadaCharla.estadoCharla}</span>
                     </div> */}
-                    <div className="charla_title">
-                      <div className="title">
-                        <h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
-                        <hr className="card_divisor"></hr>
-                      </div>
-                      <div className="icon_tiempo gap-1">
-                        <div className="btnAcciones gap-3">
-                          <BtnUpdate onClick={this.updateCharla}/>
-                          <BtnDel onClick={this.deleteCharla}/>
-                        </div>
-                        <i className="fa-regular fa-clock icon ms-2"></i>
-                        <span className="charla_tiempo">{this.state.seleccionadaCharla.tiempo} min.</span>
-                      </div>
+                  <div className="charla_title">
+                    <div className="title">
+                      <h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
+                      <hr className="card_divisor"></hr>
                     </div>
-                    <div className="charla_image">
-                      <img
-                        src={this.state.seleccionadaCharla.imagenCharla}
-                        alt={this.state.seleccionadaCharla.titulo}
-                      />
-                      <div className="charla_descripcion">
-                        <span className="descripcion">{this.state.seleccionadaCharla.descripcion}</span>
+                    <div className="icon_tiempo gap-1">
+                      <div className="btnAcciones gap-3">
+                        <BtnUpdate onClick={this.updateCharla} />
+                        <BtnDel onClick={this.deleteCharla} />
                       </div>
+                      <i className="fa-regular fa-clock icon ms-2"></i>
+                      <span className="charla_tiempo">{this.state.seleccionadaCharla.tiempo} min.</span>
                     </div>
-                    <hr />
-                    {/* Sección de recursos */}
-                    {this.state.recursosCharla.length > 0 && (
-                      <div className="recursos">
-                        <h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
-                          {this.state.showRecursos ? (
-                            <div className="rec_title">
-                              <i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
-                            </div>
-                          ) : (
-                            <div className="rec_title">
-                              <i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
-                            </div>
-                          )}
-                        </h3>
-                        {this.state.showRecursos && (
-                          <div className="recursos_content">
-                            {this.state.recursosCharla.map((recurso, index) => (
-                              <div className="rec_elementos" key={index}>
-                                <span className="recurso_desc">{recurso.descripcion}</span>
-                                <i className="fa-solid fa-arrow-right icon"></i>
-                                <a className="recurso_link" href={recurso.url} target="_blank" rel="noopener noreferrer">{recurso.nombre}</a>
-                              </div>
-                            ))}
+                  </div>
+                  <div className="charla_image">
+                    <img
+                      src={this.state.seleccionadaCharla.imagenCharla}
+                      alt={this.state.seleccionadaCharla.titulo}
+                    />
+                    <div className="charla_descripcion">
+                      <span className="descripcion">{this.state.seleccionadaCharla.descripcion}</span>
+                    </div>
+                  </div>
+                  <hr />
+                  {/* Sección de recursos */}
+                  {this.state.recursosCharla.length > 0 && (
+                    <div className="recursos">
+                      <h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
+                        {this.state.showRecursos ? (
+                          <div className="rec_title">
+                            <i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
+                          </div>
+                        ) : (
+                          <div className="rec_title">
+                            <i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
                           </div>
                         )}
-                        <hr />
-                      </div>
-                    )}
-                    {/* Sección de comentarios */}
-                    <div className="comentarios">
-                      <div className="comentarios_title">
-                        <span className="comentarios_text">Comentarios</span>
-                        <input className="comentarios_input" ref={this.cajaContenido} type="text" placeholder="Agregar nuevo comentario..." />
-                        <button onClick={this.postComentario} className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario icon" ></i></button>
-                      </div>
-                      <div className="comentarios_content">
-                        {this.state.comentariosCharla.map((comentario, index) => {
-                          return (
-                            <div className="container_comentario" key={index}>
-                              <div className="comentario">
-                                <span className="comentario_text">{comentario.contenido}</span>
-                                <span className="comentario_user">-{comentario.usuario}-</span>
-                                {/* boton borrar */}
-                                <div className="btnAcciones">
-                                  <BtnDel className="btnDel--peq"/>
-                                  <BtnUpdate className="btnUpdate--peq" />
-                                </div>
+                      </h3>
+                      {this.state.showRecursos && (
+                        <div className="recursos_content">
+                          {this.state.recursosCharla.map((recurso, index) => (
+                            <div className="rec_elementos" key={index}>
+                              <span className="recurso_desc">{recurso.descripcion}</span>
+                              <i className="fa-solid fa-arrow-right icon"></i>
+                              <a className="recurso_link" href={recurso.url} target="_blank" rel="noopener noreferrer">{recurso.nombre}</a>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <hr />
+                    </div>
+                  )}
+                  {/* Sección de comentarios */}
+                  <div className="comentarios">
+                    <div className="comentarios_title">
+                      <span className="comentarios_text">Comentarios</span>
+                      <input className="comentarios_input" ref={this.cajaContenido} type="text" placeholder="Agregar nuevo comentario..." />
+                      <button onClick={this.postComentario} className="comentarios_btn"><i className="fa-regular fa-paper-plane enviar_comentario icon" ></i></button>
+                    </div>
+                    <div className="comentarios_content">
+                      {this.state.comentariosCharla.map((comentario, index) => {
+                        return (
+                          <div className="container_comentario" key={index}>
+                            <div className="comentario">
+                              <span className="comentario_text">{comentario.contenido}</span>
+                              <span className="comentario_user">-{comentario.usuario}-</span>
+                              {/* boton borrar */}
+                              <div className="btnAcciones">
+                                <BtnDel className="btnDel--peq" />
+                                <BtnUpdate className="btnUpdate--peq" />
                               </div>
                             </div>
-                          );
-                        })}
-                      </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                  </>
-                )}
-              </PopupCharla>
-            </div>
+                  </div>
+                </>
+              )}
+            </PopupCharla>
           </div>
         </div>
       </div>
+      </div >
     );
   }
 }

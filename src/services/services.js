@@ -285,6 +285,16 @@ class serviceProfile {
 		})
 	}
 	
+	getVotosCharlaAlumno = (idRonda) => {
+		const request = "/api/Votos/VotoAlumnoRonda/" + idRonda;
+		const url = Global.api + request;
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
+	
 	getAlumnosProfesor = () => {
 		const request = "/api/Profesor/AlumnosCursoProfesor"
 		const url = Global.api + request;

@@ -1,0 +1,40 @@
+.misCharlas {
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.misCharlas_title{
+  font-family: "Poiret One", serif;
+  font-size: 25px;
+  font-weight: 400;
+  font-style: normal;
+  color: #007bff;
+}
+
+.updateBtn {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.updateBtn:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.btnCancelar{
+  background-color: transparent;
+  border: none;
+  color: #afafaf;
+  text-decoration: underline;
+}
+
+.editarButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}

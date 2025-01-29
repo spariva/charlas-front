@@ -4,9 +4,10 @@ import Card from "./CardCharla";
 import PopupCharla from "./PopupCharla";
 import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
+import FiltrosCharlas from "./FiltrosCharlas";
 
 class Charlas extends Component {
-	
+
 	state = {
 		charlas: [],
 		rondas: [],
@@ -172,45 +173,45 @@ class Charlas extends Component {
 	};
 
 	handleComentarioAction = (e) => {
-		e.preventDefault();  
+		e.preventDefault();
 		// Si estamos editando un comentario
 		if (this.state.idComentarioEditar) {
-			this.updateComentario(e); 
-		//si vamos a añadir un comentario
+			this.updateComentario(e);
+			//si vamos a añadir un comentario
 		} else {
 			this.postComentario(e);
 		}
 	};
 
 	updateComentario = (e) => {
-    e.preventDefault();
-    let comentarioText = this.state.comentarioEditar;  
-    let idComentario = this.state.idComentarioEditar;
+		e.preventDefault();
+		let comentarioText = this.state.comentarioEditar;
+		let idComentario = this.state.idComentarioEditar;
 
-    let comentario = {
-        idComentario: idComentario,
-        "idCharla": this.state.idCharlaSeleccionada,
-        "idUsuario": this.state.idUsuarioPerfil,
-        "contenido": comentarioText,
-        "fecha": new Date(),
-    };
+		let comentario = {
+			idComentario: idComentario,
+			"idCharla": this.state.idCharlaSeleccionada,
+			"idUsuario": this.state.idUsuarioPerfil,
+			"contenido": comentarioText,
+			"fecha": new Date(),
+		};
 
-    services.updateComentario(comentario)
-        .then(() => {
-            console.log("Comentario actualizado");
-            return services.getCharlaId(this.state.idCharlaSeleccionada);
-        })
-        .then((charlaData) => {
-            this.setState({
-                comentariosCharla: charlaData.comentarios,
-                comentarioEditar: "",  // Limpiar el campo de edición
-                idComentarioEditar: null,
-            });
-        })
-        .catch((error) => {
-            console.error("Error al actualizar el comentario:", error);
-        });
-};
+		services.updateComentario(comentario)
+			.then(() => {
+				console.log("Comentario actualizado");
+				return services.getCharlaId(this.state.idCharlaSeleccionada);
+			})
+			.then((charlaData) => {
+				this.setState({
+					comentariosCharla: charlaData.comentarios,
+					comentarioEditar: "",  // Limpiar el campo de edición
+					idComentarioEditar: null,
+				});
+			})
+			.catch((error) => {
+				console.error("Error al actualizar el comentario:", error);
+			});
+	};
 
 	postRecurso = (e, idCharla) => {
 		e.preventDefault();
@@ -283,7 +284,7 @@ class Charlas extends Component {
 			.then((charlaData) => {
 				this.setState({
 					recursosCharla: charlaData.recursos,
-					recursoSeleccionado: null, 
+					recursoSeleccionado: null,
 				});
 				this.toggleFormularioRecursos();
 			})
@@ -292,7 +293,7 @@ class Charlas extends Component {
 			});
 	};
 
-	
+
 
 	// deleteRecurso = (idRecurso) => {
 	// 	console.log(idRecurso);
@@ -319,51 +320,31 @@ class Charlas extends Component {
 
 	render() {
 		return (
-			<div className="container">
-				<div className="row d-flex justify-content-end mt-4">
-					<div className="col-6 col-md-3">
-						<select
-							className="form-select"
-							value={this.state.rondaSeleccionada}
-							onChange={this.handleRondaChange}
-						>
-							<option value="">Ronda</option>
-							{this.state.rondas.map((ronda, index) => {
-								return (
-									<option key={index} value={ronda.idRonda}>
-										Ronda {ronda.idRonda}
-									</option>
-								);
-							})}
-						</select>
-					</div>
-					<div className="col-6 col-md-3">
-						<select className="form-select">
-							<option value="">Estado</option>
-							{this.state.estadoCharla.map((estado, index) => {
-								return (
-									<option key={index} value={estado.idEstadoRonda}>
-										{estado.estado}
-									</option>
-								);
-							})}
-						</select>
-					</div>
+			<>
+				<div className="charlasFilters">
+					<h1 className="my-4 text-center">Charlas</h1>
+					<FiltrosCharlas
+						rondas={this.state.rondas}
+						estadoCharla={this.state.estadoCharla}
+						rondaSeleccionada={this.state.rondaSeleccionada}
+						onRondaChange={this.handleRondaChange}
+						onEstadoChange={this.handleEstadoChange}
+					/>
 				</div>
-
-				<h1 className="my-4 text-center">Charlas</h1>
 
 				{/* Fila de charlas */}
 				<div className="row d-flex flex-wrap justify-content-start">
 					{this.state.charlas.map((charla, index) => {
 						return (
-							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>
-								<Card
-									imagen={charla.imagenCharla}
-									titulo={charla.titulo}
-									descripcion={charla.descripcion}
-								/>
-							</div>
+							<>
+								<div key={index} className="col-8 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>
+									<Card
+										imagen={charla.imagenCharla}
+										titulo={charla.titulo}
+										descripcion={charla.descripcion}
+									/>
+								</div>
+							</>
 						);
 					})}
 				</div>
@@ -399,96 +380,95 @@ class Charlas extends Component {
 							</div>
 							<hr />
 							{/* Sección de recursos */}
-							{this.state.recursosCharla.length > 0 && (
-								<div className="recursos">
-									<div className="recu_title">
-										<div className="recursosElements">
-											<h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
-												{this.state.showRecursos ? (
-													<div className="rec_title">
-														<i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
-													</div>
-												) : (
-													<div className="rec_title">
-														<i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
-													</div>
-												)}
-											</h3>
-											{/* CUANDO AÑADA LA FUNCION DE AÑADIR RECURSOS, COMPROBAR QUE FUNCIONA ESTE CONDICIONAL 
-											() => this.postRecurso(this.state.idCharlaSeleccionada)*/}
-											{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
-												<button className="comentarios_btn add_recurso" onClick={this.toggleFormularioRecursos}>
-													<i className="fa-solid fa-plus icon--white"></i>
-												</button>
+
+							<div className="recursos">
+								<div className="recu_title">
+									<div className="recursosElements">
+										<h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
+											{this.state.showRecursos ? (
+												<div className="rec_title">
+													<i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
+												</div>
+											) : (
+												<div className="rec_title">
+													<i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
+												</div>
 											)}
-										</div>
-										{this.state.showFormularioRecursos && (
-											<div className="formulario-recurso">
-												<form onSubmit={(e) => this.state.recursoSeleccionado ? this.updateRecurso(e, this.state.recursoSeleccionado.idRecurso) : this.postRecurso(e, this.state.idCharlaSeleccionada)}>
-													<div className="form-group">
-														<input
-															ref={this.cajaUrl}
-															type="url"
-															className="form-control"
-															id="url"
-															placeholder=" "
-															required
-															defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.url : ""}
-														/>
-														<label htmlFor="url" className="floating-label">URL</label>
-													</div>
-													<div className="form-group">
-														<input
-															ref={this.cajaNombreRecurso}
-															type="text"
-															className="form-control"
-															id="nombre"
-															placeholder=" "
-															required
-															defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.nombre : ""}
-														/>
-														<label htmlFor="nombre" className="floating-label">Nombre</label>
-													</div>
-													<div className="form-group">
-														<input
-															ref={this.cajaDescripcionRecurso}
-															type="text"
-															className="form-control"
-															id="descripcion"
-															placeholder=" "
-															required
-															defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.descripcion : ""}
-														/>
-														<label htmlFor="descripcion" className="floating-label">Descripción</label>
-													</div>
-													<div className="recursosBtn">
-														<button type="submit" className="btn btn-primary">{this.state.recursoSeleccionado ? "Actualizar Recurso" : "Añadir Recurso"}</button>
-														<button type="button" className="btn btn-secondary" onClick={this.toggleFormularioRecursos}>Cancelar</button>
-													</div>
-												</form>
-											</div>
+										</h3>
+										{/* CUANDO AÑADA LA FUNCION DE AÑADIR RECURSOS, COMPROBAR QUE FUNCIONA ESTE CONDICIONAL 
+											() => this.postRecurso(this.state.idCharlaSeleccionada)*/}
+										{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
+											<button className="comentarios_btn add_recurso" onClick={this.toggleFormularioRecursos}>
+												<i className="fa-solid fa-plus icon--white"></i>
+											</button>
 										)}
 									</div>
-									{this.state.showRecursos && (
-										<div className="recursos_content">
-											{this.state.recursosCharla.map((recurso, index) => (
-												<div className="rec_elementos" key={index}>
-													<a className="recurso_link" href={recurso.url} target="_blank">{recurso.nombre}</a>
-													<i class="fa-solid fa-arrow-right icon"></i>
-													<span className="recurso_desc">{recurso.descripcion}</span>
-													{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
-														<div className="btnAcciones">
-															{/* <BtnDel className="btnDel--recurso"  onClick={() => this.deleteRecurso(recurso.idRecurso)}/> */}
-															<BtnUpdate className="btnUpdate--recurso" onClick={() => this.handleUpdateRecurso(recurso)} />
-														</div>
-													)}
+									{this.state.showFormularioRecursos && (
+										<div className="formulario-recurso">
+											<form onSubmit={(e) => this.state.recursoSeleccionado ? this.updateRecurso(e, this.state.recursoSeleccionado.idRecurso) : this.postRecurso(e, this.state.idCharlaSeleccionada)}>
+												<div className="form-group">
+													<input
+														ref={this.cajaUrl}
+														type="url"
+														className="form-control"
+														id="url"
+														placeholder=" "
+														required
+														defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.url : ""}
+													/>
+													<label htmlFor="url" className="floating-label">URL</label>
 												</div>
-											))}
+												<div className="form-group">
+													<input
+														ref={this.cajaNombreRecurso}
+														type="text"
+														className="form-control"
+														id="nombre"
+														placeholder=" "
+														required
+														defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.nombre : ""}
+													/>
+													<label htmlFor="nombre" className="floating-label">Nombre</label>
+												</div>
+												<div className="form-group">
+													<input
+														ref={this.cajaDescripcionRecurso}
+														type="text"
+														className="form-control"
+														id="descripcion"
+														placeholder=" "
+														required
+														defaultValue={this.state.recursoSeleccionado ? this.state.recursoSeleccionado.descripcion : ""}
+													/>
+													<label htmlFor="descripcion" className="floating-label">Descripción</label>
+												</div>
+												<div className="recursosBtn">
+													<button type="submit" className="btn btn-primary">{this.state.recursoSeleccionado ? "Actualizar Recurso" : "Añadir Recurso"}</button>
+													<button type="button" className="btn btn-secondary" onClick={this.toggleFormularioRecursos}>Cancelar</button>
+												</div>
+											</form>
 										</div>
 									)}
-									<hr />
 								</div>
-							)}
+								{this.state.showRecursos && (
+									<div className="recursos_content">
+										{this.state.recursosCharla.map((recurso, index) => (
+											<div className="rec_elementos" key={index}>
+												<a className="recurso_link" href={recurso.url} target="_blank">{recurso.nombre}</a>
+												<i class="fa-solid fa-arrow-right icon"></i>
+												<span className="recurso_desc">{recurso.descripcion}</span>
+												{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
+													<div className="btnAcciones">
+														{/* <BtnDel className="btnDel--recurso"  onClick={() => this.deleteRecurso(recurso.idRecurso)}/> */}
+														<BtnUpdate className="btnUpdate--recurso" onClick={() => this.handleUpdateRecurso(recurso)} />
+													</div>
+												)}
+											</div>
+										))}
+									</div>
+								)}
+								<hr />
+							</div>
 							{/* Sección de comentarios */}
 							<div className="comentarios">
 								<div className="comentarios_title">
@@ -522,7 +502,16 @@ class Charlas extends Component {
 						</>
 					)}
 				</PopupCharla>
-			</div>
+				{/* <div className="col-2">
+					<FiltrosCharlas
+						rondas={this.state.rondas}
+						estadoCharla={this.state.estadoCharla}
+						rondaSeleccionada={this.state.rondaSeleccionada}
+						onRondaChange={this.handleRondaChange}
+						onEstadoChange={this.handleEstadoChange}
+					/>
+				</div> */}
+			</>
 		);
 	}
 }

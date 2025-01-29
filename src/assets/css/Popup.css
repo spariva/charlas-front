@@ -371,3 +371,9 @@
   display: flex;
   gap: 1rem;
 }
+
+/* col-2 de btn Charlas */
+.colBtnActions {
+  display: flex;
+  justify-content: center;
+}

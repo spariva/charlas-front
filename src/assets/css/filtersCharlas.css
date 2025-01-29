@@ -1,0 +1,53 @@
+.charlasFilters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filters {
+  width: 25%;
+}
+
+.btnFilters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+.filters select {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Efecto hover y focus para los selects */
+.filters select:hover, .filters select:focus {
+  border-color: #007BFF;
+  background-color: #ffffff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Estilo para el texto "Ronda" por defecto en el primer select */
+.filters select option[value=""] {
+  color: #999;
+  font-style: italic;
+}
+
+/* Para dispositivos pequeños, adaptamos la visualización */
+@media (max-width: 768px) {
+  .btnFilters {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .filters {
+    width: 80%;  /* En pantallas pequeñas, los filtros ocupan más espacio */
+    margin-bottom: 10px;
+  }
+}

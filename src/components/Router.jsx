@@ -25,7 +25,7 @@ export default class Router extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const token = localStorage.getItem("token");
     this.setState({ token });
   }
@@ -53,7 +53,8 @@ export default class Router extends Component {
 
     return (
       <BrowserRouter>
-        {!token && <Navigate to="/" />}
+        {/* {console.log("el token del render: ", this.state.token)} */}
+        {/* {!token && console.log("el token del navigate: ", this.state.token) && <Navigate to="/login" />} */}
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
@@ -68,6 +69,7 @@ export default class Router extends Component {
               <Routes>
                 <Route path="/" element={<LoginElement />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/login" element={<LoginElement />} />
                 <Route path="/profile" element={<ProfileWrapper />} />
                 <Route path="/updateprofile" element={<UpdateProfileWrapper />} />
                 <Route path="/charlas" element={<Charlas />} />
@@ -78,7 +80,7 @@ export default class Router extends Component {
                 <Route path="/votar" element={<VotarCharlas />} />
                 <Route path="/cursos" element={<CursosProfesor />} />
                 <Route path="/createcurso" element={<CreateCurso />} />
-				<Route path="/alumnos/:id" element={<ListadoAlumnos />} />
+				        <Route path="/alumnos/:id" element={<ListadoAlumnos />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

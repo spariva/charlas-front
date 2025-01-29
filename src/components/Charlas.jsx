@@ -104,24 +104,24 @@ class Charlas extends Component {
 			showPopup: false
 		});
 	}
-	
+
 	handleEstadoChange = (event) => {
-    const estadoSeleccionado = event.target.value;
-    this.setState({ estadoSeleccionado }, () => {
-      this.filterCharlasByEstado(estadoSeleccionado); // Llamamos a la función para filtrar
-    });
-  };
+		const estadoSeleccionado = event.target.value;
+		this.setState({ estadoSeleccionado }, () => {
+			this.filterCharlasByEstado(estadoSeleccionado); // Llamamos a la función para filtrar
+		});
+	};
 
 	filterCharlasByEstado = (estadoSeleccionado) => {
-    if (estadoSeleccionado === "") {
-      // Si no se ha seleccionado un estado, mostramos todas las charlas
-      this.getCharlas();
-    } else {
-      // Filtramos las charlas por el estado seleccionado
-      const filteredCharlas = this.state.charlas.filter(charla => charla.estadoCharla === estadoSeleccionado);
-      this.setState({ charlas: filteredCharlas });
-    }
-  };
+		if (estadoSeleccionado === "") {
+			// Si no se ha seleccionado un estado, mostramos todas las charlas
+			this.getCharlas();
+		} else {
+			// Filtramos las charlas por el estado seleccionado
+			const filteredCharlas = this.state.charlas.filter(charla => charla.estadoCharla === estadoSeleccionado);
+			this.setState({ charlas: filteredCharlas });
+		}
+	};
 
 	// Función para alternar la visibilidad de los recursos
 	toggleRecursos = () => {
@@ -403,15 +403,13 @@ class Charlas extends Component {
 				<div className="row d-flex flex-wrap justify-content-start">
 					{this.state.charlas.map((charla, index) => {
 						return (
-							<>
-								<div key={index} className="col-8 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>
-									<Card
-										imagen={charla.imagenCharla}
-										titulo={charla.titulo}
-										descripcion={charla.descripcion}
-									/>
-								</div>
-							</>
+							<div key={index} className="col-8 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>
+								<Card
+									imagen={charla.imagenCharla}
+									titulo={charla.titulo}
+									descripcion={charla.descripcion}
+								/>
+							</div>
 						);
 					})}
 				</div>

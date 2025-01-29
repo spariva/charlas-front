@@ -137,8 +137,6 @@ export default class VotarCharlas extends Component {
 		});
 	};
 
-
-
 	componentDidMount = () => {
 		services.getToken();
 		this.getVotos();
@@ -148,28 +146,40 @@ export default class VotarCharlas extends Component {
 	render() {
 		const userId = localStorage.getItem('userId');
 		return (
-			<div className="container">
+			<div
+          className="container-fluid"
+          style={{
+            maxWidth: "90%",
+            margin: "30px auto",
+            padding: "30px",
+            borderRadius: "10px",
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            position: "relative",
+          }}
+        >
 				<div className="title">
 					<h1 className='poiret-one-regular'>Votar charla</h1>
 					<div className="underline"></div>
 				</div>
-				<div className="mb-3">
-					<select
-						className="form-select form-select-lg mb-3"
-						name="ronda"
-						id="ronda"
-						onChange={this.handleRondaChange}
-						value={this.state.rondaSeleccionada}
-					>
-						{this.state.rondas.map((ronda, index) => (
-							<option key={index} value={ronda.idRonda}>{ronda.descripcionModulo}</option>
-						))}
-					</select>
-
+				<div className="btnFilters">
+					<div className="filters">
+						<select
+							className="form-select form-select-lg mb-3"
+							name="ronda"
+							id="ronda"
+							onChange={this.handleRondaChange}
+							value={this.state.rondaSeleccionada}
+						>
+							{this.state.rondas.map((ronda, index) => (
+								<option key={index} value={ronda.idRonda}>{ronda.descripcionModulo}</option>
+							))}
+						</select>
+						</div>
+					</div>
 					{this.state.fechaPresentacion && (
 						<p>Fecha de presentación: {this.formatFecha(this.state.fechaPresentacion)}</p>
 					)}
-				</div>
 				<div className="row d-flex flex-wrap justify-content-start">
 					{this.state.charlas.map((charla, index) => {
 						const isSelected = this.state.charlaSeleccionada === charla.idCharla;

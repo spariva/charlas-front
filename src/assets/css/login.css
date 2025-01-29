@@ -5,8 +5,8 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
-    background-color: #c9d6ff;
-    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    /* background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,7 +31,7 @@
 .login-container{
     background-color: #fff;
     border-radius: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.55);
     position: relative;
     overflow: hidden;
     width: 768px;
@@ -162,7 +162,7 @@
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;
-    border-radius: 10px 0 0 90px;
+    border-radius: 4px 0 0 90px;
     z-index: 1000;
 }
 

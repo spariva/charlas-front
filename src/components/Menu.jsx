@@ -7,7 +7,7 @@ import MenuAdmin from './MenuAdmin';
 
 export default class Menu extends Component {
 	render() {
-		return (<div className="menu_container">
+		return (<div className="menu_container ">
 			{Global.rol === 1 && <MenuProfesor />}
 			{Global.rol === 2 && <MenuAlumno />}
 			{Global.rol === 3 && <MenuAdmin />}

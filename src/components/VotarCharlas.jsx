@@ -35,16 +35,6 @@ export default class VotarCharlas extends Component {
 			});
 	};
 
-	formatFecha = (fecha) => {
-		if (!fecha) return "";
-		const date = new Date(fecha);
-		return new Intl.DateTimeFormat("es-ES", {
-			day: "2-digit",
-			month: "2-digit",
-			year: "numeric",
-		}).format(date);
-	};
-
 	getCharlasUltimaRonda = () => {
 		services.getRondasCurso()
 			.then((rondasResponse) => {
@@ -167,7 +157,7 @@ export default class VotarCharlas extends Component {
 					</select>
 
 					{this.state.fechaPresentacion && (
-						<p>Fecha de presentación: {this.formatFecha(this.state.fechaPresentacion)}</p>
+						<p>Fecha de presentación: {services.formatFecha(this.state.fechaPresentacion)}</p>
 					)}
 				</div>
 				<div className="row d-flex flex-wrap justify-content-start">

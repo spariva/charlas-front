@@ -14,6 +14,7 @@ import VotarCharlas from './VotarCharlas';
 import UpdateCharlaWrapper from './UpdateCharlaWrapper';
 import CursosProfesor from './CursosProfesor';
 import CreateCurso from './CreateCurso';
+import ListadoAlumnos from './ListadoAlumnos';
 export default class Router extends Component {
   constructor(props) {
     super(props);
@@ -78,7 +79,9 @@ export default class Router extends Component {
                   <Route path="/createronda" element={<CreateCurso />} />
                   <Route path="/createcharla" element={<CreateCharla />} />
                   <Route path="/votar" element={<VotarCharlas />} />
-                  <Route path="/cursos" element={<CursosProfesor />} />
+                  <Route path="/alumnos/:idCurso" element={<ListadoAlumnos />} />
+				  <Route path="/alumnos" element={<ListadoAlumnos />} />
+				  <Route path="/cursos" element={<CursosProfesor />} />
                   <Route path="*" element={<NotFound />} />
                 </>
               </Routes>

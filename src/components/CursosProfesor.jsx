@@ -1,7 +1,4 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom'; // Importar Link de React Router
-import services from '../services/services';
-import "../assets/css/CursosProfesor.css";
+import React, { Component } from 'react'
 
 export default class CursosProfesor extends Component {
     state = {

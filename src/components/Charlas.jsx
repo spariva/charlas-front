@@ -6,20 +6,20 @@ import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
 
 class Charlas extends Component {
-	
+
 	state = {
+		allCharlas: [],
 		charlas: [],
 		rondas: [],
-		estadoCharla: [],
 		rondaSeleccionada: "",
+		estadoSeleccionado: "0",
 		seleccionadaCharla: null,
 		showPopup: false,
 		idCharlaSeleccionada: null,
 		comentariosCharla: [],
 		recursosCharla: [],
-		showRecursos: false, // Estado para controlar la visibilidad de los recursos
+		showRecursos: false,
 		idUsuarioCharlaSeleccionada: null,
-		//para borrar un comentario
 		idComentarioSeleccionado: null,
 		idUsuarioPerfil: null,
 		showFormularioRecursos: false,
@@ -34,13 +34,12 @@ class Charlas extends Component {
 			this.setState({
 				idUsuarioPerfil: response.usuario.idUsuario
 			})
-			console.log("Id usuario " + response.usuario.idUsuario)
 		})
 	}
 	getCharlas = () => {
 		services.getCharlasCurso().then((response) => {
 			this.setState({
-				charlas: response
+				charlas: response, allCharlas: response
 			});
 		});
 	}
@@ -51,6 +50,20 @@ class Charlas extends Component {
 				rondas: response
 			});
 		});
+	}
+
+	handleFilterChange = (event) => {
+		const { name, value } = event.target;
+		this.setState({ [name]: value }, this.filterCharlas);
+	}
+
+
+	filterCharlas = () => {
+		const { allCharlas, rondaSeleccionada, estadoSeleccionado } = this.state;
+		const charlasByRonda = rondaSeleccionada === "0" ? allCharlas : allCharlas.filter((c) => c.idRonda === parseInt(rondaSeleccionada));
+		const charlasByEstado = estadoSeleccionado === "0" ? charlasByRonda : charlasByRonda.filter((c) => c.idEstadoCharla === parseInt(estadoSeleccionado));
+
+		this.setState({ charlas: charlasByEstado });
 	}
 
 	componentDidMount = () => {
@@ -70,22 +83,18 @@ class Charlas extends Component {
 	}
 
 	handleCardClick = (charla) => {
-		console.log(charla.idCharla);
 		this.setState({
 			idCharlaSeleccionada: charla.idCharla,
 			seleccionadaCharla: charla,
 			showPopup: true
 		});
 		services.getCharlaId(charla.idCharla).then((response) => {
-			console.log("charla id: " + JSON.stringify(response));
-
 			this.setState({
 				comentariosCharla: response.comentarios,
 				recursosCharla: response.recursos,
 				idUsuarioCharlaSeleccionada: response.charla.idUsuario,
 				// idUsuarioComentario: comentariosFiltrados
 			});
-			console.log(response.comentarios)
 		})
 	}
 
@@ -95,6 +104,24 @@ class Charlas extends Component {
 			showPopup: false
 		});
 	}
+	
+	handleEstadoChange = (event) => {
+    const estadoSeleccionado = event.target.value;
+    this.setState({ estadoSeleccionado }, () => {
+      this.filterCharlasByEstado(estadoSeleccionado); // Llamamos a la función para filtrar
+    });
+  };
+
+	filterCharlasByEstado = (estadoSeleccionado) => {
+    if (estadoSeleccionado === "") {
+      // Si no se ha seleccionado un estado, mostramos todas las charlas
+      this.getCharlas();
+    } else {
+      // Filtramos las charlas por el estado seleccionado
+      const filteredCharlas = this.state.charlas.filter(charla => charla.estadoCharla === estadoSeleccionado);
+      this.setState({ charlas: filteredCharlas });
+    }
+  };
 
 	// Función para alternar la visibilidad de los recursos
 	toggleRecursos = () => {
@@ -109,6 +136,15 @@ class Charlas extends Component {
 			showFormularioRecursos: !prevState.showFormularioRecursos,
 		}));
 	};
+
+	cancelFormRecursos = () => {
+		if (this.state.recursoSeleccionado) {
+			this.setState({
+				recursoSeleccionado: null,
+			});
+		}
+		this.toggleFormularioRecursos();
+	}
 
 	cajaContenido = React.createRef();
 
@@ -129,12 +165,9 @@ class Charlas extends Component {
 		services
 			.postComentario(comentario)
 			.then(() => {
-				console.log("Comentario agregado");
 				return services.getCharlaId(idCharla);
 			})
 			.then((charlaData) => {
-				console.log("Comentarios actualizados:", charlaData.comentarios);
-
 				this.setState({
 					comentariosCharla: charlaData.comentarios,
 				});
@@ -150,7 +183,6 @@ class Charlas extends Component {
 		services
 			.deleteComentario(idComentario)
 			.then(() => {
-				console.log(`Comentario con ID ${idComentario} eliminado`);
 				return services.getCharlaId(this.state.idCharlaSeleccionada);
 			})
 			.then((charlaData) => {
@@ -164,7 +196,6 @@ class Charlas extends Component {
 	}
 
 	handleEditComentario = (comentario) => {
-		console.log(comentario);
 		this.setState({
 			comentarioEditar: comentario.contenido,
 			idComentarioEditar: comentario.idComentario,
@@ -172,49 +203,47 @@ class Charlas extends Component {
 	};
 
 	handleComentarioAction = (e) => {
-		e.preventDefault();  
+		e.preventDefault();
 		// Si estamos editando un comentario
 		if (this.state.idComentarioEditar) {
-			this.updateComentario(e); 
-		//si vamos a añadir un comentario
+			this.updateComentario(e);
+			//si vamos a añadir un comentario
 		} else {
 			this.postComentario(e);
 		}
 	};
 
 	updateComentario = (e) => {
-    e.preventDefault();
-    let comentarioText = this.state.comentarioEditar;  
-    let idComentario = this.state.idComentarioEditar;
+		e.preventDefault();
+		let comentarioText = this.state.comentarioEditar;
+		let idComentario = this.state.idComentarioEditar;
 
-    let comentario = {
-        idComentario: idComentario,
-        "idCharla": this.state.idCharlaSeleccionada,
-        "idUsuario": this.state.idUsuarioPerfil,
-        "contenido": comentarioText,
-        "fecha": new Date(),
-    };
+		let comentario = {
+			idComentario: idComentario,
+			"idCharla": this.state.idCharlaSeleccionada,
+			"idUsuario": this.state.idUsuarioPerfil,
+			"contenido": comentarioText,
+			"fecha": new Date(),
+		};
 
-    services.updateComentario(comentario)
-        .then(() => {
-            console.log("Comentario actualizado");
-            return services.getCharlaId(this.state.idCharlaSeleccionada);
-        })
-        .then((charlaData) => {
-            this.setState({
-                comentariosCharla: charlaData.comentarios,
-                comentarioEditar: "",  // Limpiar el campo de edición
-                idComentarioEditar: null,
-            });
-        })
-        .catch((error) => {
-            console.error("Error al actualizar el comentario:", error);
-        });
-};
+		services.updateComentario(comentario)
+			.then(() => {
+				return services.getCharlaId(this.state.idCharlaSeleccionada);
+			})
+			.then((charlaData) => {
+				this.setState({
+					comentariosCharla: charlaData.comentarios,
+					comentarioEditar: "",  // Limpiar el campo de edición
+					idComentarioEditar: null,
+				});
+			})
+			.catch((error) => {
+				console.error("Error al actualizar el comentario:", error);
+			});
+	};
 
 	postRecurso = (e, idCharla) => {
 		e.preventDefault();
-		console.log(idCharla);
 		let urlRecurso = this.cajaUrl.current.value;
 		let nombreRecurso = this.cajaNombreRecurso.current.value;
 		let descripconRecurso = this.cajaDescripcionRecurso.current.value;
@@ -230,7 +259,6 @@ class Charlas extends Component {
 		services
 			.postRecurso(recurso)
 			.then(() => {
-				console.log("Recurso añadido");
 				return services.getCharlaId(idCharla);
 			})
 			.then((charlaData) => {
@@ -276,14 +304,12 @@ class Charlas extends Component {
 		// Llamada para actualizar el recurso
 		services.updateRecurso(recurso)
 			.then(() => {
-				console.log("Recurso actualizado");
-				// Después de la actualización, puedes recuperar los recursos de la charla
 				return services.getCharlaId(this.state.idCharlaSeleccionada);
 			})
 			.then((charlaData) => {
 				this.setState({
 					recursosCharla: charlaData.recursos,
-					recursoSeleccionado: null, 
+					recursoSeleccionado: null,
 				});
 				this.toggleFormularioRecursos();
 			})
@@ -292,13 +318,11 @@ class Charlas extends Component {
 			});
 	};
 
-	
+
 
 	// deleteRecurso = (idRecurso) => {
-	// 	console.log(idRecurso);
 	// 	services.deleteRecurso(idRecurso)
 	// 		.then(() => {
-	// 			console.log(`Recurso con ID ${idRecurso} eliminado`);
 	// 			return services.getCharlaId(this.state.idCharlaSeleccionada);
 	// 		})
 	// 		.then((charlaData) => {
@@ -319,51 +343,75 @@ class Charlas extends Component {
 
 	render() {
 		return (
-			<div className="container">
-				<div className="row d-flex justify-content-end mt-4">
-					<div className="col-6 col-md-3">
-						<select
-							className="form-select"
-							value={this.state.rondaSeleccionada}
-							onChange={this.handleRondaChange}
-						>
-							<option value="">Ronda</option>
-							{this.state.rondas.map((ronda, index) => {
-								return (
-									<option key={index} value={ronda.idRonda}>
-										Ronda {ronda.idRonda}
-									</option>
-								);
-							})}
-						</select>
+			<div
+				className="container-fluid container_updateProfile"
+				style={{
+					maxWidth: "90%",
+					margin: "30px auto",
+					padding: "30px",
+					borderRadius: "10px",
+					backgroundColor: "#fff",
+					boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+					position: "relative",
+				}}
+			>
+				<div className="charlasFilters">
+					<div className="title">
+						<h1 className='poiret-one-regular'>Charlas</h1>
+						<div className="underline"></div>
 					</div>
-					<div className="col-6 col-md-3">
-						<select className="form-select">
-							<option value="">Estado</option>
-							{this.state.estadoCharla.map((estado, index) => {
-								return (
-									<option key={index} value={estado.idEstadoRonda}>
-										{estado.estado}
-									</option>
-								);
-							})}
-						</select>
+					{/* Controles de filtro */}
+					<div className="row d-flex justify-content-end mt-2">
+						<div className="col-6 col-md-3">
+							<select
+								className="form-select"
+								name="rondaSeleccionada"
+								value={this.state.rondaSeleccionada}
+								onChange={this.handleFilterChange}
+							>
+								<option value="0">Ronda</option>
+								{this.state.rondas.map((ronda, index) => {
+									return (
+										<option key={index} value={ronda.idRonda}>
+											Ronda {ronda.descripcionModulo}
+										</option>
+									);
+								})}
+							</select>
+						</div>
+						<div className="col-6 col-md-3">
+							<select
+								className="form-select"
+								name="estadoSeleccionado"
+								value={this.state.estadoSeleccionado}
+								onChange={this.handleFilterChange}
+							>
+								<option value="0">Estado</option>
+								{estadosCharla.map((e, index) => {
+									return (
+										<option key={index} value={e.idEstadoCharla}>
+											{e.estado}
+										</option>
+									);
+								})}
+							</select>
+						</div>
 					</div>
 				</div>
-
-				<h1 className="my-4 text-center">Charlas</h1>
 
 				{/* Fila de charlas */}
 				<div className="row d-flex flex-wrap justify-content-start">
 					{this.state.charlas.map((charla, index) => {
 						return (
-							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>
-								<Card
-									imagen={charla.imagenCharla}
-									titulo={charla.titulo}
-									descripcion={charla.descripcion}
-								/>
-							</div>
+							<>
+								<div key={index} className="col-8 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>
+									<Card
+										imagen={charla.imagenCharla}
+										titulo={charla.titulo}
+										descripcion={charla.descripcion}
+									/>
+								</div>
+							</>
 						);
 					})}
 				</div>
@@ -398,6 +446,73 @@ class Charlas extends Component {
 								</div>
 							</div>
 							<hr />
+							{/* Sección para añadir tu primer recurso si es tu charla */}
+							{this.state.recursosCharla.length === 0 && this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (<div className="recursos">
+								<div className="recu_title">
+									<div className="recursosElements">
+										<h3 className="rec_title poiret-one-regular" onClick={this.toggleRecursos}>
+											{this.state.showRecursos ? (
+												<div className="rec_title">
+													<i className="fa-solid fa-chevron-up icon icon_recursos"></i>Recursos
+												</div>
+											) : (
+												<div className="rec_title">
+													<i className="fa-solid fa-chevron-down icon icon_recursos"></i>Recursos
+												</div>
+											)}
+										</h3>
+										<button className="comentarios_btn add_recurso" onClick={this.toggleFormularioRecursos}>
+											<i className="fa-solid fa-plus icon--white"></i>
+										</button>
+									</div>
+									{this.state.showFormularioRecursos && (
+										<div className="formulario-recurso">
+											<form onSubmit={(e) => this.postRecurso(e, this.state.idCharlaSeleccionada)}>
+												<div className="form-group">
+													<input
+														ref={this.cajaUrl}
+														type="url"
+														className="form-control"
+														id="url"
+														placeholder=" "
+														required
+														defaultValue={""}
+													/>
+													<label htmlFor="url" className="floating-label">URL</label>
+												</div>
+												<div className="form-group">
+													<input
+														ref={this.cajaNombreRecurso}
+														type="text"
+														className="form-control"
+														id="nombre"
+														placeholder=" "
+														required
+														defaultValue={""}
+													/>
+													<label htmlFor="nombre" className="floating-label">Nombre</label>
+												</div>
+												<div className="form-group">
+													<input
+														ref={this.cajaDescripcionRecurso}
+														type="text"
+														className="form-control"
+														id="descripcion"
+														placeholder=" "
+														required
+														defaultValue={""}
+													/>
+													<label htmlFor="descripcion" className="floating-label">Descripción</label>
+												</div>
+												<div className="recursosBtn">
+													<button type="submit" className="btn btn-primary">Añadir Recurso</button>
+													<button type="button" className="btn btn-secondary" onClick={this.cancelFormRecursos}>Cancelar</button>
+												</div>
+											</form>
+										</div>
+									)}
+								</div>
+							</div>)}
 							{/* Sección de recursos */}
 							{this.state.recursosCharla.length > 0 && (
 								<div className="recursos">
@@ -414,8 +529,6 @@ class Charlas extends Component {
 													</div>
 												)}
 											</h3>
-											{/* CUANDO AÑADA LA FUNCION DE AÑADIR RECURSOS, COMPROBAR QUE FUNCIONA ESTE CONDICIONAL 
-											() => this.postRecurso(this.state.idCharlaSeleccionada)*/}
 											{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
 												<button className="comentarios_btn add_recurso" onClick={this.toggleFormularioRecursos}>
 													<i className="fa-solid fa-plus icon--white"></i>
@@ -463,7 +576,7 @@ class Charlas extends Component {
 													</div>
 													<div className="recursosBtn">
 														<button type="submit" className="btn btn-primary">{this.state.recursoSeleccionado ? "Actualizar Recurso" : "Añadir Recurso"}</button>
-														<button type="button" className="btn btn-secondary" onClick={this.toggleFormularioRecursos}>Cancelar</button>
+														<button type="button" className="btn btn-secondary" onClick={this.cancelFormRecursos}>Cancelar</button>
 													</div>
 												</form>
 											</div>
@@ -473,8 +586,8 @@ class Charlas extends Component {
 										<div className="recursos_content">
 											{this.state.recursosCharla.map((recurso, index) => (
 												<div className="rec_elementos" key={index}>
-													<a className="recurso_link" href={recurso.url} target="_blank">{recurso.nombre}</a>
-													<i class="fa-solid fa-arrow-right icon"></i>
+													<a className="recurso_link" href={recurso.url} target="_blank" rel="noreferrer">{recurso.nombre}</a>
+													<i className="fa-solid fa-arrow-right icon"></i>
 													<span className="recurso_desc">{recurso.descripcion}</span>
 													{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
 														<div className="btnAcciones">
@@ -526,5 +639,16 @@ class Charlas extends Component {
 		);
 	}
 }
+
+const estadosCharla = [
+	{
+		"idEstadoCharla": 1,
+		"estado": "PROPUESTA"
+	},
+	{
+		"idEstadoCharla": 2,
+		"estado": "ACEPTADA"
+	}
+];
 
 export default Charlas;

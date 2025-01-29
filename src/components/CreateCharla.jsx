@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import services from '../services/services';
 import { Navigate } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 export default class CreateCharla extends Component {
 	cajaTitulo = React.createRef();
@@ -9,12 +10,18 @@ export default class CreateCharla extends Component {
 	selectRonda = React.createRef();
 	cajaImagen = React.createRef();
 
+
 	state = {
 		usuario: null,
 		rondas: [],
-		status: false
+		status: false,
+		redirectToCharla: false
 	};
 
+	cancelCreation = () => {
+    this.setState({ redirectToCharla: true });  // Set state to trigger redirect
+  };
+	
 	async getUsuario() {
 		const data = await services.getPerfilUsuario();
 		this.setState({ usuario: data.usuario });
@@ -65,6 +72,9 @@ export default class CreateCharla extends Component {
 	}
 
 	render() {
+		if (this.state.redirectToCharla) {
+      return <Navigate to="/charlas" />;  // Conditionally navigate when state changes
+    }
 		if (this.state.status == true) {
 			return (<Navigate to="/home" />)
 		} else {
@@ -143,9 +153,9 @@ export default class CreateCharla extends Component {
 								/>
 								<label htmlFor="inputImagen" className="floating-label">Imagen</label>
 							</div>
-
 							<div className="text-center">
-								<button className="btn btn-info mt-3" onClick={this.insertCharla}>Insertar</button>
+								<button className="updateBtn btn btn-outline-dark" onClick={this.insertCharla}>Crear</button>
+								<button className='btnCancelar' onClick={this.cancelCreation}>Cancelar</button>
 							</div>
 						</form>
 					</div>

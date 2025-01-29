@@ -31,7 +31,6 @@ export default class Profile extends Component {
 		recursoSeleccionado: null,
 		comentarioEditar: '',
 		idComentarioEditar: null,
-		estadoSeleccionado: ""
   };
 
   async getUsuario() {
@@ -435,7 +434,7 @@ export default class Profile extends Component {
                   return c.charla.idEstadoCharla === 1;
                 }).length}
               </h3>
-              <p style={{ margin: "0", fontSize: "14px"}}>
+              <p style={{ margin: "0", fontSize: "14px" }}>
                 Propuestas
               </p>
             </div>
@@ -456,7 +455,7 @@ export default class Profile extends Component {
                   return c.charla.idEstadoCharla === 2;
                 }).length}
               </h3>
-              <p style={{ margin: "0", fontSize: "14px"}}>
+              <p style={{ margin: "0", fontSize: "14px" }}>
                 Aceptadas
               </p>
             </div>
@@ -503,7 +502,7 @@ export default class Profile extends Component {
             <div>
               {/* Filtro charlas con encabezado desplegable */}
               <div className="row d-flex justify-content-end mt-2">
-                <div className="misCharlas" onClick={() =>this.setState((prevState) => ({showCharlas: !prevState.showCharlas}))}>
+                <div className="misCharlas" onClick={() => this.setState((prevState) => ({ showCharlas: !prevState.showCharlas }))}>
                   <h3 className="misCharlas_title">Mis Charlas</h3>
                   <i
                     className={`fa-solid ${this.state.showCharlas ? "fa-chevron-up" : "fa-chevron-down"
@@ -680,7 +679,7 @@ export default class Profile extends Component {
 									<div className="recursos_content">
 										{this.state.recursosCharla.map((recurso, index) => (
 											<div className="rec_elementos" key={index}>
-												<a className="recurso_link" href={recurso.url} target="_blank">{recurso.nombre}</a>
+												<a className="recurso_link" href={recurso.url} target="_blank" rel="noreferrer">{recurso.nombre}</a>
 												<i class="fa-solid fa-arrow-right icon"></i>
 												<span className="recurso_desc">{recurso.descripcion}</span>
 												{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (
@@ -730,8 +729,8 @@ export default class Profile extends Component {
 				</PopupCharla>
           </div>
         </div>
-      </div>
       </div >
+    </div>
     );
   }
 }

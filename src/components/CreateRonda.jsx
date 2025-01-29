@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import services from '../services/services';
 import { Navigate } from 'react-router-dom';
+import './../assets/css/perfil.css';
 
 export default class CreateRonda extends Component {
 	cajaFechaPresentacion = React.createRef();
@@ -125,7 +126,7 @@ export default class CreateRonda extends Component {
 							</div>
 
 							<div className="text-center">
-								<button className="btn btn-info mt-3" onClick={this.insertRonda}>Insertar</button>
+								<button className="updateBtn btn btn-outline-dark m-2 mb-3" onClick={this.insertRonda}>Insertar</button>
 							</div>
 						</form>
 					</div>

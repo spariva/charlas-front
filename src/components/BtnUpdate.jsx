@@ -1,5 +1,5 @@
 import React from "react";
-import btnUpdate from './../assets/css/btnUpdate.css'; // Asegúrate de que este import funcione correctamente.
+import './../assets/css/btnUpdate.css';
 
 const BtnUpdate = ({ onClick, className = "" }) => {
   return (

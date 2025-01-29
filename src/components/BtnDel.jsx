@@ -1,5 +1,5 @@
 import React from "react";
-import btnDelete from './../assets/css/btnDelete.css'; // Asegúrate de que este import funcione correctamente.
+import './../assets/css/btnDelete.css';
 
 const BtnDel = ({ onClick, className = "" }) => {
   return (

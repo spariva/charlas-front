@@ -93,7 +93,6 @@ export default class Login extends Component {
       })
       .then(profile => {
         localStorage.setItem('userId', profile.idUsuario);
-        console.log("idRole maki: " + profile.idRole);
         localStorage.setItem('idRole', profile.idRole);
       })
       .catch(err => {

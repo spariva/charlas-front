@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 70vh;
+    height: 100vh;
 }
 
 /* Contenedor específico del formulario de login */
@@ -30,7 +30,7 @@
 
 .login-container{
     background-color: #fff;
-    border-radius: 30px;
+    border-radius: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     position: relative;
     overflow: hidden;
@@ -58,7 +58,7 @@
 }
 
 .login-container button{
-    background-color: #512da8;
+    background-color: #141414;  
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -162,19 +162,19 @@
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
+    border-radius: 10px 0 0 90px;
     z-index: 1000;
 }
 
 .login-container.active .toggle-container{
     transform: translateX(-100%);
-    border-radius: 0 150px 100px 0;
+    border-radius: 0 90px 90px 0;
 }
 
 .toggle{
     background-color: #512da8;
     height: 100%;
-    background: linear-gradient(to right, #5c6bc0, #512da8);
+    background: linear-gradient(to right, #101010, #121212);
     color: #fff;
     position: relative;
     left: -100%;

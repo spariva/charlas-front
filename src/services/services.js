@@ -560,11 +560,11 @@ class serviceProfile {
 				'Authorization': 'Bearer ' + this.token
 			}
 		}).then((response) => {
-			console.log("Respuesta completa de cursos:", response);
+			//console.log("Respuesta completa de cursos:", response);
 			return response.data;
 		}).catch((error) => {
 			console.error("Error al obtener los cursos:", error);
-			throw error;  // Lanzar el error para que el componente lo maneje
+			throw error;
 		});
 	}
 	formatFecha = (fecha) => {
@@ -584,10 +584,25 @@ class serviceProfile {
 				'Authorization': 'Bearer ' + this.token
 			}
 		}).then((response) => {
-			console.log("Respuesta completa de alumnos:", response);
+			//console.log("Respuesta completa de alumnos:", response);
 			return response.data;
 		}).catch((error) => {
 			console.error("Error al obtener los alumnos:", error);
+			throw error;
+		});
+	}
+	updateEstadoUsuario = (idUsuario, estado) => {
+		let request = "api/profesor/updateestadoalumno/" + idUsuario + "/" + estado;
+		const url = Global.api + request;
+		return axios.put(url, url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		}).then((response) => {
+			console.log("Estado actualizado correctamente:", response);
+			return response;
+		}).catch((error) => {
+			console.error("Error al actualizar el estado del usuario:", error);
 			throw error;
 		});
 	}

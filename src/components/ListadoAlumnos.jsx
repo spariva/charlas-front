@@ -6,16 +6,25 @@ export default class ListadoAlumnos extends Component {
         alumnos: []
     };
 
+    // Obtener los alumnos
     getAlumnos = () => {
         services.getAlumnosActivosProfesor().then((response) => {
-            //console.log(response);
             const alumnos = response;
-			//console.log("Alumnos:", alumnos);
             this.setState({
                 alumnos: alumnos
             });
         }).catch((error) => {
             console.error("Error al obtener los alumnos:", error);
+        });
+    };
+
+    // Cambiar el estado de usuario
+    toggleEstadoUsuario = (idUsuario, estadoActual) => {
+        services.updateEstadoUsuario(idUsuario, !estadoActual).then((response) => {
+            console.log("Respuesta al cambiar el estado del usuario:", response);
+            this.getAlumnos();
+        }).catch((error) => {
+            console.error("Error al cambiar el estado del usuario:", error);
         });
     };
 
@@ -36,23 +45,34 @@ export default class ListadoAlumnos extends Component {
                             <th scope="col">#</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Role</th>
+                            <th scope="col">Estado usuario</th>
                         </tr>
                     </thead>
                     <tbody>
                         {alumnos.length > 0 ? (
                             alumnos.map((alumnoData, index) => (
-								alumnoData.alumnos.map((alumnoData, index) => (
-                                <tr key={alumnoData.alumno.idUsuario}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{alumnoData.alumno.usuario}</td>
-                                    <td>{alumnoData.alumno.email}</td>
-                                    <td>{alumnoData.alumno.role}</td>
-                                </tr>
+                                alumnoData.alumnos.map((alumnoData) => {
+                                    const estadoUsuario = alumnoData.alumno.estadoUsuario;
+                                    return (
+                                        <tr key={alumnoData.alumno.idUsuario}>
+                                            <th scope="row">{index + 1}</th>
+                                            <td>{alumnoData.alumno.usuario}</td>
+                                            <td>{alumnoData.alumno.email}</td>
+                                            <td>
+                                                {/* Mostrar un toggle */}
+                                                <input 
+                                                    type="checkbox"
+                                                    checked={estadoUsuario}
+                                                    onChange={() => this.toggleEstadoUsuario(alumnoData.alumno.idUsuario, estadoUsuario)} 
+                                                />
+                                            </td>
+                                        </tr>
+                                    );
+                                })
                             ))
-                        ))) : (
+                        ) : (
                             <tr>
-                                <td colSpan="4" className="text-center">No hay alumnos disponibles</td>
+                                <td colSpan="5" className="text-center">No hay alumnos disponibles</td>
                             </tr>
                         )}
                     </tbody>

@@ -26,15 +26,17 @@ export default class CreateRonda extends Component {
 		let duracion = this.cajaDuracion.current.value;
 		let descripcion = this.cajaDescripcion.current.value;
 		let cajaLimiteVotacion = this.cajaLimiteVotacion.current.value;
+
 		let ronda = {
 			"idRonda": 0,
-			"idCursoUsuario": this.state.usuario.id,
+			"idCursoUsuario": this.state.usuario.idCursoUsuario,
 			"fechaPresentacion": fechaPresentacion,
 			"fechaCierre": fechaCierre,
 			"duracion": duracion,
 			"descripcionModulo": descripcion,
 			"fechaLimiteVotacion": cajaLimiteVotacion
 		}
+
 		try {
 			await services.createRonda(ronda);
 			console.log("Ronda insertada con éxito!");

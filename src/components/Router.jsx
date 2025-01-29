@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Routes, Route, useParams, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import Home from "./Home";
 import Menu from "./Menu";
 import ProfileWrapper from "./ProfileWrapper";

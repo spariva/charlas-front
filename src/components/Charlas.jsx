@@ -4,23 +4,22 @@ import Card from "./CardCharla";
 import PopupCharla from "./PopupCharla";
 import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
-import FiltrosCharlas from "./FiltrosCharlas";
 
 class Charlas extends Component {
 
 	state = {
+		allCharlas: [],
 		charlas: [],
 		rondas: [],
-		estadoCharla: [],
 		rondaSeleccionada: "",
+		estadoSeleccionado: "0",
 		seleccionadaCharla: null,
 		showPopup: false,
 		idCharlaSeleccionada: null,
 		comentariosCharla: [],
 		recursosCharla: [],
-		showRecursos: false, // Estado para controlar la visibilidad de los recursos
+		showRecursos: false,
 		idUsuarioCharlaSeleccionada: null,
-		//para borrar un comentario
 		idComentarioSeleccionado: null,
 		idUsuarioPerfil: null,
 		showFormularioRecursos: false,
@@ -40,7 +39,7 @@ class Charlas extends Component {
 	getCharlas = () => {
 		services.getCharlasCurso().then((response) => {
 			this.setState({
-				charlas: response
+				charlas: response, allCharlas: response
 			});
 		});
 	}
@@ -51,6 +50,20 @@ class Charlas extends Component {
 				rondas: response
 			});
 		});
+	}
+
+	handleFilterChange = (event) => {
+		const { name, value } = event.target;
+		this.setState({ [name]: value }, this.filterCharlas);
+	}
+
+
+	filterCharlas = () => {
+		const { allCharlas, rondaSeleccionada, estadoSeleccionado } = this.state;
+		const charlasByRonda = rondaSeleccionada === "0" ? allCharlas : allCharlas.filter((c) => c.idRonda === parseInt(rondaSeleccionada));
+		const charlasByEstado = estadoSeleccionado === "0" ? charlasByRonda : charlasByRonda.filter((c) => c.idEstadoCharla === parseInt(estadoSeleccionado));
+
+		this.setState({ charlas: charlasByEstado });
 	}
 
 	componentDidMount = () => {
@@ -251,7 +264,6 @@ class Charlas extends Component {
 			recursoSeleccionado: recurso,
 		});
 
-		console.log("Recurso seleccionado:", recurso);
 		this.toggleFormularioRecursos();
 	};
 
@@ -330,13 +342,43 @@ class Charlas extends Component {
 						<h1 className='poiret-one-regular'>Charlas</h1>
 						<div className="underline"></div>
 					</div>
-					<FiltrosCharlas
-						rondas={this.state.rondas}
-						estadoCharla={this.state.estadoCharla}
-						rondaSeleccionada={this.state.rondaSeleccionada}
-						onRondaChange={this.handleRondaChange}
-						onEstadoChange={this.handleEstadoChange}
-					/>
+					{/* Controles de filtro */}
+					<div className="row d-flex justify-content-end mt-2">
+						<div className="col-6 col-md-3">
+							<select
+								className="form-select"
+								name="rondaSeleccionada"
+								value={this.state.rondaSeleccionada}
+								onChange={this.handleFilterChange}
+							>
+								<option value="0">Ronda</option>
+								{this.state.rondas.map((ronda, index) => {
+									return (
+										<option key={index} value={ronda.idRonda}>
+											Ronda {ronda.descripcionModulo}
+										</option>
+									);
+								})}
+							</select>
+						</div>
+						<div className="col-6 col-md-3">
+							<select
+								className="form-select"
+								name="estadoSeleccionado"
+								value={this.state.estadoSeleccionado}
+								onChange={this.handleFilterChange}
+							>
+								<option value="0">Estado</option>
+								{estadosCharla.map((e, index) => {
+									return (
+										<option key={index} value={e.idEstadoCharla}>
+											{e.estado}
+										</option>
+									);
+								})}
+							</select>
+						</div>
+					</div>
 				</div>
 
 				{/* Fila de charlas */}
@@ -579,5 +621,16 @@ class Charlas extends Component {
 		);
 	}
 }
+
+const estadosCharla = [
+	{
+		"idEstadoCharla": 1,
+		"estado": "PROPUESTA"
+	},
+	{
+		"idEstadoCharla": 2,
+		"estado": "ACEPTADA"
+	}
+];
 
 export default Charlas;

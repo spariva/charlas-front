@@ -11,7 +11,7 @@ class Charlas extends Component {
 		allCharlas: [],
 		charlas: [],
 		rondas: [],
-		rondaSeleccionada: "",
+		rondaSeleccionada: "0",
 		estadoSeleccionado: "0",
 		seleccionadaCharla: null,
 		showPopup: false,
@@ -60,8 +60,11 @@ class Charlas extends Component {
 
 	filterCharlas = () => {
 		const { allCharlas, rondaSeleccionada, estadoSeleccionado } = this.state;
+
 		const charlasByRonda = rondaSeleccionada === "0" ? allCharlas : allCharlas.filter((c) => c.idRonda === parseInt(rondaSeleccionada));
+
 		const charlasByEstado = estadoSeleccionado === "0" ? charlasByRonda : charlasByRonda.filter((c) => c.idEstadoCharla === parseInt(estadoSeleccionado));
+		console.log(charlasByEstado);
 
 		this.setState({ charlas: charlasByEstado });
 	}
@@ -104,24 +107,6 @@ class Charlas extends Component {
 			showPopup: false
 		});
 	}
-
-	handleEstadoChange = (event) => {
-		const estadoSeleccionado = event.target.value;
-		this.setState({ estadoSeleccionado }, () => {
-			this.filterCharlasByEstado(estadoSeleccionado); // Llamamos a la función para filtrar
-		});
-	};
-
-	filterCharlasByEstado = (estadoSeleccionado) => {
-		if (estadoSeleccionado === "") {
-			// Si no se ha seleccionado un estado, mostramos todas las charlas
-			this.getCharlas();
-		} else {
-			// Filtramos las charlas por el estado seleccionado
-			const filteredCharlas = this.state.charlas.filter(charla => charla.estadoCharla === estadoSeleccionado);
-			this.setState({ charlas: filteredCharlas });
-		}
-	};
 
 	// Función para alternar la visibilidad de los recursos
 	toggleRecursos = () => {
@@ -204,10 +189,8 @@ class Charlas extends Component {
 
 	handleComentarioAction = (e) => {
 		e.preventDefault();
-		// Si estamos editando un comentario
 		if (this.state.idComentarioEditar) {
 			this.updateComentario(e);
-			//si vamos a añadir un comentario
 		} else {
 			this.postComentario(e);
 		}
@@ -219,7 +202,7 @@ class Charlas extends Component {
 		let idComentario = this.state.idComentarioEditar;
 
 		let comentario = {
-			idComentario: idComentario,
+			"idComentario": idComentario,
 			"idCharla": this.state.idCharlaSeleccionada,
 			"idUsuario": this.state.idUsuarioPerfil,
 			"contenido": comentarioText,

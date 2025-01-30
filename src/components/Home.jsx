@@ -14,9 +14,6 @@ class Home extends Component {
 		rondas: [],
 		charlasRonda: [],
 		estadoCharla: [],
-		charlas: [],
-		rondas: [],
-		estadoCharla: [],
 		rondaSeleccionada: "",
 		seleccionadaCharla: null,
 		showPopup: false,
@@ -60,15 +57,6 @@ class Home extends Component {
 		});
 	}
 
-	getPerfil = () => {
-		services.getPerfilUsuario().then((response) => {
-			this.setState({
-				idUsuarioPerfil: response.usuario.idUsuario
-			})
-			console.log("Id usuario " + response.usuario.idUsuario)
-		})
-	}
-
 	handleCardClick = (charla) => {
 		console.log(charla.idCharla);
 		this.setState({
@@ -109,6 +97,15 @@ class Home extends Component {
 			showFormularioRecursos: !prevState.showFormularioRecursos,
 		}));
 	};
+
+	cancelFormRecursos = () => {
+		if (this.state.recursoSeleccionado) {
+			this.setState({
+				recursoSeleccionado: null,
+			});
+		}
+		this.toggleFormularioRecursos();
+	}
 
 	cajaContenido = React.createRef();
 
@@ -459,7 +456,7 @@ class Home extends Component {
 												</div>
 												<div className="recursosBtn">
 													<button type="submit" className="btn btn-primary">{this.state.recursoSeleccionado ? "Actualizar Recurso" : "Añadir Recurso"}</button>
-													<button type="button" className="btn btn-secondary" onClick={this.toggleFormularioRecursos}>Cancelar</button>
+													<button type="button" className="btn btn-secondary" onClick={this.cancelFormRecursos}>Cancelar</button>
 												</div>
 											</form>
 										</div>
@@ -469,7 +466,7 @@ class Home extends Component {
 									<div className="recursos_content">
 										{this.state.recursosCharla.map((recurso, index) => (
 											<div className="rec_elementos" key={index}>
-												<a className="recurso_link" href={recurso.url} target="_blank">{recurso.nombre}</a>
+												<a className="recurso_link" href={recurso.url} target="_blank" rel="noopener noreferrer">{recurso.nombre}</a>
 												<i class="fa-solid fa-arrow-right icon"></i>
 												<span className="recurso_desc">{recurso.descripcion}</span>
 												{this.state.idUsuarioPerfil === this.state.idUsuarioCharlaSeleccionada && (

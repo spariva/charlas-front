@@ -17,7 +17,7 @@ export default class MenuProfesor extends Component {
 					</NavLink>
 				</div>
 				<div className="item">
-					<NavLink to='/votar' className="link">
+					<NavLink to='/votacion' className="link">
 						<h4 className='poiret-one-regular poiret-one-regular--peq'>Votación</h4>
 					</NavLink>
 				</div>

@@ -261,6 +261,7 @@ class serviceProfile {
 		}).then(response => response.data);
 	}
 
+	//*Votos:
 	votarCharla = (voto) => {
 		const request = "/api/Votos";
 		const url = Global.api + request;
@@ -273,7 +274,7 @@ class serviceProfile {
 	}
 	
 	getVotosCharlaAlumno = (idRonda) => {
-		const request = "/api/Votos/VotoAlumnoRonda/" + idRonda;
+		const request = "api/Votos/VotoAlumnoRonda/" + idRonda;
 		const url = Global.api + request;
 		return axios.get(url, {
 			headers: {
@@ -282,9 +283,45 @@ class serviceProfile {
 		})
 	}
 
+	async getVotosRonda(idRonda){
+		this.getToken();
+		let request = "api/votos/votosronda/" + idRonda;
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.get(Global.api + request, { headers });
+			return response.data;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+	async getVotosCharla(idCharla){
+		this.getToken();
+		let request = "api/votos/votoscharla/" + idCharla;
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		try {
+			const response = await axios.get(Global.api + request, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+
+
 	//comentarios
 	postComentario = (comentario) => {
-		const request = "/api/comentarios";
+		const request = "api/comentarios";
 		const url = Global.api + request;
 		return axios.post(url, comentario, {
 			headers: {
@@ -400,22 +437,22 @@ class serviceProfile {
 	}
 
 
-	async getCursosActivosProfesor() {
-		this.getToken();
-		let request = "api/profesor/cursosactivosprofesor";
-		let headers = {
-			'Authorization': 'Bearer ' + this.token,
-			'Content-Type': 'application/json'
-		}
+	// async getCursosActivosProfesor() {
+	// 	this.getToken();
+	// 	let request = "api/profesor/cursosactivosprofesor";
+	// 	let headers = {
+	// 		'Authorization': 'Bearer ' + this.token,
+	// 		'Content-Type': 'application/json'
+	// 	}
 
-		try {
-			const response = await axios.get(Global.api + request, { headers });
-			return response;
-		} catch (error) {
-			console.log(error);
-			throw error;
-		}
-	}
+	// 	try {
+	// 		const response = await axios.get(Global.api + request, { headers });
+	// 		return response;
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 		throw error;
+	// 	}
+	// }
 
 	//Devuelve todos los cursos del profesor, activos o inactivos
 	async getAllCursosProfesor() {
@@ -567,6 +604,7 @@ class serviceProfile {
 			throw error;
 		});
 	}
+
 	formatFecha = (fecha) => {
 			if (!fecha) return "";
 			const date = new Date(fecha);

@@ -647,6 +647,29 @@ class serviceProfile {
 		});
 	}
 
+	//*Files
+	async uploadImagenCharla(id, fileName, content){
+		let request = "api/files/uploadimagencharla/" + id;
+		this.getToken();
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		var fichero = {
+			"fileName": fileName,
+			"fileContent": content
+		  }
+
+		try {
+			const response = await axios.put(Global.api + request, fichero, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	} 
+
 }
 
 

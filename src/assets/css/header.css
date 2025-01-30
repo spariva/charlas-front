@@ -33,9 +33,9 @@
   height: 50px;
   background-position: center;
   border-radius: 50%;
+  right: 0;
   background-size: cover;
-  left: 44%;
-  top: 10px;
+  left: 40%;
 }
 
 /* tooltip de PERFIL */

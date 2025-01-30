@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import services from "../services/services";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/css/votarCharlas.css';
+import './../assets/css/charlas.css';
+import Swal from 'sweetalert2';
 
 export default class VotarCharlas extends Component {
 	state = {
@@ -33,6 +35,7 @@ export default class VotarCharlas extends Component {
 			.catch((error) => {
 				console.error("Error al obtener los votos:", error);
 			});
+		console.log(this.state.charlaSeleccionada);
 	};
 
 	formatFecha = (fecha) => {
@@ -84,6 +87,20 @@ export default class VotarCharlas extends Component {
 	}
 
 	seleccionarCharla = (idCharla) => {
+		const charlaYaVotada = this.state.charlaSeleccionada;
+		if (charlaYaVotada) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Ya has votado por esta charla. No puedes cambiar tu voto.',
+				confirmButtonText: 'Entendido',
+				confirmButtonColor: '#3085d6', 
+				background: '#f8d7da', 
+				color: '#721c24', 
+				timer: 3000, 
+			});
+			return;
+		}
 		this.setState({
 			charlaSeleccionada: idCharla
 		});
@@ -150,7 +167,6 @@ export default class VotarCharlas extends Component {
 				className="container-fluid"
 				style={{
 					maxWidth: "90%",
-					margin: "30px auto",
 					padding: "30px",
 					borderRadius: "10px",
 					backgroundColor: "#fff",
@@ -162,7 +178,7 @@ export default class VotarCharlas extends Component {
 					<h1 className='poiret-one-regular'>Votar charla</h1>
 					<div className="underline"></div>
 				</div>
-				<div className="btnFilters">
+				<div className="btnFilters--votar">
 					<div className="filters">
 						<select
 							className="form-select form-select-lg mb-3"
@@ -176,21 +192,24 @@ export default class VotarCharlas extends Component {
 							))}
 						</select>
 					</div>
+					{this.state.fechaPresentacion && (
+						<p className="fecha-presentacion">
+							<i className="fa-regular fa-calendar-days icon"></i>
+							<span>Fecha de presentación:</span> {this.formatFecha(this.state.fechaPresentacion)}
+						</p>
+					)}
+
 				</div>
-				{this.state.fechaPresentacion && (
-					<p>Fecha de presentación: {this.formatFecha(this.state.fechaPresentacion)}</p>
-				)}
-				<div className="row d-flex flex-wrap justify-content-start">
+				<div className="row d-flex flex-wrap justify-content-start scroll-container">
 					{this.state.charlas.map((charla, index) => {
 						const isSelected = this.state.charlaSeleccionada === charla.idCharla;
-						const isVoted = Array.isArray(this.state.votosAlumno) ? this.state.votosAlumno.some(voto => voto.idCharla === charla.idCharla) : false;
 						return (
 							<div
 								key={index}
 								className="col-12 col-sm-6 col-md-4 mb-4"
 								onClick={() => this.seleccionarCharla(charla.idCharla)}
 							>
-								<div className={`card h-100 ${isSelected ? 'selected-charla' : ''} ${isVoted ? 'voted-charla' : ''}`}>
+								<div className={`card h-100 ${isSelected ? 'voted-charla' : ''}`}>
 									<img
 										src={charla.imagenCharla || 'https://as1.ftcdn.net/v2/jpg/05/03/24/40/1000_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}
 										alt={charla.titulo}
@@ -198,21 +217,19 @@ export default class VotarCharlas extends Component {
 									/>
 									<div className="card-body d-flex flex-column">
 										<h5 className="card-title">{charla.titulo}</h5>
-										<p className="card-text">{charla.descripcion}</p>
-										{isVoted && <p className="text-success">Votado</p>}
 									</div>
 								</div>
 							</div>
 						);
 					})}
 				</div>
-
-				<div className="d-flex justify-content-end align-items-center mt-4">
-					<button
-						className="btn btn-dark"
-						onClick={() => this.votarCharlaSeleccionda()}
-					>Votar charla seleccionada</button>
-				</div>
+				<button
+					className="btnVotar group"
+					onClick={() => this.votarCharlaSeleccionda()}
+				>
+					<i className="fa-solid fa-check icon--white"></i>
+					<span className="tooltip">Votar charla</span>
+				</button>
 			</div>
 		)
 	}

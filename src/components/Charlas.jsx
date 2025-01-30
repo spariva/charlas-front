@@ -4,6 +4,7 @@ import Card from "./CardCharla";
 import PopupCharla from "./PopupCharla";
 import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
+import './../assets/css/charlas.css';
 
 class Charlas extends Component {
 
@@ -383,7 +384,7 @@ class Charlas extends Component {
 				</div>
 
 				{/* Fila de charlas */}
-				<div className="row d-flex flex-wrap justify-content-start">
+				<div className="row d-flex flex-wrap justify-content-start scroll-container">
 					{this.state.charlas.map((charla, index) => {
 						return (
 							<div key={index} className="col-8 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>

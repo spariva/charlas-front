@@ -436,6 +436,17 @@ class serviceProfile {
 		}
 	}
 
+	//FILTRAR VOTOS POR ALUMNO
+	getVotosAlumno = () => {
+		const request = "/api/votos/votosalumno"
+		const url = Global.api + request;
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		})
+	}
+
 
 	// async getCursosActivosProfesor() {
 	// 	this.getToken();

@@ -1,0 +1,19 @@
+.scroll-container {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #a0a0a0;
+  border-radius: 2.7rem;
+}

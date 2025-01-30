@@ -525,44 +525,48 @@ export default class Profile extends Component {
 								</div>
 
 								{this.state.showCharlas && (
-									<div>
-										{/* Controles de filtro */}
-										<div className="row d-flex justify-content-end mt-2">
-											<div className="col-6 col-md-3">
-												<select
-													className="form-select"
-													name="rondaSeleccionada"
-													value={this.state.rondaSeleccionada}
-													onChange={this.handleFilterChange}
-												>
-													<option value="0">Ronda</option>
-													{this.state.rondas.map((ronda, index) => {
-														return (
-															<option key={index} value={ronda.idRonda}>
-																Ronda {ronda.descripcionModulo}
-															</option>
-														);
-													})}
-												</select>
-											</div>
-											<div className="col-6 col-md-3">
-												<select
-													className="form-select"
-													name="estadoSeleccionado"
-													value={this.state.estadoSeleccionado}
-													onChange={this.handleFilterChange}
-												>
-													<option value="0">Estado</option>
-													{estadosCharla.map((e, index) => {
-														return (
-															<option key={index} value={e.idEstadoCharla}>
-																{e.estado}
-															</option>
-														);
-													})}
-												</select>
-											</div>
+									<div className="charlasFilters">
+									<div className="title">
+										<h1 className='poiret-one-regular'>Charlas</h1>
+										<div className="underline"></div>
+									</div>
+									{/* Controles de filtro */}
+									<div className="btnFilters">
+										<div className="filters">
+											<select
+												className="form-select form-select-lg "
+												name="rondaSeleccionada"
+												value={this.state.rondaSeleccionada}
+												onChange={this.handleFilterChange}
+											>
+												<option value="0">Ronda</option>
+												{this.state.rondas.map((ronda, index) => {
+													return (
+														<option key={index} value={ronda.idRonda}>
+															Ronda {ronda.descripcionModulo}
+														</option>
+													);
+												})}
+											</select>
 										</div>
+										<div className="filters">
+											<select
+												className="form-select"
+												name="estadoSeleccionado"
+												value={this.state.estadoSeleccionado}
+												onChange={this.handleFilterChange}
+											>
+												<option value="0">Estado</option>
+												{estadosCharla.map((e, index) => {
+													return (
+														<option key={index} value={e.idEstadoCharla}>
+															{e.estado}
+														</option>
+													);
+												})}
+											</select>
+										</div>
+									</div>
 
 										{/* Contenido de las tarjetas */}
 										<div className="row d-flex flex-wrap justify-content-start">

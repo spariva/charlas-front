@@ -11,7 +11,8 @@ export default class CreateCurso extends Component {
 
 	state = {
 		usuario: null,
-		status: false
+		status: false,
+		redirectToCharla: false
 	};
 
 	async getUsuario() {
@@ -45,32 +46,68 @@ export default class CreateCurso extends Component {
 		}
 	}
 
+	cancelCreation = () => {
+    this.setState({ redirectToCharla: true }); 
+  };
+
 	componentDidMount = () => {
 		this.getUsuario();
 	}
 
 	render() {
+		if (this.state.redirectToCharla) {
+					return <Navigate to="/charlas" />;
+				}
 		if (this.state.status) {
 			return (<Navigate to="/profile" />)
 		} else {
-		return (
-			<div>
-				<h1>Create Curso hay que cambiarlo</h1>
-				<form>
-					<label>Fecha de presentacion</label>
-					<input type='date' ref={this.cajaFechaPresentacion} className='form-control'></input>
-					<label className='form-label'>Fecha de cierre</label>
-					<input type='date' ref={this.cajaFechaCierre} className='form-control'></input>
-					<label>Duración</label>
-					<input type='number' ref={this.cajaDuracion} className='form-control'></input>
-					<label>Descripcion Modulo</label>
-					<input type='text' ref={this.cajaDescripcion} className='form-control'></input>
-					<label>Fecha de limite de votacion</label>
-					<input type='date' ref={this.cajaLimiteVotacion} className='form-control'></input>
-					<button className='btn btn-info' onClick={this.insertRonda}>insertar</button>
-				</form>
-			</div>
-		)
+			return (
+				<div
+					className="container-fluid container_updateProfile"
+					style={{
+						maxWidth: "90%",
+						margin: "30px auto",
+						padding: "30px",
+						borderRadius: "10px",
+						backgroundColor: "#fff",
+						boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+						position: "relative",
+					}}
+				>
+					<div className="title">
+							<h1 className='poiret-one-regular'>Crear curso</h1>
+							<div className="underline"></div>
+						</div>
+					<div className='form-group'>
+						<form>
+							<div className="form-group">
+								<input type='date' ref={this.cajaFechaPresentacion} className='form-control'></input>
+								<label className="floating-label">Fecha de presentacion</label>
+							</div>
+							<div className="form-group">
+								<input type='date' ref={this.cajaFechaCierre} className='form-control'></input>
+								<label className="floating-label">Fecha de cierre</label>
+							</div>
+							<div className="form-group">
+								<input type='number' ref={this.cajaDuracion} className='form-control'></input>
+								<label className="floating-label">Duración</label>
+							</div>
+							<div className="form-group">
+								<input type='text' ref={this.cajaDescripcion} className='form-control'></input>
+								<label className="floating-label">Descripcion Modulo</label>
+							</div>
+							<div className="form-group">
+								<input type='date' ref={this.cajaLimiteVotacion} className='form-control'></input>
+								<label className="floating-label">Fecha de limite de votacion</label>
+							</div>
+							<div className="text-center">
+								<button className="updateBtn btn btn-outline-dark" onClick={this.insertRonda}>Crear</button>
+								<button className='btnCancelar' onClick={this.cancelCreation}>Cancelar</button>
+							</div>						
+						</form>
+					</div>
+				</div>
+			)
 		}
 	}
 }

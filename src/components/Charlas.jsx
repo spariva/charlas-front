@@ -4,6 +4,7 @@ import Card from "./CardCharla";
 import PopupCharla from "./PopupCharla";
 import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
+import './../assets/css/charlas.css';
 
 class Charlas extends Component {
 
@@ -344,10 +345,10 @@ class Charlas extends Component {
 						<div className="underline"></div>
 					</div>
 					{/* Controles de filtro */}
-					<div className="row d-flex justify-content-end mt-2">
-						<div className="col-6 col-md-3">
+					<div className="btnFilters">
+						<div className="filters">
 							<select
-								className="form-select"
+								className="form-select form-select-lg "
 								name="rondaSeleccionada"
 								value={this.state.rondaSeleccionada}
 								onChange={this.handleFilterChange}
@@ -362,7 +363,7 @@ class Charlas extends Component {
 								})}
 							</select>
 						</div>
-						<div className="col-6 col-md-3">
+						<div className="filters">
 							<select
 								className="form-select"
 								name="estadoSeleccionado"
@@ -383,7 +384,7 @@ class Charlas extends Component {
 				</div>
 
 				{/* Fila de charlas */}
-				<div className="row d-flex flex-wrap justify-content-start">
+				<div className="row d-flex flex-wrap justify-content-start scroll-container">
 					{this.state.charlas.map((charla, index) => {
 						return (
 							<div key={index} className="col-8 col-sm-6 col-md-4 mb-4" onClick={() => this.handleCardClick(charla)} style={{ cursor: "pointer" }}>

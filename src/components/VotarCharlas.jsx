@@ -87,20 +87,7 @@ export default class VotarCharlas extends Component {
 	}
 
 	seleccionarCharla = (idCharla) => {
-		const charlaYaVotada = this.state.charlaSeleccionada;
-		if (charlaYaVotada) {
-			Swal.fire({
-				icon: 'error',
-				title: 'Oops...',
-				text: 'Ya has votado por esta charla. No puedes cambiar tu voto.',
-				confirmButtonText: 'Entendido',
-				confirmButtonColor: '#3085d6', 
-				background: '#f8d7da', 
-				color: '#721c24', 
-				timer: 3000, 
-			});
-			return;
-		}
+		
 		this.setState({
 			charlaSeleccionada: idCharla
 		});
@@ -124,10 +111,28 @@ export default class VotarCharlas extends Component {
 			return;
 		} else {
 			services.votarCharla(voto).then((response) => {
-				alert("Voto registrado correctamente");
+				Swal.fire({
+					icon: 'success',
+					title: 'Voto Registrado',
+					text: 'Tu voto ha sido registrado correctamente.',
+					confirmButtonText: 'OK',
+					confirmButtonColor: '#3085d6',
+					background: '#d4edda',
+					color: '#155724',
+					timer: 3000
+				});
 			}).catch((error) => {
 				console.error("Error al registrar el voto:", error);
-				alert("Error al registrar el voto");
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'Hubo un error al registrar tu voto. Intenta de nuevo.',
+					confirmButtonText: 'Entendido',
+					confirmButtonColor: '#3085d6',
+					background: '#f8d7da',
+					color: '#721c24',
+					timer: 3000
+				});
 			});
 		}
 	}

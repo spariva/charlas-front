@@ -248,3 +248,17 @@ export default class VotarCharlas extends Component {
 		)
 	}
 }
+
+// SWEET ALERT PARA QUE NO DEJE SELECCIONAR OTRA CHARLA
+
+// Swal.fire({
+// 	icon: 'error',
+// 	title: 'Oops...',
+// 	text: 'Ya has votado por esta charla. No puedes cambiar tu voto.',
+// 	confirmButtonText: 'Entendido',
+// 	confirmButtonColor: '#3085d6',
+// 	background: '#f8d7da',
+// 	color: '#721c24',
+// 	timer: 3000,
+// });
+// return;

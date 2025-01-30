@@ -6,6 +6,9 @@
 .btn-dark {
     background-color: #343a40;
     border: 1px solid black;
+    position: absolute;
+    top: 50%;
+    right: -245px;
 }
 
 .form-select-lg {

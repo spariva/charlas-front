@@ -147,17 +147,17 @@ export default class VotarCharlas extends Component {
 		const userId = localStorage.getItem('userId');
 		return (
 			<div
-          className="container-fluid"
-          style={{
-            maxWidth: "90%",
-            margin: "30px auto",
-            padding: "30px",
-            borderRadius: "10px",
-            backgroundColor: "#fff",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            position: "relative",
-          }}
-        >
+				className="container-fluid"
+				style={{
+					maxWidth: "90%",
+					margin: "30px auto",
+					padding: "30px",
+					borderRadius: "10px",
+					backgroundColor: "#fff",
+					boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+					position: "relative",
+				}}
+			>
 				<div className="title">
 					<h1 className='poiret-one-regular'>Votar charla</h1>
 					<div className="underline"></div>
@@ -175,36 +175,43 @@ export default class VotarCharlas extends Component {
 								<option key={index} value={ronda.idRonda}>{ronda.descripcionModulo}</option>
 							))}
 						</select>
-						</div>
 					</div>
-					{this.state.fechaPresentacion && (
-						<p>Fecha de presentación: {this.formatFecha(this.state.fechaPresentacion)}</p>
-					)}
+				</div>
+				{this.state.fechaPresentacion && (
+					<p>Fecha de presentación: {this.formatFecha(this.state.fechaPresentacion)}</p>
+				)}
 				<div className="row d-flex flex-wrap justify-content-start">
 					{this.state.charlas.map((charla, index) => {
 						const isSelected = this.state.charlaSeleccionada === charla.idCharla;
 						const isVoted = Array.isArray(this.state.votosAlumno) ? this.state.votosAlumno.some(voto => voto.idCharla === charla.idCharla) : false;
 						return (
-							<div
-								key={index}
-								className={`col-12 col-sm-6 col-md-4 mb-4 `}
-								onClick={() => this.seleccionarCharla(charla.idCharla)}
-							>
-
-								<div className={`card ${isSelected ? 'selected-charla' : ''} ${isVoted ? 'voted-charla' : ''}`} style={{ width: '300px', height: '400px' }}>
-									<img
-										src={charla.imagenCharla ? charla.imagenCharla : 'https://as1.ftcdn.net/v2/jpg/05/03/24/40/1000_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}
-										alt={charla.titulo}
-										className="imgcharla card-img-top"
-										style={{ height: '200px', objectFit: 'cover' }}
-									/>
-									<div className="card-body">
-										<h5 className="card-title">{charla.titulo}</h5>
-										<p className="card-text">{charla.descripcion}</p>
-										{isVoted && <p className="text-success">Votado</p>}
-									</div>
-								</div>
+							<div className="row d-flex flex-wrap justify-content-start">
+								{this.state.charlas.map((charla, index) => {
+									const isSelected = this.state.charlaSeleccionada === charla.idCharla;
+									const isVoted = Array.isArray(this.state.votosAlumno) ? this.state.votosAlumno.some(voto => voto.idCharla === charla.idCharla) : false;
+									return (
+										<div
+											key={index}
+											className="col-12 col-sm-6 col-md-4 mb-4"
+											onClick={() => this.seleccionarCharla(charla.idCharla)}
+										>
+											<div className={`card h-100 ${isSelected ? 'selected-charla' : ''} ${isVoted ? 'voted-charla' : ''}`}>
+												<img
+													src={charla.imagenCharla || 'https://as1.ftcdn.net/v2/jpg/05/03/24/40/1000_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}
+													alt={charla.titulo}
+													className="card-img-top"
+												/>
+												<div className="card-body d-flex flex-column">
+													<h5 className="card-title">{charla.titulo}</h5>
+													<p className="card-text">{charla.descripcion}</p>
+													{isVoted && <p className="text-success">Votado</p>}
+												</div>
+											</div>
+										</div>
+									);
+								})}
 							</div>
+
 						);
 					})}
 				</div>

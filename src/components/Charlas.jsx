@@ -344,10 +344,10 @@ class Charlas extends Component {
 						<div className="underline"></div>
 					</div>
 					{/* Controles de filtro */}
-					<div className="row d-flex justify-content-end mt-2">
-						<div className="col-6 col-md-3">
+					<div className="btnFilters">
+						<div className="filters">
 							<select
-								className="form-select"
+								className="form-select form-select-lg "
 								name="rondaSeleccionada"
 								value={this.state.rondaSeleccionada}
 								onChange={this.handleFilterChange}
@@ -362,7 +362,7 @@ class Charlas extends Component {
 								})}
 							</select>
 						</div>
-						<div className="col-6 col-md-3">
+						<div className="filters">
 							<select
 								className="form-select"
 								name="estadoSeleccionado"

@@ -227,12 +227,7 @@ export default class votacionProfesor extends Component {
   };
 
   updateEstadoCharla = () => {
-    let estado;
-    if(this.state.seleccionadaCharla.idEstado === 1){
-      estado = 2;
-    } else {
-      estado = 1;
-    }
+    let estado = this.state.seleccionadaCharla.idEstado === 1 ? 2 : 1;
     console.log("id y estado", this.state.idCharlaSeleccionada, estado);
     services.updateEstadoCharla(this.state.idCharlaSeleccionada, estado).then((response) => {
       console.log("charla actualizada: ", response);
@@ -240,7 +235,7 @@ export default class votacionProfesor extends Component {
         votosCharla: response
       });
     }).catch((err) => {
-      console.log(err);
+      console.log("error del update estado charla; ", err);
     });
   }
 

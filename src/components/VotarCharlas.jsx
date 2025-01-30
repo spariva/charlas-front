@@ -185,36 +185,28 @@ export default class VotarCharlas extends Component {
 						const isSelected = this.state.charlaSeleccionada === charla.idCharla;
 						const isVoted = Array.isArray(this.state.votosAlumno) ? this.state.votosAlumno.some(voto => voto.idCharla === charla.idCharla) : false;
 						return (
-							<div className="row d-flex flex-wrap justify-content-start">
-								{this.state.charlas.map((charla, index) => {
-									const isSelected = this.state.charlaSeleccionada === charla.idCharla;
-									const isVoted = Array.isArray(this.state.votosAlumno) ? this.state.votosAlumno.some(voto => voto.idCharla === charla.idCharla) : false;
-									return (
-										<div
-											key={index}
-											className="col-12 col-sm-6 col-md-4 mb-4"
-											onClick={() => this.seleccionarCharla(charla.idCharla)}
-										>
-											<div className={`card h-100 ${isSelected ? 'selected-charla' : ''} ${isVoted ? 'voted-charla' : ''}`}>
-												<img
-													src={charla.imagenCharla || 'https://as1.ftcdn.net/v2/jpg/05/03/24/40/1000_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}
-													alt={charla.titulo}
-													className="card-img-top"
-												/>
-												<div className="card-body d-flex flex-column">
-													<h5 className="card-title">{charla.titulo}</h5>
-													<p className="card-text">{charla.descripcion}</p>
-													{isVoted && <p className="text-success">Votado</p>}
-												</div>
-											</div>
-										</div>
-									);
-								})}
+							<div
+								key={index}
+								className="col-12 col-sm-6 col-md-4 mb-4"
+								onClick={() => this.seleccionarCharla(charla.idCharla)}
+							>
+								<div className={`card h-100 ${isSelected ? 'selected-charla' : ''} ${isVoted ? 'voted-charla' : ''}`}>
+									<img
+										src={charla.imagenCharla || 'https://as1.ftcdn.net/v2/jpg/05/03/24/40/1000_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}
+										alt={charla.titulo}
+										className="card-img-top"
+									/>
+									<div className="card-body d-flex flex-column">
+										<h5 className="card-title">{charla.titulo}</h5>
+										<p className="card-text">{charla.descripcion}</p>
+										{isVoted && <p className="text-success">Votado</p>}
+									</div>
+								</div>
 							</div>
-
 						);
 					})}
 				</div>
+
 				<div className="d-flex justify-content-end align-items-center mt-4">
 					<button
 						className="btn btn-dark"

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import '../assets/css/menu.css'
-import Global from '../Global';
+import '../assets/css/menu.css';
 import MenuAlumno from './MenuAlumno';
 import MenuProfesor from './MenuProfesor';
 import MenuAdmin from './MenuAdmin';

@@ -606,7 +606,20 @@ class serviceProfile {
 			throw error;
 		});
 	}
-
+	getCursosAdmin = () => {
+		let request = "/api/Cursos";
+		let url = Global.api + request;
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		}).then((response) => {
+			return response.data;
+		}).catch((error) => {
+			console.error("Error al obtener los cursos:", error);
+			throw error;
+		});
+	}
 }
 
 

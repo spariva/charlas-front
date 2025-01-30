@@ -480,6 +480,8 @@ class serviceProfile {
 			'Content-Type': 'application/json'
 		}
 
+		//TODO no funciona, no sé si porque hay que enviar un body vacío, o lleno, o así está bien. pero da error 401. pero en teoría soy el profe y es mi curso wtf, probar con insomnia a ver.
+
 		try {
 			const response = await axios.put(Global.api + request, { headers });
 			return response;

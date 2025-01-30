@@ -102,8 +102,6 @@ export default class votacionProfesor extends Component {
       showPopup: true
     });
     services.getCharlaId(charla.idCharla).then((response) => {
-      console.log("charla id: " + JSON.stringify(response));
-
       this.setState({
         comentariosCharla: response.comentarios,
         recursosCharla: response.recursos,
@@ -227,6 +225,24 @@ export default class votacionProfesor extends Component {
         console.error("Error al actualizar el comentario:", error);
       });
   };
+
+  updateEstadoCharla = () => {
+    let estado;
+    if(this.state.seleccionadaCharla.idEstado === 1){
+      estado = 2;
+    } else {
+      estado = 1;
+    }
+    console.log("id y estado", this.state.idCharlaSeleccionada, estado);
+    services.updateEstadoCharla(this.state.idCharlaSeleccionada, estado).then((response) => {
+      console.log("charla actualizada: ", response);
+      this.setState({
+        votosCharla: response
+      });
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
 
   componentDidMount() {
     this.getPerfil();
@@ -438,6 +454,7 @@ export default class votacionProfesor extends Component {
                 Votos
               </p>
             </div>
+            <button className='btn btn-outline-success' onClick={this.updateEstadoCharla}>ACEPTAR!! </button>
           </div>
                   <div className="charla_title">
                     <div className="title">

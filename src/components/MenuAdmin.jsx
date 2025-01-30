@@ -21,6 +21,11 @@ export default class MenuAdmin extends Component {
 						<h4 className='poiret-one-regular poiret-one-regular--peq'>Votar charlas</h4>
 					</NavLink>
 				</div>
+				<div className="item">
+					<NavLink to='/listaCursos' className="link">
+						<h4 className='poiret-one-regular poiret-one-regular--peq'>Listado Cursos</h4>
+					</NavLink>
+				</div>
 			</div>
 
 		)

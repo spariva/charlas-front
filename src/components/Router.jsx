@@ -16,6 +16,7 @@ import CursosProfesor from "./CursosProfesor";
 import CreateCurso from "./CreateCurso";
 import CreateBtnCharla from "./CreateBtnCharla";
 import ListadoAlumnos from "./ListadoAlumnos";
+import ListaCursosAdmin from "./ListaCursosAdmin";
 import VotacionProfesor from "./VotacionProfesor";
 
 export default class Router extends Component {
@@ -82,6 +83,7 @@ export default class Router extends Component {
                 <Route path="/votacion" element={<VotacionProfesor />} />
                 <Route path="/cursos" element={<CursosProfesor />} />
                 <Route path="/createcurso" element={<CreateCurso />} />
+				<Route path="/listaCursos" element={<ListaCursosAdmin />} />
 				        <Route path="/alumnos/:id" element={<ListadoAlumnos />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

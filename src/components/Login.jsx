@@ -88,7 +88,7 @@ export default class Login extends Component {
     services.login(user)
       .then(res => {
         this.props.navigate("/home");
-        this.props.onLogin(res); //Esto le pasa el token al padre, que es el Router
+        this.props.onLogin(res);
         return this.getUsuario();
       })
       .then(profile => {

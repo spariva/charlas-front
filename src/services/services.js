@@ -10,7 +10,7 @@ class serviceProfile {
 		if (!this.token) {
 			this.token = localStorage.getItem('token');
 		}
-		return this.token;	
+		return this.token;
 	}
 
 	//* Usuario:
@@ -97,7 +97,7 @@ class serviceProfile {
 		}
 	}
 
-	async updateCharla(charla){
+	async updateCharla(charla) {
 		let request = "api/charlas/";
 		let url = Global.api + request;
 		this.getToken();
@@ -109,7 +109,7 @@ class serviceProfile {
 		try {
 			const response = await axios.put(url, charla, { headers });
 			return response.data;
-		} catch (error){
+		} catch (error) {
 			console.log("error en el service update charla: " + error);
 			throw error;
 		}
@@ -127,8 +127,8 @@ class serviceProfile {
 		try {
 			const response = await axios.delete(url, { headers });
 			return response.data;
-		} catch (error){
-			console.log("error en el service delete charla: " + error);	
+		} catch (error) {
+			console.log("error en el service delete charla: " + error);
 			throw error;
 		}
 	}
@@ -158,7 +158,7 @@ class serviceProfile {
 		let request = "api/auth/login";
 		try {
 			const response = await axios.post(Global.api + request, user);
-			localStorage.setItem('token', response.data.response); 
+			localStorage.setItem('token', response.data.response);
 			Global.rol = response.data.idrole;
 			return response.data.response;
 		} catch (error) {
@@ -272,7 +272,7 @@ class serviceProfile {
 			}
 		})
 	}
-	
+
 	getVotosCharlaAlumno = (idRonda) => {
 		const request = "api/Votos/VotoAlumnoRonda/" + idRonda;
 		const url = Global.api + request;
@@ -339,7 +339,7 @@ class serviceProfile {
 					'Authorization': 'Bearer ' + this.token
 				}
 			}
-		).then((response)=> {
+		).then((response) => {
 			console.log("comentario eliminado correctamente");
 		})
 	}
@@ -347,7 +347,7 @@ class serviceProfile {
 	updateComentario = (comentario) => {
 		const request = "api/comentarios";
 		const url = Global.api + request;
-		return axios.put(url , comentario, {
+		return axios.put(url, comentario, {
 			headers: {
 				'Authorization': 'Bearer ' + this.token
 			}
@@ -384,7 +384,7 @@ class serviceProfile {
 					'Authorization': 'Bearer ' + this.token
 				}
 			}
-		).then(()=> {
+		).then(() => {
 			console.log("Recurso eliminado correctamente");
 		})
 	}
@@ -617,14 +617,14 @@ class serviceProfile {
 	}
 
 	formatFecha = (fecha) => {
-			if (!fecha) return "";
-			const date = new Date(fecha);
-			return new Intl.DateTimeFormat("es-ES", {
-				day: "2-digit",
-				month: "2-digit",
-				year: "numeric",
-			}).format(date);
-		};
+		if (!fecha) return "";
+		const date = new Date(fecha);
+		return new Intl.DateTimeFormat("es-ES", {
+			day: "2-digit",
+			month: "2-digit",
+			year: "numeric",
+		}).format(date);
+	};
 	getAlumnosActivosProfesor = () => {
 		const request = "/api/Profesor/AlumnosCursoActivoProfesor";
 		const url = Global.api + request;
@@ -653,6 +653,47 @@ class serviceProfile {
 		}).catch((error) => {
 			console.error("Error al actualizar el estado del usuario:", error);
 			throw error;
+		});
+	}
+	getCursosAdmin = () => {
+		let request = "/api/Cursos";
+		let url = Global.api + request;
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		}).then((response) => {
+			return response.data;
+		}).catch((error) => {
+			console.error("Error al obtener los cursos:", error);
+			throw error;
+		});
+	}
+	updateEstadoCurso = (idCurso, estado) => {
+		let request = "/api/Cursos/UpdateEstadoCurso/" + idCurso + "/" + estado;
+		let url = Global.api + request;
+		return axios.put(url, {}, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		}).then((response) => {
+			console.log("Estado actualizado correctamente:", response);
+			return response;
+		}).catch((error) => {
+			console.error("Error al actualizar el estado del usuario:", error);
+			throw error;
+		});
+
+	}
+	getUsuariosCurso = (idCurso) => {
+		const request = "/api/Usuarios/UsuariosCurso/" + idCurso;
+		const url = Global.api + request;
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		}).then((response) => {
+			return response.data;
 		});
 	}
 

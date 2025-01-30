@@ -74,7 +74,10 @@ export default class CreateCurso extends Component {
 						position: "relative",
 					}}
 				>
-					<h1>Create Curso hay que cambiarlo</h1>
+					<div className="title">
+							<h1 className='poiret-one-regular'>Crear curso</h1>
+							<div className="underline"></div>
+						</div>
 					<div className='form-group'>
 						<form>
 							<div className="form-group">

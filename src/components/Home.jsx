@@ -294,6 +294,10 @@ class Home extends Component {
 		this.getPerfil();
 	};
 
+	cajaUrl = React.createRef();
+	cajaNombreRecurso = React.createRef();
+	cajaDescripcionRecurso = React.createRef();
+
 	render() {
 		// Configuración del carrusel con react-slick
 		const settings = {
@@ -344,7 +348,7 @@ class Home extends Component {
 							<div key={index} className="col-12 col-sm-6 col-md-4 mb-4">
 								<div className="card" style={{ width: '300px', height: '400px' }} onClick={() => this.handleCardClick(charla)}>
 									<img
-										src={charla.imagenCharla ? charla.imagenCharla : 'https://as1.ftcdn.net/v2/jpg/05/03/24/40/1000_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg' }
+										src={charla.imagenCharla ? charla.imagenCharla : 'https://as1.ftcdn.net/v2/jpg/05/03/24/40/1000_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}
 										alt={charla.titulo}
 										className="imgcharla card-img-top"
 										style={{ height: '200px', objectFit: 'cover' }}

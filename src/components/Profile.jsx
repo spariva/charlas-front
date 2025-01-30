@@ -6,6 +6,7 @@ import PopupCharla from "./PopupCharla";
 import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
 import './../assets/css/perfil.css';
+import './../assets/css/filtersCharlas.css';
 
 export default class Profile extends Component {
 	state = {
@@ -395,6 +396,10 @@ export default class Profile extends Component {
 		this.props.navigate('/updateprofile', { state: { usuario: this.state.usuario } });
 	};
 
+	cajaUrl = React.createRef();
+	cajaNombreRecurso = React.createRef();
+	cajaDescripcionRecurso = React.createRef();
+
 	render() {
 		const { usuario } = this.state;
 
@@ -496,6 +501,16 @@ export default class Profile extends Component {
 							</p>
 						</div>
 						<button className="updateBtn btn btn-outline-dark m-2 mb-3" onClick={this.navigateUpdateProfile}>Editar perfil</button>
+
+						{/* <div
+              className="divider"
+              style={{
+                borderTop: "0.8px solid #a0a0a0",
+                width: "100%",
+                margin: "10px auto",
+                borderRadius: "12px"
+              }}
+            ></div> */}
 
 						<div>
 							{/* Filtro charlas con encabezado desplegable */}

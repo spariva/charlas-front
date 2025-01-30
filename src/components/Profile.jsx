@@ -168,6 +168,15 @@ export default class Profile extends Component {
 		}));
 	};
 
+	cancelFormRecursos = () => {
+		if (this.state.recursoSeleccionado) {
+			this.setState({
+				recursoSeleccionado: null,
+			});
+		}
+		this.toggleFormularioRecursos();
+	}
+
 	cajaContenido = React.createRef();
 
 	postComentario = (e) => {
@@ -658,7 +667,7 @@ export default class Profile extends Component {
 															</div>
 															<div className="recursosBtn">
 																<button type="submit" className="btn btn-primary">{this.state.recursoSeleccionado ? "Actualizar Recurso" : "Añadir Recurso"}</button>
-																<button type="button" className="btn btn-secondary" onClick={this.toggleFormularioRecursos}>Cancelar</button>
+																<button type="button" className="btn btn-secondary" onClick={this.cancelFormRecursos}>Cancelar</button>
 															</div>
 														</form>
 													</div>

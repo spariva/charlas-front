@@ -26,14 +26,12 @@
   cursor: pointer;
 }
 
-/* Efecto hover y focus para los selects */
 .filters select:hover, .filters select:focus {
   border-color: #007BFF;
   background-color: #ffffff;
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
 }
 
-/* Estilo para el texto "Ronda" por defecto en el primer select */
 .filters select option[value=""] {
   color: #999;
   font-style: italic;

@@ -295,6 +295,7 @@ class Charlas extends Component {
 					recursoSeleccionado: null,
 				});
 				this.toggleFormularioRecursos();
+				this.toggleRecursos();
 			})
 			.catch((error) => {
 				console.error("Error al actualizar el recurso:", error);
@@ -317,7 +318,6 @@ class Charlas extends Component {
 	// 			console.error(`Error al eliminar recurso con ID ${idRecurso}:`, error);
 	// 		});
 	// };
-
 
 
 	cajaUrl = React.createRef();

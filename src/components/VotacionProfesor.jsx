@@ -5,6 +5,7 @@ import PopupCharla from "./PopupCharla";
 import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
 import './../assets/css/perfil.css';
+import './../assets/css/votacionProfe.css';
 
 export default class votacionProfesor extends Component {
   state = {
@@ -77,7 +78,7 @@ export default class votacionProfesor extends Component {
   }
 
   getVotosRondas = () => {
-    services.getVotosRonda(this.state.rondaSeleccionada).then(res =>{
+    services.getVotosRonda(this.state.rondaSeleccionada).then(res => {
       console.log("votosRondas ", res);
       this.setState({ votos: res })
     }).catch(err => {
@@ -86,7 +87,7 @@ export default class votacionProfesor extends Component {
   }
 
   getVotosCharla = () => {
-    services.getVotosCharla(this.state.idCharlaSeleccionada).then(res =>{
+    services.getVotosCharla(this.state.idCharlaSeleccionada).then(res => {
       console.log("votos charla ", res);
       this.setState({ votosCharla: res.votos })
     }).catch(err => {
@@ -250,16 +251,12 @@ export default class votacionProfesor extends Component {
             position: "relative",
           }}
         >
+          <div className="title">
+            <h1 className='poiret-one-regular'>Panel votaciones</h1>
+            <div className="underline"></div>
+          </div>
           {/* Tarjetas de estadísticas */}
-          <div
-            style={{
-              position: "absolute",
-              top: "20px",
-              right: "20px",
-              display: "flex",
-              gap: "10px",
-            }}
-          >
+          <div className='infoVotacion'>
             <div
               className="info-box"
               style={{
@@ -294,7 +291,7 @@ export default class votacionProfesor extends Component {
               }}
             >
               <h3 style={{ margin: "0", fontSize: "24px" }}>
-                {this.state.votos.votoscompletados ?? 0}  
+                {this.state.votos.votoscompletados ?? 0}
               </h3>
               <p style={{ margin: "0", fontSize: "14px" }}>
                 Votos
@@ -312,6 +309,7 @@ export default class votacionProfesor extends Component {
                 color: "white"
               }}
             >
+              
               <h3 style={{ margin: "0", fontSize: "24px" }}>
                 {this.state.charlas.filter((charla) => {
                   return charla.idEstadoCharla === 2;
@@ -325,7 +323,7 @@ export default class votacionProfesor extends Component {
 
           <div>
             {/* Filtro charlas con encabezado desplegable */}
-            <div className="row d-flex justify-content-end mt-2">
+            <div className="row d-flex justify-content-end mt-4">
               <div className="misCharlas" onClick={() => this.setState((prevState) => ({ showCharlas: !prevState.showCharlas }))}>
                 <h3 className="misCharlas_title">Charlas</h3>
                 <i
@@ -337,11 +335,10 @@ export default class votacionProfesor extends Component {
 
               {this.state.showCharlas && (
                 <div>
-                  {/* Controles de filtro */}
-                  <div className="row d-flex justify-content-end mt-2">
-                    <div className="col-6 col-md-3">
+                  <div className="btnFilters">
+                    <div className="filters">
                       <select
-                        className="form-select"
+                        className="form-select form-select-lg "
                         name="rondaSeleccionada"
                         value={this.state.rondaSeleccionada}
                         onChange={this.handleFilterChange}
@@ -356,7 +353,7 @@ export default class votacionProfesor extends Component {
                         })}
                       </select>
                     </div>
-                    <div className="col-6 col-md-3">
+                    <div className="filters">
                       <select
                         className="form-select"
                         name="estadoSeleccionado"
@@ -376,7 +373,7 @@ export default class votacionProfesor extends Component {
                   </div>
 
                   {/* Contenido de las tarjetas */}
-                  <div className="row d-flex flex-wrap justify-content-start">
+                  <div className="row d-flex flex-wrap justify-content-start scroll-container">
                     {this.state.charlas.map((charla, index) => {
                       return (
                         <div
@@ -408,37 +405,37 @@ export default class votacionProfesor extends Component {
                       color: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#29721f' : '#d57018',
                     }}>{this.state.seleccionadaCharla.estadoCharla}</span>
                   </div>
-                   {/* Tarjetas de estadísticas */}
-          <div
-            style={{
-              position: "absolute",
-              top: "20px",
-              right: "8%",
-              display: "flex",
-              gap: "12px",
-            }}
-          >
-            <div
-              className="info-box"
-              style={{
-                textAlign: "center",
-                padding: "5px",
-                border: "2px solid rgb(29, 96, 190)",
-                borderRadius: "5px",
-                width: "100px",
-                backgroundColor: "rgb(66, 155, 227)",
-                color: "white",
-                gap: "2 px",
-              }}
-            >
-              <h3 style={{ margin: "0", fontSize: "24px" }}>
-                {this.state.votosCharla}  
-              </h3>
-              <p style={{ margin: "0", fontSize: "14px" }}>
-                Votos
-              </p>
-            </div>
-          </div>
+                  {/* Tarjetas de estadísticas */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "20px",
+                      right: "8%",
+                      display: "flex",
+                      gap: "12px",
+                    }}
+                  >
+                    <div
+                      className="info-box"
+                      style={{
+                        textAlign: "center",
+                        padding: "5px",
+                        border: "2px solid rgb(29, 96, 190)",
+                        borderRadius: "5px",
+                        width: "100px",
+                        backgroundColor: "rgb(66, 155, 227)",
+                        color: "white",
+                        gap: "2 px",
+                      }}
+                    >
+                      <h3 style={{ margin: "0", fontSize: "24px" }}>
+                        {this.state.votosCharla}
+                      </h3>
+                      <p style={{ margin: "0", fontSize: "14px" }}>
+                        Votos
+                      </p>
+                    </div>
+                  </div>
                   <div className="charla_title">
                     <div className="title">
                       <h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>

@@ -19,7 +19,7 @@ export default class CreateCharla extends Component {
 	};
 
 	cancelCreation = () => {
-    this.setState({ redirectToCharla: true });  // Set state to trigger redirect
+    this.setState({ redirectToCharla: true }); 
   };
 	
 	async getUsuario() {
@@ -73,7 +73,8 @@ export default class CreateCharla extends Component {
 
 	render() {
 		if (this.state.redirectToCharla) {
-      return <Navigate to="/charlas" />;  // Conditionally navigate when state changes
+			// cambiar segun lo que se necesite en profesor
+      return <Navigate to="/charlas" />; 
     }
 		if (this.state.status == true) {
 			return (<Navigate to="/home" />)

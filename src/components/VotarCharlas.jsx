@@ -107,7 +107,16 @@ export default class VotarCharlas extends Component {
 			idRonda: idRonda
 		}
 		if (idCharla === "0") {
-			alert("Debe seleccionar una charla");
+			Swal.fire({
+				icon: 'warning',
+				title: 'Selecciona una charla',
+				text: 'Debes seleccionar una charla antes de votar.',
+				confirmButtonText: 'Entendido',
+				confirmButtonColor: '#3085d6',
+				background: '#fff3cd',
+				color: '#856404',
+				timer: 3000
+			});
 			return;
 		} else {
 			services.votarCharla(voto).then((response) => {

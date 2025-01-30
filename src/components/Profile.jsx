@@ -26,7 +26,6 @@ export default class Profile extends Component {
 		showRecursos: false,
 		idUsuarioCharlaSeleccionada: null,
 		idComentarioSeleccionado: null,
-		estadoCharla: [],
 		idUsuarioPerfil: null,
 		showFormularioRecursos: false,
 		recursoSeleccionado: null,
@@ -169,6 +168,15 @@ export default class Profile extends Component {
 			showFormularioRecursos: !prevState.showFormularioRecursos,
 		}));
 	};
+
+	cancelFormRecursos = () => {
+		if (this.state.recursoSeleccionado) {
+			this.setState({
+				recursoSeleccionado: null,
+			});
+		}
+		this.toggleFormularioRecursos();
+	}
 
 	cajaContenido = React.createRef();
 
@@ -519,10 +527,10 @@ export default class Profile extends Component {
 								{this.state.showCharlas && (
 									<div>
 										{/* Controles de filtro */}
-										<div className="btnFilters">
-											<div className="filters">
+										<div className="row d-flex justify-content-end mt-2">
+											<div className="col-6 col-md-3">
 												<select
-													className="form-select form-select-lg "
+													className="form-select"
 													name="rondaSeleccionada"
 													value={this.state.rondaSeleccionada}
 													onChange={this.handleFilterChange}
@@ -537,7 +545,7 @@ export default class Profile extends Component {
 													})}
 												</select>
 											</div>
-											<div className="filters">
+											<div className="col-6 col-md-3">
 												<select
 													className="form-select"
 													name="estadoSeleccionado"
@@ -674,7 +682,7 @@ export default class Profile extends Component {
 															</div>
 															<div className="recursosBtn">
 																<button type="submit" className="btn btn-primary">{this.state.recursoSeleccionado ? "Actualizar Recurso" : "Añadir Recurso"}</button>
-																<button type="button" className="btn btn-secondary" onClick={this.toggleFormularioRecursos}>Cancelar</button>
+																<button type="button" className="btn btn-secondary" onClick={this.cancelFormRecursos}>Cancelar</button>
 															</div>
 														</form>
 													</div>

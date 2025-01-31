@@ -194,7 +194,7 @@ class serviceProfile {
 	}
 
 	createCharla = (charla) => {
-		const request = "/api/charlas";
+		const request = "api/charlas";
 		const url = Global.api + request;
 
 		return axios.post(url, charla, {
@@ -218,7 +218,7 @@ class serviceProfile {
 	}
 
 	getCharlasAlumno = () => {
-		const request = "/api/charlas/charlasalumno";
+		const request = "api/charlas/charlasalumno";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -241,7 +241,7 @@ class serviceProfile {
 	}
 
 	getRondasCurso = () => {
-		const request = "/api/rondas/rondascurso";
+		const request = "api/rondas/rondascurso";
 		const url = Global.api + request;
 
 		return axios.get(url, {
@@ -252,7 +252,7 @@ class serviceProfile {
 	}
 
 	getCharlaId = (id) => {
-		const request = "/api/charlas/" + id;
+		const request = "api/charlas/" + id;
 		const url = Global.api + request;
 		return axios.get(url, {
 			headers: {
@@ -263,7 +263,7 @@ class serviceProfile {
 
 	//*Votos:
 	votarCharla = (voto) => {
-		const request = "/api/Votos";
+		const request = "api/Votos";
 		const url = Global.api + request;
 
 		return axios.post(url, voto, {
@@ -310,7 +310,7 @@ class serviceProfile {
 
 		try {
 			const response = await axios.get(Global.api + request, { headers });
-			return response;
+			return response.data;
 		} catch (error) {
 			console.log(error);
 			throw error;
@@ -391,7 +391,7 @@ class serviceProfile {
 
 	//* Profesor (métodos que se necesita el token de profe para que funcionen):
 	getAlumnosProfesor = () => {
-		const request = "/api/Profesor/AlumnosCursoProfesor"
+		const request = "api/Profesor/AlumnosCursoProfesor"
 		const url = Global.api + request;
 		return axios.get(url, {
 			headers: {
@@ -438,7 +438,7 @@ class serviceProfile {
 
 	//FILTRAR VOTOS POR ALUMNO
 	getVotosAlumno = () => {
-		const request = "/api/votos/votosalumno"
+		const request = "api/votos/votosalumno"
 		const url = Global.api + request;
 		return axios.get(url, {
 			headers: {
@@ -491,8 +491,10 @@ class serviceProfile {
 			'Content-Type': 'application/json'
 		}
 
+		//TODO no funciona, no sé si porque hay que enviar un body vacío, o lleno, o así está bien. pero da error 401. pero en teoría soy el profe y es mi curso wtf, probar con insomnia a ver.
+
 		try {
-			const response = await axios.put(Global.api + request, { headers });
+			const response = await axios.put(Global.api + request, {}, { headers });
 			return response;
 		} catch (error) {
 			console.log(error);
@@ -601,7 +603,7 @@ class serviceProfile {
 	// }
 
 	getCursosActivosProfesor = () => {
-		const request = "/api/Profesor/AlumnosCursoActivoProfesor";
+		const request = "api/Profesor/AlumnosCursoActivoProfesor";
 		const url = Global.api + request;
 		return axios.get(url, {
 			headers: {
@@ -626,7 +628,7 @@ class serviceProfile {
 		}).format(date);
 	};
 	getAlumnosActivosProfesor = () => {
-		const request = "/api/Profesor/AlumnosCursoActivoProfesor";
+		const request = "api/Profesor/AlumnosCursoActivoProfesor";
 		const url = Global.api + request;
 		return axios.get(url, {
 			headers: {
@@ -656,7 +658,7 @@ class serviceProfile {
 		});
 	}
 	getCursosAdmin = () => {
-		let request = "/api/Cursos";
+		let request = "api/Cursos";
 		let url = Global.api + request;
 		return axios.get(url, {
 			headers: {
@@ -670,7 +672,7 @@ class serviceProfile {
 		});
 	}
 	updateEstadoCurso = (idCurso, estado) => {
-		let request = "/api/Cursos/UpdateEstadoCurso/" + idCurso + "/" + estado;
+		let request = "api/Cursos/UpdateEstadoCurso/" + idCurso + "/" + estado;
 		let url = Global.api + request;
 		return axios.put(url, {}, {
 			headers: {
@@ -686,7 +688,7 @@ class serviceProfile {
 
 	}
 	getUsuariosCurso = (idCurso) => {
-		const request = "/api/Usuarios/UsuariosCurso/" + idCurso;
+		const request = "api/Usuarios/UsuariosCurso/" + idCurso;
 		const url = Global.api + request;
 		return axios.get(url, {
 			headers: {
@@ -696,6 +698,29 @@ class serviceProfile {
 			return response.data;
 		});
 	}
+
+	//*Files
+	async uploadImagenCharla(id, fileName, content){
+		let request = "api/files/uploadimagencharla/" + id;
+		this.getToken();
+		let headers = {
+			'Authorization': 'Bearer ' + this.token,
+			'Content-Type': 'application/json'
+		}
+
+		var fichero = {
+			"fileName": fileName,
+			"fileContent": content
+		  }
+
+		try {
+			const response = await axios.put(Global.api + request, fichero, { headers });
+			return response;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	} 
 
 }
 

@@ -62,13 +62,6 @@ export default class Login extends Component {
       console.log("Error registro, rol ni 1, ni 2: ", this.state.rol);
       console.log(this.cajaRolSignup.current.value);
     }
-    // services.login(user)
-    // .then(res => {
-    //   console.log("signup token: " + res);
-    // }).catch(err => {
-    //   console.log(err);
-    //   alert("Error de credenciales al registrar usuario");
-    // });
   }
 
   async getUsuario() {
@@ -115,6 +108,7 @@ export default class Login extends Component {
     const { location } = this.props;
     const mensaje = location.state?.mensaje;
     const placeholderCurso = this.state.rol === "2" ? "Curso" : "Key Profesor";
+    const typeInput = this.state.rol === "2" ? "number" : "text";
 
     return (
       <div className="login-parent-container">
@@ -139,7 +133,7 @@ export default class Login extends Component {
               <input type="text" name="apellidos" placeholder="Apellidos" ref={this.cajaApellidosSignup} />
               <input type="email" name="email" placeholder="Email" ref={this.cajaEmailSignup} />
               <input type="password" name="password" placeholder="Contraseña" ref={this.cajaPasswordSignup} />
-              <input type="number" name="idCurso" placeholder={placeholderCurso} ref={this.cajaIdCursoSignup} />
+              <input type={typeInput} name="idCurso" placeholder={placeholderCurso} ref={this.cajaIdCursoSignup} />
               <button>Crear cuenta</button>
             </form>
           </div>

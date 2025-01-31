@@ -13,6 +13,7 @@ export default class Menu extends Component {
 	async getUsuario() {
 		const data = await services.getPerfilUsuario();
 		this.setState({ rol: data.usuario.idRole });
+		this.props.onRol(data.usuario.idRole);
 	}
 
 	componentDidMount() {

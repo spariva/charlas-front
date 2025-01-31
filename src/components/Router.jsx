@@ -24,6 +24,7 @@ export default class Router extends Component {
     super(props);
     this.state = {
       token: null,
+      rol: 1
     };
   }
 
@@ -34,17 +35,21 @@ export default class Router extends Component {
 
   handleLogout = () => {
     localStorage.removeItem("token");
-    this.setState({ token: null });
+    this.setState({ token: null, rol: 1 });
   };
 
   onLogin = (token) => {
     this.setState({ token: token });
   };
 
+  getRol = (rol) => {
+    this.setState({ rol: rol });
+  }
+
   
 
   render() {
-    const { token } = this.state;
+    const { token, rol } = this.state;
 
     const LoginElement = () => <LoginWrapper onLogin={this.onLogin} />;
 
@@ -65,7 +70,7 @@ export default class Router extends Component {
           </div>
           <div className="row">
             <div className="col-md-2 p-0">
-              {token && <Menu />}
+              {token && <Menu onRol={this.getRol}/>}
             </div>
             <div className="col-md-8">
               <Routes>
@@ -89,7 +94,7 @@ export default class Router extends Component {
               </Routes>
             </div>
             <div className="col-2 colBtnActions">
-              <CreateBtnCharla />
+              {rol === 2 && <CreateBtnCharla />}
             </div>
           </div>
         </div>

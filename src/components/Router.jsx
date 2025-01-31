@@ -19,6 +19,7 @@ import ListadoAlumnos from "./ListadoAlumnos";
 import ListaCursosAdmin from "./ListaCursosAdmin";
 import VotacionProfesor from "./VotacionProfesor";
 import RondasProfe from "./RondasProfe";
+import ListadoAlumnosProfe from "./ListadoAlumnosProfe";
 
 export default class Router extends Component {
   constructor(props) {
@@ -91,6 +92,7 @@ export default class Router extends Component {
                 <Route path="/createcurso" element={<CreateCurso />} />
 				        <Route path="/listaCursos" element={<ListaCursosAdmin />} />
 				        <Route path="/alumnos/:id" element={<ListadoAlumnos />} />
+				        <Route path="/alumnosprofe/:id" element={<ListadoAlumnosProfe />} />
                 <Route path="/rondasprofe" element={<RondasProfe />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

@@ -121,7 +121,7 @@ export default class CursosProfesor extends Component {
 
 										{/* Enlace a los alumnos del curso */}
 										<div className="mt-3">
-											<Link to={`/alumnos/${cursoData.curso.idCurso}`} className="btn btn-primary">
+											<Link to={`/alumnosprofe/${cursoData.curso.idCurso}`} className="btn btn-primary">
 												Ver Alumnos
 											</Link>
 										</div>

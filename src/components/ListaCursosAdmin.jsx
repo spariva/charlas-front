@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'; // Importar Link de React Router
+import { Link } from 'react-router-dom'; 
 import services from '../services/services';
-import "../assets/css/CursosProfesor.css"; // Asegúrate de tener el CSS adecuado
+import "../assets/css/CursosProfesor.css"; 
 
 export default class ListaCursosAdmin extends Component {
     state = {
@@ -27,8 +27,21 @@ export default class ListaCursosAdmin extends Component {
         const { cursos } = this.state;
 
         return (
-            <div className="container my-5">
-                <h1 className="text-center profesor-header">Listado de Cursos</h1>
+          <div
+          className="container-fluid scroll-container scroll-container--lg"
+          style={{
+            maxWidth: "90%",
+            padding: "30px",
+            borderRadius: "10px",
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            position: "relative",
+          }}
+        >
+          <div className="title">
+            <h1 className='poiret-one-regular'>Listado de cursos</h1>
+            <div className="underline"></div>
+          </div>
 
                 <div className="row">
                     {cursos.length > 0 ? (

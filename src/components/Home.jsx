@@ -8,6 +8,7 @@ import services from "../services/services";
 import BtnDel from "./BtnDel";
 import BtnUpdate from "./BtnUpdate";
 import { Navigate } from "react-router-dom";
+import ListaCursosAdmin from "./ListaCursosAdmin";
 
 class Home extends Component {
 	state = {
@@ -581,6 +582,10 @@ class Home extends Component {
 							)}
 						</PopupCharla>
 					</>
+				)}
+
+				{this.state.rol == 3 && (
+					<ListaCursosAdmin/>
 				)}
 			</div>
 		);

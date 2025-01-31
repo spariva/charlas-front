@@ -699,6 +699,18 @@ class serviceProfile {
 		});
 	}
 
+	getRondasProfesor = () => {
+		const request = "api/profesor/rondasprofesor";
+		const url = Global.api + request;
+		return axios.get(url, {
+			headers: {
+				'Authorization': 'Bearer ' + this.token
+			}
+		}).then((response) => {
+			return response;
+		});
+	}
+
 	//*Files
 	async uploadImagenCharla(id, fileName, content){
 		let request = "api/files/uploadimagencharla/" + id;

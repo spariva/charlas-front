@@ -35,7 +35,9 @@ class Home extends Component {
 		redirigir: false,
 		redirigirVotacion: false,
 		redirigirRondas: false,
-		redirigirCursos: false
+		redirigirCursos: false,
+		redirigirRondas: false,
+		redirigirCrearRondas:false
 	};
 
 
@@ -58,14 +60,6 @@ class Home extends Component {
 			});
 		});
 	};
-
-	getRondas = () => {
-		services.getRondasCurso().then((response) => {
-			this.setState({
-				rondas: response
-			});
-		});
-	}
 
 	handleCardClick = (charla) => {
 		console.log(charla.idCharla);
@@ -319,6 +313,15 @@ class Home extends Component {
 		this.setState({ redirigirCursos: true });
 	};
 
+	handleNavigatRondas = () => {
+		this.setState({ redirigirRondas: true });
+	};
+
+	handleNavigatCrearRondas = () => {
+		this.setState({ redirigirCrearRondas: true });
+	};
+
+
 	cajaUrl = React.createRef();
 	cajaNombreRecurso = React.createRef();
 	cajaDescripcionRecurso = React.createRef();
@@ -330,11 +333,14 @@ class Home extends Component {
 		if (this.state.redirigirVotacion) {
 			return <Navigate to="/votacion" />;
 		}
-		if (this.state.redirigirRondas) {
-			return <Navigate to="/createcharla" />;
+		if (this.state.redirigirCrearRondas) {
+			return <Navigate to="/createronda" />;
 		}
 		if (this.state.redirigirCursos) {
 			return <Navigate to="/createcurso" />;
+		}
+		if (this.state.redirigirRondas) {
+			return <Navigate to="/rondasprofe" />;
 		}
 		// Configuración del carrusel con react-slick
 		const settings = {
@@ -400,8 +406,9 @@ class Home extends Component {
 						<div className="btnProfesor d-flex gap-4 justify-content-center mt-4">
 							<button className="btn btn-outline-dark p-3" onClick={this.handleNavigate}>Mis cursos</button>
 							<button className="btn btn-outline-dark p-3" onClick={this.handleNavigateVotacion}>Votación charlas</button>
-							<button className="btn btn-outline-dark p-3" onClick={this.handleNavigateRondas}>Crear ronda</button>
+							<button className="btn btn-outline-dark p-3" onClick={this.handleNavigatCrearRondas}>Crear ronda</button>
 							<button className="btn btn-outline-dark p-3" onClick={this.handleNavigateCursos}>Crear curso</button>
+							<button className="btn btn-outline-dark p-3" onClick={this.handleNavigateRondas}>Ver rondas</button>
 						</div>
 					</div>
 				)}

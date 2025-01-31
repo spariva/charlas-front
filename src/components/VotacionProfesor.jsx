@@ -397,7 +397,7 @@ export default class VotacionProfesor extends Component {
 
                     <div>
                         {/* Filtro charlas con encabezado desplegable */}
-                        <div className="row d-flex justify-content-end mt-2">
+                        <div className="row d-flex justify-content-end mt-4">
                             <div className="misCharlas" onClick={() => this.setState((prevState) => ({ showCharlas: !prevState.showCharlas }))}>
                                 <h3 className="misCharlas_title">Charlas</h3>
                                 <i
@@ -410,10 +410,10 @@ export default class VotacionProfesor extends Component {
                             {this.state.showCharlas && (
                                 <div>
                                     {/* Controles de filtro */}
-                                    <div className="row d-flex justify-content-end mt-2">
-                                        <div className="col-6 col-md-3">
+                                    <div className="btnFilters">
+                                        <div className="filters">
                                             <select
-                                                className="form-select"
+                                                className="form-select form-select-lg "
                                                 name="rondaSeleccionada"
                                                 value={this.state.rondaSeleccionada}
                                                 onChange={this.handleFilterChange}
@@ -428,7 +428,7 @@ export default class VotacionProfesor extends Component {
                                                 })}
                                             </select>
                                         </div>
-                                        <div className="col-6 col-md-3">
+                                        <div className="filters">
                                             <select
                                                 className="form-select"
                                                 name="estadoSeleccionado"
@@ -490,26 +490,26 @@ export default class VotacionProfesor extends Component {
                                             justifyContent: "space-between"
                                         }}
                                     >
-                                                                            <div
-                                        className="info-box"
-                                        style={{
-                                            textAlign: "center",
-                                            padding: "2px",
-                                            border: "2px solid rgb(29, 96, 190)",
-                                            borderRadius: "5px",
-                                            width: "80px",
-                                            backgroundColor: "rgb(66, 155, 227)",
-                                            color: "white",
-                                            gap: "2 px",
-                                        }}
-                                    >
-                                        <h3 style={{ margin: "0", fontSize: "24px" }}>
-                                            {this.state.votosCharla ?? 0}
-                                        </h3>
-                                        <p style={{ margin: "0", fontSize: "14px" }}>
-                                            Votos
-                                        </p>
-                                    </div>
+                                        <div
+                                            className="info-box"
+                                            style={{
+                                                textAlign: "center",
+                                                padding: "2px",
+                                                border: "2px solid rgb(29, 96, 190)",
+                                                borderRadius: "5px",
+                                                width: "80px",
+                                                backgroundColor: "rgb(66, 155, 227)",
+                                                color: "white",
+                                                gap: "2 px",
+                                            }}
+                                        >
+                                            <h3 style={{ margin: "0", fontSize: "24px" }}>
+                                                {this.state.votosCharla ?? 0}
+                                            </h3>
+                                            <p style={{ margin: "0", fontSize: "14px" }}>
+                                                Votos
+                                            </p>
+                                        </div>
                                         <button className={this.state.seleccionadaCharla.idEstadoCharla === 1 ? "btn btn-outline-primary" : "btn btn-outline-danger"} onClick={this.updateEstadoCharla}>
                                             {this.state.seleccionadaCharla.idEstadoCharla === 1 ? "Seleccionar" : "Deseleccionar"}
                                         </button>
@@ -517,7 +517,7 @@ export default class VotacionProfesor extends Component {
                                     <div className="charla_title">
                                         <div className="title">
                                             <h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>
-                                            <hr className="card_divisor"></hr>  
+                                            <hr className="card_divisor"></hr>
                                         </div>
                                         <div className="icon_tiempo me-4">
                                             <i className="fa-regular fa-clock icon"></i>

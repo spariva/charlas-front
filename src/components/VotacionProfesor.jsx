@@ -510,7 +510,7 @@ export default class VotacionProfesor extends Component {
                                             Votos
                                         </p>
                                     </div>
-                                        <button className={this.state.seleccionadaCharla.idEstadoCharla === 1 ? "btn btn-outline-success" : "btn btn-outline-danger"} onClick={this.updateEstadoCharla}>
+                                        <button className={this.state.seleccionadaCharla.idEstadoCharla === 1 ? "btn btn-outline-primary" : "btn btn-outline-danger"} onClick={this.updateEstadoCharla}>
                                             {this.state.seleccionadaCharla.idEstadoCharla === 1 ? "Seleccionar" : "Deseleccionar"}
                                         </button>
                                     </div>

@@ -84,7 +84,7 @@ export default class VotacionProfesor extends Component {
         const sortedCharlas = charlasWithVotes.sort((a, b) => a.votos - b.votos);
         console.log("charlas sorted ", sortedCharlas);
 
-        this.setState({ charlas: charlasByEstado });
+        this.setState({ charlas: sortedCharlas });
         this.getVotosRondas();
     }
 

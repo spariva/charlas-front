@@ -501,17 +501,6 @@ export default class Profile extends Component {
 							</p>
 						</div>
 						<button className="updateBtn btn btn-outline-dark m-2 mb-3" onClick={this.navigateUpdateProfile}>Editar perfil</button>
-
-						{/* <div
-              className="divider"
-              style={{
-                borderTop: "0.8px solid #a0a0a0",
-                width: "100%",
-                margin: "10px auto",
-                borderRadius: "12px"
-              }}
-            ></div> */}
-
 						<div>
 							{/* Filtro charlas con encabezado desplegable */}
 							<div className="row d-flex justify-content-end mt-2">

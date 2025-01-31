@@ -7,7 +7,7 @@ import axios from 'axios';
 const ListadoAlumnos = () => {
     const { id } = useParams();  // Obtener el ID de la ruta
     const [alumnos, setAlumnos] = useState([]);  // Aseguramos que es un array vacío por defecto
-    
+
     // Obtener el idRole de localStorage
     const idRole = localStorage.getItem('idRole');  // Asumiendo que el idRole está guardado en localStorage
 
@@ -43,13 +43,13 @@ const ListadoAlumnos = () => {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')  // Suponiendo que el token está en localStorage
             }
         })
-        .then((response) => {
-            const usuariosCurso = response.data || [];  // Aseguramos que sea un array
-            setAlumnos(usuariosCurso);  // Guardamos la respuesta en el estado 'alumnos'
-        })
-        .catch((error) => {
-            console.error("Error al obtener los usuarios del curso:", error);
-        });
+            .then((response) => {
+                const usuariosCurso = response.data || [];  // Aseguramos que sea un array
+                setAlumnos(usuariosCurso);  // Guardamos la respuesta en el estado 'alumnos'
+            })
+            .catch((error) => {
+                console.error("Error al obtener los usuarios del curso:", error);
+            });
     };
 
     // Cambiar el estado de usuario
@@ -67,46 +67,63 @@ const ListadoAlumnos = () => {
     };
 
     return (
-        <div className="container my-5">
-            <h1>Listado de Alumnos</h1>
+        <div
+            className="container-fluid"
+            style={{
+                maxWidth: "90%",
+                margin: "30px auto",
+                padding: "30px",
+                borderRadius: "10px",
+                backgroundColor: "#fff",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                position: "relative",
+            }}
+        >
+            <div className="title">
+                <h1 className="poiret-one-regular">Alumnos del curso {id}</h1>
+                <div className="underline"></div>
+            </div>
 
-            <table className="table table-striped">
-                <thead>
+            <table className="table table-bordered table-hover align-middle">
+            <thead>
+                <tr>
+                    <th scope="col" className="text-center">#</th>
+                    <th scope="col" className="text-center">Nombre</th>
+                    <th scope="col" className="text-center">Email</th>
+                    <th scope="col" className="text-center">Rol</th>
+                    <th scope="col" className="text-center">Estado Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                {Array.isArray(alumnos) && alumnos.length > 0 ? (
+                    alumnos.map((alumnoData, index) => {
+                        const estadoUsuario = alumnoData.estadoUsuario; // Aseguramos que accedemos a las propiedades correctas
+                        return (
+                            <tr key={alumnoData.idUsuario}>
+                                <th scope="row" className="text-center">{index + 1}</th>
+                                <td className="text-center">{alumnoData.usuario}</td>
+                                <td className="text-center">{alumnoData.email}</td>
+                                <td className="text-center">{alumnoData.role}</td>
+                                <td className="text-center">
+                                    <input
+                                        type="checkbox"
+                                        checked={estadoUsuario}
+                                        onChange={() => toggleEstadoUsuario(alumnoData.idUsuario, estadoUsuario)}
+                                        style={{ accentColor: "#007bff" }} // Aplicar color azul al checkbox
+                                    />
+                                </td>
+                            </tr>
+                        );
+                    })
+                ) : (
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Email</th>
-						<th scope="col">Rol</th>
-                        <th scope="col">Estado usuario</th>
+                        <td colSpan="5" className="text-center" style={{ color: "#007bff" }}>
+                            No hay alumnos disponibles
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {Array.isArray(alumnos) && alumnos.length > 0 ? (
-                        alumnos.map((alumnoData, index) => {
-                            const estadoUsuario = alumnoData.estadoUsuario;  // Aseguramos que accedemos a las propiedades correctas
-                            return (
-                                <tr key={alumnoData.idUsuario}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{alumnoData.usuario}</td>
-                                    <td>{alumnoData.email}</td>
-									<td>{alumnoData.role}</td>
-                                    <td>
-                                        <input 
-                                            type="checkbox"
-                                            checked={estadoUsuario}
-                                            onChange={() => toggleEstadoUsuario(alumnoData.idUsuario, estadoUsuario)} 
-                                        />
-                                    </td>
-                                </tr>
-                            );
-                        })
-                    ) : (
-                        <tr>
-                            <td colSpan="5" className="text-center">No hay alumnos disponibles</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                )}
+            </tbody>
+        </table>
         </div>
     );
 }

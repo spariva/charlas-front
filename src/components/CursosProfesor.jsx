@@ -4,42 +4,42 @@ import services from '../services/services';
 import "../assets/css/CursosProfesor.css"; // Asegúrate de tener el CSS adecuado
 
 export default class CursosProfesor extends Component {
-    state = {
-        cursos: [],  // Para almacenar los cursos
-        usuario: []  // Para almacenar la información del usuario
-    };
+	state = {
+		cursos: [],  // Para almacenar los cursos
+		usuario: []  // Para almacenar la información del usuario
+	};
 
-    // Obtener los datos del perfil del usuario
-    async getUsuario() {
-        const data = await services.getPerfilUsuario();
-        this.setState({ usuario: data.usuario });
-    }
+	// Obtener los datos del perfil del usuario
+	async getUsuario() {
+		const data = await services.getPerfilUsuario();
+		this.setState({ usuario: data.usuario });
+	}
 
-    // Obtener los cursos activos del profesor
-    async getCursos() {
-        try {
-            const response = await services.getCursosActivosProfesor();
-            console.log("Respuesta completa de cursos:", response);
-            const cursos = response;
-            console.log("CURSOS ACTIVOS:", cursos);
-            if (Array.isArray(cursos) && cursos.length > 0) {
-                const primerCurso = cursos[0];
-                if (primerCurso && primerCurso.curso) {
-                    console.log("Detalles del curso:", primerCurso.curso);
-                    this.setState({ cursos: cursos });
-                } else {
-                    console.error("El primer curso no tiene detalles.");
-                }
-            } else {
-                console.error("No hay cursos disponibles.");
-            }
-        } catch (error) {
-            console.error("Error al obtener los cursos:", error);
-        }
-    }
+	// Obtener los cursos activos del profesor
+	async getCursos() {
+		try {
+			const response = await services.getCursosActivosProfesor();
+			console.log("Respuesta completa de cursos:", response);
+			const cursos = response;
+			console.log("CURSOS ACTIVOS:", cursos);
+			if (Array.isArray(cursos) && cursos.length > 0) {
+				const primerCurso = cursos[0];
+				if (primerCurso && primerCurso.curso) {
+					console.log("Detalles del curso:", primerCurso.curso);
+					this.setState({ cursos: cursos });
+				} else {
+					console.error("El primer curso no tiene detalles.");
+				}
+			} else {
+				console.error("No hay cursos disponibles.");
+			}
+		} catch (error) {
+			console.error("Error al obtener los cursos:", error);
+		}
+	}
 
-    // Cambiar el estado del curso (activo/inactivo)
-    toggleEstadoCurso = (idCurso, estadoActual) => {
+	// Cambiar el estado del curso (activo/inactivo)
+	toggleEstadoCurso = (idCurso, estadoActual) => {
 		// Cambiar el estado local del curso antes de enviar la solicitud
 		const nuevosCursos = this.state.cursos.map((curso) => {
 			if (curso.curso.idCurso === idCurso) {
@@ -47,10 +47,10 @@ export default class CursosProfesor extends Component {
 			}
 			return curso;
 		});
-	
+
 		// Actualizar el estado local inmediatamente
 		this.setState({ cursos: nuevosCursos });
-	
+
 		// Enviar la solicitud al servidor para actualizar el estado en el backend
 		services.updateEstadoCurso(idCurso, !estadoActual)
 			.then((response) => {
@@ -68,21 +68,33 @@ export default class CursosProfesor extends Component {
 			});
 	};
 
-    // Obtener los cursos cuando el componente se monta
-    componentDidMount() {
-        this.getUsuario();
-        this.getCursos();
-    }
+	// Obtener los cursos cuando el componente se monta
+	componentDidMount() {
+		this.getUsuario();
+		this.getCursos();
+	}
 
-    render() {
+	render() {
 		const { cursos } = this.state;
-	
+
 		return (
-			<div className="container my-5">
-				<h1 className="text-center profesor-header">
-					Cursos Activos de {this.state.usuario.nombre} {this.state.usuario.apellidos}
-				</h1>
-	
+			<div
+				className="container-fluid container_updateProfile"
+				style={{
+					maxWidth: "90%",
+					margin: "30px auto",
+					padding: "30px",
+					borderRadius: "10px",
+					backgroundColor: "#fff",
+					boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+					position: "relative",
+				}}
+			>
+				<div className="title">
+					<h1 className='poiret-one-regular'>Mis cursos activos</h1>
+					<div className="underline"></div>
+				</div>
+
 				<div className="row">
 					{cursos.length > 0 ? (
 						cursos.map((cursoData, index) => (
@@ -93,7 +105,7 @@ export default class CursosProfesor extends Component {
 										<p className="card-text">Fecha de inicio: {services.formatFecha(cursoData.curso.fechaInicio)}</p>
 										<p className="card-text">Fecha de fin: {services.formatFecha(cursoData.curso.fechaFin)}</p>
 										<p className="card-text">Alumnos inscritos: {cursoData.numeroAlumnos}</p>
-	
+
 										{/* Checkbox para cambiar el estado del curso */}
 										<div className="form-check">
 											<input
@@ -106,7 +118,7 @@ export default class CursosProfesor extends Component {
 												Estado: {cursoData.curso.activo ? "Activo" : "Inactivo"}
 											</label>
 										</div>
-	
+
 										{/* Enlace a los alumnos del curso */}
 										<div className="mt-3">
 											<Link to={`/alumnos/${cursoData.curso.idCurso}`} className="btn btn-primary">

@@ -26,16 +26,6 @@ export default class MenuProfesor extends Component {
 						<h4 className='poiret-one-regular poiret-one-regular--peq'>Cursos</h4>
 					</NavLink>
 				</div>
-				<div className="item">
-					<NavLink to='/createcurso' className="link">
-						<h4 className='poiret-one-regular poiret-one-regular--peq'>Crear Curso</h4>
-					</NavLink>
-				</div>
-				<div className="item">
-					<NavLink to='/createronda' className="link">
-						<h4 className='poiret-one-regular poiret-one-regular--peq'>Crear Ronda</h4>
-					</NavLink>
-				</div>
 			</div>
 		)
 	}

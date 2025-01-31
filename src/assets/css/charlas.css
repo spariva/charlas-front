@@ -4,7 +4,10 @@
   margin-top: 1rem;
   padding-bottom: 1rem;
 }
-
+.scroll-container--lg {
+  max-height: 630px;
+  
+}
 .scroll-container::-webkit-scrollbar {
   width: 3px;
 }

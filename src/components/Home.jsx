@@ -42,7 +42,6 @@ class Home extends Component {
 	getPerfil = () => {
 		services.getPerfilUsuario().then((response) => {
 			const rol = response.usuario.idRole;
-			const data = response.usuario;
 			this.setState({
 				idUsuarioPerfil: response.usuario.idUsuario,
 				rol: rol
@@ -399,10 +398,10 @@ class Home extends Component {
 							<div className="underline"></div>
 						</div>
 						<div className="btnProfesor d-flex gap-4 justify-content-center mt-4">
-							<button className="btn btn-info p-3" onClick={this.handleNavigate}>Mis cursos</button>
-							<button className="btn btn-warning p-3" onClick={this.handleNavigateVotacion}>Votación charlas</button>
-							<button className="btn btn-success p-3" onClick={this.handleNavigateRondas}>Crear ronda</button>
-							<button className="btn btn-secondary p-3" onClick={this.handleNavigateCursos}>Crear curso</button>
+							<button className="btn btn-outline-dark p-3" onClick={this.handleNavigate}>Mis cursos</button>
+							<button className="btn btn-outline-dark p-3" onClick={this.handleNavigateVotacion}>Votación charlas</button>
+							<button className="btn btn-outline-dark p-3" onClick={this.handleNavigateRondas}>Crear ronda</button>
+							<button className="btn btn-outline-dark p-3" onClick={this.handleNavigateCursos}>Crear curso</button>
 						</div>
 					</div>
 				)}

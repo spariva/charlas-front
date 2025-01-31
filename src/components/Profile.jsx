@@ -31,6 +31,10 @@ export default class Profile extends Component {
     recursoSeleccionado: null,
     comentarioEditar: '',
     idComentarioEditar: null,
+    redirigir: false,
+		redirigirVotacion: false,
+		redirigirRondas: false,
+		redirigirCursos: false
   };
 
   async getUsuario() {
@@ -369,8 +373,37 @@ export default class Profile extends Component {
   cajaNombreRecurso = React.createRef();
   cajaDescripcionRecurso = React.createRef();
 
+  handleNavigate = () => {
+		this.setState({ redirigir: true });
+	};
+
+	handleNavigateVotacion = () => {
+		this.setState({ redirigirVotacion: true });
+	};
+
+	handleNavigateRondas = () => {
+		this.setState({ redirigirRondas: true });
+	};
+	handleNavigateCursos = () => {
+		this.setState({ redirigirCursos: true });
+	};
+
   render() {
     const { usuario } = this.state;
+
+    
+        if (this.state.redirigir) {
+          return <Navigate to="/cursos" />;
+        }
+        if (this.state.redirigirVotacion) {
+          return <Navigate to="/votacion" />;
+        }
+        if (this.state.redirigirRondas) {
+          return <Navigate to="/createcharla" />;
+        }
+        if (this.state.redirigirCursos) {
+          return <Navigate to="/createcurso" />;
+        }
 
     return (
       <div>
@@ -445,6 +478,8 @@ export default class Profile extends Component {
               </div>
             </>)}
 
+            
+
           {/* Perfil */}
           <div className="user-profile" style={{ textAlign: "center" }}>
             {/* Imagen de perfil */}
@@ -473,7 +508,28 @@ export default class Profile extends Component {
             </div>
             <button className="updateBtn btn btn-outline-dark m-2 mb-3" onClick={this.navigateUpdateProfile}>Editar perfil</button>
 
-            {usuario?.idRole === 1 && (<h1>Profe</h1>)}
+            {usuario?.idRole === 1 && (
+              					<div
+                        className="container-fluid container_updateProfile"
+                        style={{
+                          maxWidth: "90%",
+                          margin: "30px auto",
+                          padding: "30px",
+                          borderRadius: "10px",
+                          backgroundColor: "#fff",
+                          position: "relative",
+                        }}
+                      >
+                        <div className="title">
+                          <h1 className='poiret-one-regular'>Accesos directos</h1>
+                          <div className="underline"></div>
+                        </div>
+                        <div className="btnProfesor d-flex gap-4 justify-content-center mt-4">
+                          <button className="btn btn-outline-dark p-3" onClick={this.handleNavigateRondas}>Crear ronda</button>
+                          <button className="btn btn-outline-dark p-3" onClick={this.handleNavigateCursos}>Crear curso</button>
+                        </div>
+                      </div>
+            )}
             {usuario?.idRole === 2 && (<>
               <div>
                 {/* Filtro charlas con encabezado desplegable */}

@@ -81,7 +81,7 @@ export default class VotacionProfesor extends Component {
         }));
         charlasWithVotes.forEach(charla => console.log(`Charla ID: ${charla.idCharla}, Votos: ${charla.votos}`));
 
-        const sortedCharlas = charlasWithVotes.sort((a, b) => a.votos - b.votos);
+        const sortedCharlas = charlasWithVotes.sort((a, b) => b.votos - a.votos);
         console.log("charlas sorted ", sortedCharlas);
 
         this.setState({ charlas: sortedCharlas });

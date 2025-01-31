@@ -620,6 +620,10 @@ export default class Profile extends Component {
                           color: this.state.seleccionadaCharla.estadoCharla === 'ACEPTADA' ? '#29721f' : '#d57018',
                         }}>{this.state.seleccionadaCharla.estadoCharla}</span>
                       </div>
+                      <div className="btnAcciones">
+                          <BtnDel className="btnDel"  onClick={() => this.deleteCharla()}/> 
+                          <BtnUpdate className="btnUpdate" onClick={() => this.updateCharla()} />
+                      </div>
                       <div className="charla_title">
                         <div className="title">
                           <h2 className="poiret-one-regular">{this.state.seleccionadaCharla.titulo}</h2>

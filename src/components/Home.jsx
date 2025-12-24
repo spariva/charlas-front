@@ -36,7 +36,6 @@ class Home extends Component {
 		redirigirVotacion: false,
 		redirigirRondas: false,
 		redirigirCursos: false,
-		redirigirRondas: false,
 		redirigirCrearRondas:false
 	};
 
@@ -74,8 +73,7 @@ class Home extends Component {
 			this.setState({
 				comentariosCharla: response.comentarios,
 				recursosCharla: response.recursos,
-				idUsuarioCharlaSeleccionada: response.charla.idUsuario,
-				// idUsuarioComentario: comentariosFiltrados
+				idUsuarioCharlaSeleccionada: response.charla.idUsuario
 			});
 			console.log(response.comentarios)
 		})
